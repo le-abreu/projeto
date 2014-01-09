@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Desenrola</title>
+	<link type="text/css" href="../estilo/estilo.css" rel="stylesheet"/>
+</h:head>
+<h:body styleClass="fundo">
+	<div class="fundo">
+		<ui:include src="topo.xhtml"/>
+		<div class="fundo_branco" style="">
+			<ui:include src="menu.xhtml"/> 
+			<p:panel style="color: gray; margin: 2%; border-left: 0px; border-right: 0px; border-bottom: 0px;"> 
+				<h:outputLabel value="artistas|" styleClass="tituloPag"/>
+			</p:panel>
+	     	<p:panel style="color: gray; margin: 2%; border-left: 0px; border-right: 0px; margin-top: -2%;  height: 400px;">
+		     	<h:form id="form">  
+				    <p:carousel id="carousel" vertical="false" value="#{artistaHandler.listaArtista}" var="artista" itemStyleClass="artistaItem" rows="1">  
+				        <p:commandLink id="view" update=":form:artistaDetail" oncomplete="artistaDialog.show()" title="View Detail">  
+				            <h:panelGrid columns="1" cellspacing="15" style="width: 360px;">  
+					            <h:panelGrid columns="2">  
+						            <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
+					            	<h:outputText id="nome" value="#{artista.apelido}"/>  
+				            	</h:panelGrid>
+				  		 		<img onmouseover="this.style.opacity=1;"
+									onmouseout="this.style.opacity=0.5;"
+									style="opacity: 0.5; display: inline-block;"
+									src="#{artista.foto}" width="400" height="280"/>
+			        		</h:panelGrid>
+				            <f:setPropertyActionListener value="#{artista}" target="#{artistaHandler.artistaEscolhido}" />  
+				        </p:commandLink>  
+				    </p:carousel>
+				  
+				    <p:dialog header="Artista" showEffect="fade" hideEffect="fade" modal="true" widgetVar="artistaDialog" closable="true">  
+				          
+				        <p:outputPanel id="artistaDetail" layout="block">
+				            <h:panelGrid  columns="2"> 
+				            	<h:outputLabel value="Biografia"/> 
+				                
+				                <h:outputText value=" " />  
+				
+						  		<img src="#{artistaHandler.artistaEscolhido.foto}" width="480" height="320"/>
+
+					            <p:panel style="width: 640px; height: 400px; align:left; border: 0px;">
+						            <h:panelGrid  columns="1">
+						                <h:outputLabel id="nomeArtista" value="#{artistaHandler.artistaEscolhido.nome}" style="border: 0px;"/>  
+					            		<h:inputTextarea rows="19" maxlength="1000" cols="96" disabled="true" value="#{artistaHandler.artistaEscolhido.biografia}" id="biogafiaArtista" style="border: 0px;"/>  
+						            </h:panelGrid> 
+					            </p:panel>  
+				            </h:panelGrid>  
+				        </p:outputPanel>  
+				          
+				    </p:dialog>  
+				      
+				</h:form>   
+		  		<p:growl id="messagesLista" showDetail="false"/> 
+		    </p:panel>
+		    <div id="lateral">
+	           	<p:imageSwitch effect="zoom">  
+				    <ui:repeat value="#{eventoHandler.bainnerLado}" var="image">  
+		                <p:graphicImage value="#{image}" width="80" height="360"/>   
+				    </ui:repeat>
+				</p:imageSwitch>
+		    </div>
+		</div>
+	</div>
+</h:body>
+</html>

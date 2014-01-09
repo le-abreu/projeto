@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="ISO_8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/padraoEmpresa.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Lançamento</ui:define>
+	<ui:define name="content">
+		<p:panel header="Lancamento" toggleable="false" id="panelLancamento">
+		
+			<h:form id="formLancamento">
+				<p:toolbar style="margin-top: 8px">
+					<p:toolbarGroup>
+						<p:commandButton id="btnNovo" value="Cliente Lançamento" style="font-size: 0.8em;" icon="ui-icon-document" update=":formDialogCliente" oncomplete="novoClienteDiaglog.show();" />
+					</p:toolbarGroup>
+				</p:toolbar>
+				
+				<!-- TABELA LANÇAMENTOS -->
+				<p:dataTable id="dataTableLancamentosResults" var="lancamento" value="#{lancamentoHandler.lancamentos}" 
+					emptyMessage="Nenhum lancamento encontrado." selection="#{lancamentoHandler.lancamento}"
+					paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,40"
+					style="margin-top: 8px">
+
+					<f:facet name="header">
+						<h:outputText value="" />
+					</f:facet>
+					<p:column sortable="true" sortBy="#{lancamento.id}">
+						<f:facet name="header">
+							<h:outputText value="ID" />
+						</f:facet>
+						<h:outputText value="#{lancamento.id}" />
+					</p:column>
+
+					<f:facet name="header">
+						<h:outputText value="" />
+					</f:facet>
+
+					<p:column sortable="true" sortBy="#{lancamento.dataLancamento}">
+						<f:facet name="header">
+							<h:outputText value="ID" />
+						</f:facet>
+						<h:outputText value="#{lancamento.dataLancamento}" >
+			            	<f:convertDateTime pattern="dd/MM/yyyy"/>
+			            </h:outputText>
+					</p:column>
+
+					<p:column sortable="true" sortBy="#{lancamento.cliente.nome}">
+						<f:facet name="header">
+							<h:outputText value="Cliente" />
+						</f:facet>
+						<h:outputText value="#{lancamento.cliente.nome}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+   			
+   			<h:form id="formDialogCliente" >
+				<p:dialog id="novoClienteDiaglog" widgetVar="novoClienteDiaglog" header="Cadastro Lançamento para Cliente" 
+				 resizable="false" maximizable="true" minimizable="false" closable="false"> 
+					<p:scrollPanel style="width:1250px;height:600px"> 
+						<h:inputHidden id="idCliente" value="#{lancamentoHandler.cliente.id}" />
+						<!--CLIENTE-->
+						<h:panelGrid columns="1">
+							<h:panelGrid columns="2">
+								<h:panelGrid columns="1">
+									<p:graphicImage value="#{lancamentoHandler.cliente.imagem.imagem}"
+										id="foto" width="300" height="240" />
+					        	</h:panelGrid> 
+								<h:panelGrid columns="1" id="painelClient">
+									<h:panelGrid columns="1">
+										<h:outputLabel value="CPF:" for="cpf"/>
+										<h:panelGrid columns="2">
+											<p:inputMask id="cpf" value="#{lancamentoHandler.cliente.cpf}" mask="999.999.999-99" />
+					                        <p:commandLink actionListener="#{lancamentoHandler.selecionaCliente}"  value="-buscar"  update=":formDialogCliente" oncomplete="novoClienteDiaglog.show();"/>
+										</h:panelGrid>
+									</h:panelGrid>
+									
+									<h:panelGrid columns="1">
+										<h:outputLabel value="Nome:" for="nome" />
+										<p:inputText id="nome" value="#{lancamentoHandler.cliente.nome}" size="45" disabled="true"/>
+									</h:panelGrid>
+			
+									<h:panelGrid columns="1">
+										<h:outputLabel value="Sexo:" for="sexo" />
+										<p:selectOneRadio id="sexo" value="#{lancamentoHandler.cliente.sexo}" disabled="true">
+											<f:selectItems value="#{lancamentoHandler.cliente.sexoEnum}" itemLabel="#{s}" var="s" />
+										</p:selectOneRadio>
+									</h:panelGrid>
+					        	</h:panelGrid> 
+			
+							</h:panelGrid>
+						
+							<p:tabView effect="blind" effectDuration="normal" id="tab">
+								
+		   	 					<p:tab title="Lancamentos" id="tabLancamento">
+		   	 						<p:commandButton id="btnNovoLancamento" value="Nova Lançamento" style="font-size: 0.8em;" icon="ui-icon-document" oncomplete="lancamentoDiaglog.show();" update=":formHabilit">
+										<f:setPropertyActionListener value="#{lancamentoHandler.novoLancamento}" target="#{lancamentoHandler.lancamento}" />
+										<f:setPropertyActionListener value="Confirmar" target="#{lancamentoHandler.evento}" />
+										<f:setPropertyActionListener value="" target="#{lancamentoHandler.disabled}" />
+									</p:commandButton>
+									
+									<p:dataTable  id="dataTableLancamentosResults" var="lancamento"  scrollable="true" scrollHeight="220" 
+										value="#{lancamentoHandler.lancamentosCliente}" emptyMessage="Nenhum lançamento esta cadastrado para o cliente"
+										selection="#{lancamentoHandler.lancamento}"
+										paginator="true" rows="2"
+										paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="2,4,8"
+										style="margin-top: 8px">
+										  
+								        <p:column headerText="Data">  
+								            <h:outputText value="#{lancamento.dataLancamento}" >
+								            	<f:convertDateTime pattern="dd/MM/yyyy"/>
+								            </h:outputText>
+								        </p:column>  
+								  
+								        <p:column headerText="Historico">  
+								            <h:outputText value="#{lancamento.titulo}" />  
+								        </p:column>  
+		
+								        <p:column headerText="Pagamento">  
+								            <h:outputText value="#{lancamento.tipoLancamento}" />  
+								        </p:column>  
+								  
+								        <p:column headerText="Valor">  
+								            <h:outputText value="#{lancamento.valor}">
+								            	<f:convertNumber pattern="R$ #0.00" />
+								            </h:outputText> 
+								        </p:column>  
+				
+								        <p:column headerText="Saldo">  
+								            <h:outputText value="#{lancamento.saldo}" >
+								            	<f:convertNumber pattern="R$ #0.00" />
+								            </h:outputText> 
+								        </p:column>  
+								  
+										<p:column style="width:90px" headerText="#">
+											<p:commandButton id="btnViewLancamento" icon="ui-icon-search" oncomplete="lancamentoDiaglog.show();" update=":formHabilit">
+												<f:setPropertyActionListener value="#{lancamento}" target="#{lancamentoHandler.lancamento}" />
+												<f:setPropertyActionListener value="Visualizar" target="#{lancamentoHandler.evento}" />
+												<f:setPropertyActionListener value="true" target="#{lancamentoHandler.disabled}" />
+											</p:commandButton>
+										</p:column>
+										
+										<p:column style="width:90px" headerText="#">
+											<p:commandButton id="btnEditarLancamento" title="Editar" icon="ui-icon-pencil" oncomplete="lancamentoDiaglog.show();" update=":formHabilit">
+												<f:setPropertyActionListener value="#{lancamento}" target="#{lancamentoHandler.lancamento}" />
+												<f:setPropertyActionListener value="Confirmar" target="#{lancamentoHandler.evento}" />
+												<f:setPropertyActionListener value="false" target="#{lancamentoHandler.disabled}" />
+											</p:commandButton>
+										</p:column>
+										
+										<p:column style="width:90px" headerText="#">
+											<p:commandButton id="btnRemoverLancamento" title="Remover" icon="ui-icon-close" oncomplete="lancamentoDiaglog.show();" update=":formHabilit">
+												<f:setPropertyActionListener value="#{lancamento}" target="#{lancamentoHandler.lancamento}" />
+												<f:setPropertyActionListener value="Remover" target="#{lancamentoHandler.evento}" />
+												<f:setPropertyActionListener value="true" target="#{lancamentoHandler.disabled}" />
+											</p:commandButton>
+										</p:column>
+									</p:dataTable>
+		   	 					</p:tab>
+							</p:tabView>
+						</h:panelGrid>
+					</p:scrollPanel>
+				</p:dialog>
+			</h:form>
+						
+			<h:form id="formHabilit">  
+	     		<p:dialog id="lancamentoDiaglog" widgetVar="lancamentoDiaglog" header="Lançamento Cliente" 
+	     			resizable="true" showEffect="fold" hideEffect="fold" width="780" height="420">   
+		     		<h:inputHidden id="id" value="#{lancamentoHandler.cliente.id}" /> 
+			        <h:panelGrid columns="2" cellpadding="1" >
+
+						<h:outputLabel value="Historico:" for="lancamento"/>
+						<p:inputText id="lancamento"  value="#{lancamentoHandler.lancamento.titulo}"/>
+						
+						<h:outputLabel value="Descrição:" for="descricao"/>
+						<p:inputText id="descricao" value="#{lancamentoHandler.lancamento.descricao}" size="80"/>
+	
+						<h:outputLabel value="Valor:" for="valor"/>
+						<p:inputText id="valor"  value="#{lancamentoHandler.lancamento.valor}"/>
+
+				        <h:outputLabel value="Tipo Lançamento:" for="tipoLancamento" />
+						<p:selectOneRadio id="tipoLancamento" value="#{lancamentoHandler.lancamento.tipoLancamento}">
+							<f:selectItems value="#{lancamentoHandler.tipoLancamentoEnum}" /> 
+						</p:selectOneRadio>
+					</h:panelGrid>  
+					<h:commandButton actionListener="#{lancamentoHandler.salvarLancamento}" value="+Add" id="btSalvarLancamento" update=":formDialogCliente" oncomplete="novoClienteDiaglog.show();" />
+		   		</p:dialog>
+  			</h:form>
+  			
+		</p:panel>
+	</ui:define>
+</ui:composition>

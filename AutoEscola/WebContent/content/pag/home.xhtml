@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head>
+		<title>Auto Escola ::Inovação::</title>
+		<link type="text/css" href="../estilo/estilo.css" rel="stylesheet"/>
+	</h:head>
+	<h:body styleClass="fundo">
+		<div class="fundo">
+			<ui:include src="topo.xhtml"/>
+			<div class="fundo_branco" style="">
+				<ui:include src="menu.xhtml"/>
+	   		    <div id="center">
+			     	<p:panel style="color: gray; margin: 2%; margin-top: -2%; border-left: 0px; border-right: 0px; border-bottom: 0px; height:380px;">
+				  		<p:growl id="messagesLista" showDetail="false"/> 
+				    </p:panel>
+	  		    </div>
+			    <div id="footer">
+			     	<p:panel style="color: gray; margin: 2%; border-left: 0px; border-right: 0px;">
+						<p:outputLabel value="
+							Leul Seixas
+						"/>
+			     	</p:panel>
+			    </div>
+			</div>
+		</div>
+	</h:body>
+</html>

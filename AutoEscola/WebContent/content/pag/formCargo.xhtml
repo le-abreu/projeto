@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/padraoEmpresa.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Cargo</ui:define>
+	<ui:define name="content">
+		<p:panel header="Cargo" toggleable="false" id="panelDadosCargo">
+			<h:form id="formCargo">  
+				<p:toolbar style="margin-top: 8px">
+					<p:toolbarGroup>
+						<p:commandButton id="btnNovo" value="Novo" style="font-size: 0.8em;" icon="ui-icon-document" oncomplete="novoCargoDiaglog.show();" update=":formDialogCargo">
+							<f:setPropertyActionListener value="#{cargoHandler.novoCargo}" target="#{cargoHandler.cargo}" />
+						</p:commandButton>	
+					</p:toolbarGroup>
+				</p:toolbar>
+			
+				<!-- TABELA CARGOS -->
+				<p:dataTable id="dataTableCargosResults" var="cargo"
+					value="#{cargoHandler.cargos}"
+					emptyMessage="Nenhum cargo encontrado." paginator="true" rows="5"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15"
+					selection="#{cargoHandler.cargo}"
+					style="margin-top: 8px">
+	
+					<f:facet name="header">
+						<h:outputText value="" />
+					</f:facet>
+
+					<p:column sortable="true" sortBy="#{cargo.titulo}">
+						<f:facet name="header">
+							<h:outputText value="Titulo" />
+						</f:facet>
+						<h:outputText value="#{cargo.titulo}" />
+					</p:column>
+	
+					<p:column style="width:90px">
+						<p:commandButton id="btnEditar" title="Editar" icon="ui-icon-pencil" oncomplete="novoCargoDiaglog.show();" update=":formDialogCargo">
+							<f:setPropertyActionListener value="#{cargo}" target="#{cargoHandler.cargo}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+	   		</h:form>
+	   		
+			<!-- CARGO -->	
+			<h:form id="formDialogCargo">  
+	     		<p:dialog id="novoCargoDiaglog" widgetVar="novoCargoDiaglog" header="Cadastro Cargo" resizable="true" showEffect="fold" hideEffect="fold" width="700" height="350"> 
+					<h:inputHidden id="id" value="#{cargoHandler.cargo.id}"/>
+		     		<h:panelGrid columns="2" cellpadding="1" id="painelClient">
+						<h:outputLabel value="Nome:" for="nome"/>
+						<p:inputText id="nome" value="#{cargoHandler.cargo.titulo}" size="60" />
+
+						<h:outputLabel value="Descrição:" for="descricao"/>
+						<p:inputTextarea id="descricao" value="#{cargoHandler.cargo.descricao}" rows="4" cols="60"/>
+					</h:panelGrid>
+					<p:commandButton id="btnCadastroCargo" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{cargoHandler.persistirCargo}" style="align:right" update=":formCargo" onclick="novoCargoDiaglog.close()"/>
+		   		</p:dialog>
+			</h:form>
+			
+	    </p:panel>
+	</ui:define>
+</ui:composition>

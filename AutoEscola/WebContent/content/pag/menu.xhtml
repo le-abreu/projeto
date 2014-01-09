@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:composition>
+		<h:form>
+			<h:panelGrid columns="2" cellspacing="5" style="margin: 2%;"> 
+		        <h:panelGrid columns="1"> 
+					<h:outputLabel value="busque novidades em são paulo" style="font-size: 18px; margin: 2%;"/>
+		            <h:panelGrid columns="5" cellspacing="5"> 
+		            	<h:column style="align:center">
+							<h:commandLink action="/content/pag/videos.xhtml">
+					            <h:panelGrid columns="1" cellspacing="5" style="width:60px; height:60px; border: solid 1px; border-color: gray;">
+									<img src="../img/icone/videos.png" width="60" height="40" style="margin-top: 5px;"/>
+								</h:panelGrid>
+								<h:outputLabel value="vídeos" style="margin: 10%;"/>
+							</h:commandLink>
+		            	</h:column>
+		            	<h:column style="align:center">
+							<h:commandLink action="/content/pag/artista.xhtml">
+					            <h:panelGrid columns="1" cellspacing="5" style="width:60px; height:60px; border: solid 1px; border-color: gray;">
+									<img src="../img/icone/artistas.png" width="60" height="40" style="margin-top: 5px;"/>
+								</h:panelGrid>
+								<h:outputLabel value="artistas" style="margin: 10%;"/>
+							</h:commandLink>
+		            	</h:column>
+		            	<h:column style="align:center">
+							<h:commandLink action="/content/pag/eventos.xhtml">
+					            <h:panelGrid columns="1" cellspacing="5" style="width:60px; height:60px; border: solid 1px; border-color: gray;">
+									<img src="../img/icone/eventos.png" width="60" height="40" style="margin-top: 5px;"/>
+								</h:panelGrid>
+								<h:outputLabel value="eventos" style="margin: 10%;"/>
+							</h:commandLink>
+		            	</h:column>
+		            	<h:column>
+							<h:commandLink action="/content/pag/fotos.xhtml">
+					            <h:panelGrid columns="1" cellspacing="5" style="width:60px; height:60px; border: solid 1px; border-color: gray;">
+									<img src="../img/icone/artes.png" width="60" height="40" style="margin-top: 5px;"/>
+								</h:panelGrid>
+								<h:outputLabel value="artes" style="margin: 10%;"/>
+							</h:commandLink>
+		            	</h:column>
+		            	<h:column style="align:center">
+							<h:commandLink action="/content/pag/oficinas.xhtml">
+					            <h:panelGrid columns="1" cellspacing="5" style="width:60px; height:60px; border: solid 1px; border-color: gray;">
+									<img src="../img/icone/oficinas.png" width="60" height="40" style="margin-top: 5px;"/>
+								</h:panelGrid>
+								<h:outputLabel value="oficinas" style="margin: 10%;"/>
+							</h:commandLink>
+		            	</h:column>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+	</ui:composition>
+</f:view>
