@@ -4,13 +4,11 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 
 
@@ -50,12 +48,6 @@ public class Endereco implements Serializable {
 	@Column()
 	private String cidade;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	private Cliente cliente;
-	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	private Funcionario funcionario;
-
 	public long getId() {
 		return id;
 	}
@@ -126,22 +118,6 @@ public class Endereco implements Serializable {
 
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Funcionario getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
 	}
 
 	public List<Classificador> getClassificadorEnum() {

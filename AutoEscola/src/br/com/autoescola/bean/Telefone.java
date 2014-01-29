@@ -3,13 +3,11 @@ package br.com.autoescola.bean;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Telefone {
@@ -29,13 +27,6 @@ public class Telefone {
 	
 	@Column
 	private String operadora;
-
-	@ManyToOne(cascade = CascadeType.REFRESH)
-	private Cliente cliente;
-	
-	@ManyToOne(cascade = CascadeType.REFRESH)
-	private Funcionario funcionario;
-
 
 	@Column
 	private Classificador tipoTelefone;
@@ -78,22 +69,6 @@ public class Telefone {
 
 	public void setOperadora(String operadora) {
 		this.operadora = operadora;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Funcionario getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
 	}
 
 	public Classificador getTipoTelefone() {

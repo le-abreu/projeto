@@ -6,15 +6,13 @@
 	<ui:composition>
 		<h:form>
 			<p:menubar>  
-		        <p:submenu label="File" icon="ui-icon-document">  
-		            <p:submenu label="Cadastro" icon="ui-icon-contact">  
-		                <p:menuitem value="Cliente" url="formClienteList.xhtml" />  
-		                <p:menuitem value="Funcionário" url="formFuncionario.xhtml" />  
-		            </p:submenu>  
-		        </p:submenu>  
+	            <p:submenu label="Cadastro" icon="ui-icon-contact">  
+	                <p:menuitem value="Cliente" url="formClienteList.xhtml" />  
+	                <p:menuitem value="Funcionário" url="formFuncionario.xhtml" />  
+	            </p:submenu>  
 		  
-		        <p:submenu label="Edit" icon="ui-icon-pencil">  
-	                <p:menuitem value="Lançamentos" url="formLancamento.xhtml" />  
+		        <p:submenu label="Financeiro" >  
+	                <p:menuitem value="Lançamentos" icon="ui-icon-pencil" url="formLancamento.xhtml" />  
 		        </p:submenu>  
 		  
 				<p:menuitem icon="/content/images/dock/logout.png" ajax="false" value="Logout" action="#{loginHandler.sair}"/>

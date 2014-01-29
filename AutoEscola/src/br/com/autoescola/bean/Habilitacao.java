@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,12 +39,6 @@ public class Habilitacao implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Imagem imagem;
-
-	@ManyToOne(cascade = CascadeType.REFRESH)
-	private Cliente cliente;
-
-	@ManyToOne(cascade = CascadeType.REFRESH)
-	private Funcionario funcionario;
 	
 	public long getId() {
 		return id;
@@ -87,14 +80,6 @@ public class Habilitacao implements Serializable {
 		this.dataExpedicao = dataExpedicao;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
 	public Imagem getImagem() {
 		return imagem;
 	}
@@ -103,12 +88,5 @@ public class Habilitacao implements Serializable {
 		this.imagem = imagem;
 	}
 
-	public Funcionario getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
-	}
 	
 }

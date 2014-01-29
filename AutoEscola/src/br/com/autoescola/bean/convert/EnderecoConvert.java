@@ -19,7 +19,7 @@ public class EnderecoConvert implements Converter{
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object object) {
-		return ((Endereco) object).getCliente() == null ? ((Endereco) object).getFuncionario().getNome(): ((Endereco) object).getCliente().getNome();
+		return ((Endereco) object).getCep();
 	}
 
 

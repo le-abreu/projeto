@@ -10,16 +10,12 @@ import javax.faces.bean.ViewScoped;
 
 import br.com.autoescola.bean.Cargo;
 import br.com.autoescola.bean.Classificador;
-import br.com.autoescola.bean.Cliente;
 import br.com.autoescola.bean.Endereco;
 import br.com.autoescola.bean.Funcionario;
 import br.com.autoescola.bean.Habilitacao;
 import br.com.autoescola.bean.Telefone;
 import br.com.autoescola.dao.CargoDAO;
-import br.com.autoescola.dao.EnderecoDAO;
 import br.com.autoescola.dao.FuncionarioDAO;
-import br.com.autoescola.dao.HabilitacaoDAO;
-import br.com.autoescola.dao.TelefoneDAO;
 
 @ViewScoped()
 @ManagedBean(name = "funcionarioHandler")
@@ -29,12 +25,6 @@ public class FuncionarioHandler implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	public FuncionarioHandler() {
-		this.telefone.setFuncionario(new Funcionario());
-		this.endereco.setFuncionario(new Funcionario());
-		this.habilitacao.setFuncionario(new Funcionario());
-	}
 	
 	//BEAN
 	private Funcionario funcionario = new Funcionario();
@@ -50,9 +40,6 @@ public class FuncionarioHandler implements Serializable{
 
 	//DAO
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-	private TelefoneDAO telefoneDAO = new TelefoneDAO();
-	private EnderecoDAO enderecoDAO = new EnderecoDAO();
-	private HabilitacaoDAO habilitacaoDAO = new HabilitacaoDAO();
 
 	//VARIAVEIS AUXILIARES
 	private boolean disabled = false;
@@ -140,10 +127,6 @@ public class FuncionarioHandler implements Serializable{
 		this.funcionarioDAO.persist(funcionario);
 	}
 	
-	public void persistirEndereco() {
-		enderecoDAO.update(endereco);
-	}
-	
 	public Cargo getCargo() {
 		return cargo;
 	}
@@ -152,39 +135,39 @@ public class FuncionarioHandler implements Serializable{
 		this.cargo = cargo;
 	}
 
+	public void persistirEndereco() {
+		if(!this.funcionario.getEnderecos().contains(endereco)){
+			this.funcionario.getEnderecos().add(endereco);
+		}
+		endereco = new Endereco();
+	}
+
 	public void excluirEndereco() {
-		Endereco endereco = enderecoDAO.find(this.endereco.getId());
-		Funcionario funcionario = endereco.getFuncionario();
-		endereco.setFuncionario(null);
 		funcionario.getEnderecos().remove(endereco);
-		enderecoDAO.delete(endereco);
 	}
 
 	public void persistirTelefone() {
-		telefoneDAO.update(telefone);
+		if (!this.funcionario.getTelefones().contains(telefone)) {
+			this.funcionario.getTelefones().add(telefone);
+		}
+		telefone = new Telefone();
 	}
-	
+
 	public void excluirTelefone() {
-		Telefone telefone = telefoneDAO.find(this.telefone.getId());
-		Funcionario funcionario = telefone.getFuncionario();
-		telefone.setFuncionario(null);
 		funcionario.getTelefones().remove(telefone);
-		telefoneDAO.delete(telefone);
 	}
-	
 
 	public void persistirHabilitacao() {
-		habilitacaoDAO.update(habilitacao);
+		
+		if(!this.funcionario.getHabilitacoes().contains(habilitacao)){
+			this.funcionario.getHabilitacoes().add(habilitacao);
+		}
+		habilitacao = new Habilitacao();
 	}
 	
 	public void excluirHabilitacao() {
-		Habilitacao habilitacao = habilitacaoDAO.find(this.habilitacao.getId());
-		Cliente cliente = habilitacao.getCliente();
-		habilitacao.setCliente(null);
-		cliente.getTelefones().remove(habilitacao);
-		habilitacaoDAO.delete(habilitacao);
+		funcionario.getHabilitacoes().remove(habilitacao);
 	}
-
 
 	public Funcionario getNovoFuncionario() {
 		return new Funcionario();
@@ -192,19 +175,16 @@ public class FuncionarioHandler implements Serializable{
 
 	public Telefone getNovoTelefone() {
 		Telefone telefone = new Telefone() ;
-		telefone.setFuncionario(this.funcionario);
 		return telefone;
 	}
 	
 	public Endereco getNovoEndereco() {
 		Endereco endereco = new Endereco();
-		endereco.setFuncionario(this.funcionario);
 		return endereco;
 	}
 
 	public Habilitacao getNovoHabilitacao() {
 		Habilitacao habilitacao = new Habilitacao() ;
-		habilitacao.setFuncionario(this.funcionario);
 		return habilitacao;
 	}
 	

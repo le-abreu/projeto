@@ -16,41 +16,38 @@
 			<h:form id="formCliente">
 				<h:inputHidden id="idCliente" value="#{clienteHandler.cliente.id}" />
 				
+				<p:messages id="msgs"/>
 				<h:panelGrid columns="2">
 					<h:panelGrid columns="3" id="painelClient">
-						
-						<p:commandButton id="btnCadastroCliente" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{clienteHandler.persistirCliente}" style="align:right" update=":formCliente" onclick="novoClienteDiaglog.close();" />
+						<p:commandButton id="btnCadastroCliente" value="Confirmar" title="Concluir" icon="ui-icon-check" action="#{clienteHandler.persistirCliente}" style="align:right" update=":formCliente" />
 						<h:outputLabel value=" "/>
 						<h:outputLabel value=" "/>
 						
 						<h:panelGrid columns="1">
 							<h:outputLabel value="Nome:" for="nome" />
-							<p:inputText id="nome" value="#{clienteHandler.cliente.nome}" size="45" />
+							<p:inputText id="nome" value="#{clienteHandler.cliente.nome}" size="45"  rendered="true" requiredMessage="O campo nome é obrigátorio!"/>
 						</h:panelGrid>
 
 						<h:panelGrid columns="1">
 							<h:outputLabel value="CPF:" for="cpf" />
-							<p:inputMask id="cpf" value="#{clienteHandler.cliente.cpf}" mask="999.999.999-99" disabled="#{not empty clienteHandler.cliente.cpf}"/>
-							<h:inputHidden id="cpfHiddden" value="#{clienteHandler.cliente.cpf}" />
+							<p:inputMask id="cpf" value="#{clienteHandler.cliente.cpf}" mask="999.999.999-99" disabled="#{not empty clienteHandler.cliente.cpf}" rendered="true" requiredMessage="O campo CPF é obrigátorio!"/>
 						</h:panelGrid>
 
 						<h:panelGrid columns="1">
 							<h:outputLabel value="RG:" for="rg" />
-							<p:inputMask id="rg" value="#{clienteHandler.cliente.rg}" mask="99.999.999-9" disabled="#{not empty clienteHandler.cliente.rg}"/>
-							<h:inputHidden id="rgHiddden" value="#{clienteHandler.cliente.rg}" />
+							<p:inputMask id="rg" value="#{clienteHandler.cliente.rg}" mask="99.999.999-9" disabled="#{not empty clienteHandler.cliente.rg}" rendered="true" requiredMessage="O campo RG é obrigátorio!"/>
 						</h:panelGrid>
 
 						<h:panelGrid columns="1">
 							<h:outputLabel value="Sexo:" for="sexo" />
-							<p:selectOneRadio id="sexo" value="#{clienteHandler.cliente.sexo}" disabled="#{clienteHandler.cliente.id ne 0}">
-								<f:selectItems value="#{clienteHandler.cliente.sexoEnum}" itemLabel="#{s}" var="s" />
+							<p:selectOneRadio id="sexo" value="#{clienteHandler.cliente.sexo}" rendered="true" requiredMessage="O campo sexo é obrigátorio!">
+								<f:selectItems value="#{clienteHandler.cliente.sexoEnum}" itemLabel="#{sexo}" var="sexo" />
 							</p:selectOneRadio>
-							<h:inputHidden id="sexoHiddden" value="#{clienteHandler.cliente.sexo}" />
 						</h:panelGrid>
 
 						<h:panelGrid columns="1">
 							<h:outputLabel value="Data Nascimento:" for="dataNascimento" />
-							<p:calendar id="dataNascimento" value="#{clienteHandler.cliente.dataNascimento}" pattern="dd/MM/yyyy" showButtonPanel="true" />
+							<p:calendar id="dataNascimento" value="#{clienteHandler.cliente.dataNascimento}" pattern="dd/MM/yyyy" showButtonPanel="true"  rendered="true" requiredMessage="O campo data nascimentoé obrigátorio!"/>
 						</h:panelGrid>
 						
 						<h:panelGrid columns="1">
@@ -70,7 +67,7 @@
 
 						<h:panelGrid columns="1">
 							<h:outputLabel value="Email:" for="email" />
-							<p:inputText id="email" value="#{clienteHandler.cliente.email}" size="45" />
+							<p:inputText id="email" value="#{clienteHandler.cliente.email}" size="45"  rendered="true" requiredMessage="O campo email é obrigátorio!"/>
 						</h:panelGrid>
 	
 					</h:panelGrid>
@@ -82,7 +79,7 @@
 				</h:panelGrid>
 				<p:tabView effect="blind" effectDuration="normal" id="tab">
 					<p:tab title="Telefones" id="tabTelefone">
- 						<p:commandButton id="btnNovoTelefone" value="Novo Telefone" style="font-size: 0.8em;" icon="ui-icon-document" oncomplete="novoTelefoneClienteDiaglog.show();" update=":formDialogTelefoneCliente">
+ 						<p:commandButton id="btnNovoTelefone" value="Novo Telefone" style="font-size: 0.8em;" icon="ui-icon-contact" oncomplete="novoTelefoneClienteDiaglog.show();" update=":formDialogTelefoneCliente">
 							<f:setPropertyActionListener value="Confirmar" target="#{clienteHandler.evento}" />
 							<f:setPropertyActionListener value="" target="#{clienteHandler.disabled}" />
 							<f:setPropertyActionListener value="#{clienteHandler.novoTelefone}" target="#{clienteHandler.telefone}" />
@@ -161,7 +158,7 @@
 					</p:tab>
 					
 					<p:tab title="Endereços" id="tabEnderecos">
-						<p:commandButton id="btnNovoEndereco" value="Novo Endereço" style="font-size: 0.8em;" icon="ui-icon-document" oncomplete="novoEnderecoClienteDiaglog.show();" update=":formDialogEnderecoCliente">
+						<p:commandButton id="btnNovoEndereco" value="Novo Endereço" style="font-size: 0.8em;" icon="ui-icon-contact" oncomplete="novoEnderecoClienteDiaglog.show();" update=":formDialogEnderecoCliente">
 							<f:setPropertyActionListener value="Confirmar" target="#{clienteHandler.evento}" />
 							<f:setPropertyActionListener value="" target="#{clienteHandler.disabled}" />
 							<f:setPropertyActionListener value="#{clienteHandler.novoEndereco}" target="#{clienteHandler.endereco}" />
@@ -302,133 +299,27 @@
 			<!-- ENDEREÇO -->
 			<h:form id="formDialogEnderecoCliente">  
 	     		<p:dialog id="novoEnderecoClienteDiaglog" widgetVar="novoEnderecoClienteDiaglog" header="Endereço Cliente" 
-	     			resizable="true" showEffect="fold" hideEffect="fold" width="780" height="420">   
-					<h:inputHidden id="idClienteEndereco" value="#{clienteHandler.endereco.cliente.id}" />
-	     			<h:inputHidden id="idEndereco" value="#{clienteHandler.endereco.id}" />
-			     	<h:panelGrid columns="2">
-						<h:outputLabel value="Cliente:"  />
-						<h:outputLabel value="#{clienteHandler.endereco.cliente.nome}" />
-					</h:panelGrid>
-						
-			     	<h:panelGrid columns="1">
-						<h:outputLabel value="Tipo Endereço:" for="tipoEndereco" />
-						<p:selectOneRadio id="tipoEndereco" value="#{clienteHandler.endereco.tipoEndereco}" disabled="#{clienteHandler.disabled}">
-							<f:selectItems value="#{clienteHandler.endereco.classificadorEnum}" itemLabel="#{tipoEndereco}" var="tipoEndereco" />
-						</p:selectOneRadio>
-
-					</h:panelGrid>
-					
-			     	<h:panelGrid columns="3">
-				     	<h:panelGrid columns="1">
-							<h:outputLabel value="Logradouro:" for="logradouro"/>
-							<p:inputText id="logradouro" value="#{clienteHandler.endereco.logradouro}" size="60" disabled="#{clienteHandler.disabled}"/>
-						</h:panelGrid>
-							
-					     	<h:panelGrid columns="1">
-								<h:outputLabel value="Nº" for="numero"/>
-								<p:inputText id="numero" value="#{clienteHandler.endereco.numero}" size="4" disabled="#{clienteHandler.disabled}" />
-							</h:panelGrid>
-		
-					     	<h:panelGrid columns="1">
-								<h:outputLabel value="Complemento" for="complemento"/>
-								<p:inputText id="complemento" value="#{clienteHandler.endereco.complemento}" size="6" disabled="#{clienteHandler.disabled}" />
-							</h:panelGrid>
-					</h:panelGrid>
-			     	<h:panelGrid columns="4">
-				     	<h:panelGrid columns="1">
-							<h:outputLabel value="CEP:" for="cep"/>
-							<p:inputMask id="cep" value="#{clienteHandler.endereco.cep}" mask="99999-999" size="9" disabled="#{clienteHandler.disabled}"/>
-						</h:panelGrid>
-						
-
-				     	<h:panelGrid columns="1">
-							<h:outputLabel value="Bairro" for="bairro"/>
-							<p:inputText id="bairro" value="#{clienteHandler.endereco.bairro}" size="25" disabled="#{clienteHandler.disabled}" />
-						</h:panelGrid>
-	
-				     	<h:panelGrid columns="1">
-							<h:outputLabel value="Cidade" for="cidade"/>
-							<p:inputText id="cidade" value="#{clienteHandler.endereco.cidade}" size="25" disabled="#{clienteHandler.disabled}" />
-						</h:panelGrid>
-	
-				     	<h:panelGrid columns="1">
-							<h:outputLabel value="Estado" for="uf"/>
-							<p:inputText id="uf" value="#{clienteHandler.endereco.uf}" size="2" disabled="#{clienteHandler.disabled}" />
-						</h:panelGrid>
-	
-					</h:panelGrid>
-		     		<div style="visibility: #{clienteHandler.evento eq 'Confirmar'? 'visible': 'hidden'};">
-						<p:commandButton id="btnConcluirEndereco" value="Confirmar" title="Concluir" icon="ui-icon-pencil" actionListener="#{clienteHandler.persistirEndereco}" style="align:right" 
-						 	update=":formCliente" onclick="novoEnderecoClienteDiaglog.close();"  />
-		     		</div>
-		     		<div style="visibility: #{clienteHandler.evento eq 'Remover'? 'visible': 'hidden'};">
-						<p:commandButton id="btnRemoverEndereco" value="Remover" title="Remover" icon="ui-icon-close" actionListener="#{clienteHandler.excluirEndereco}" style="align:right" 
-							update=":formCliente" onclick="novoEnderecoClienteDiaglog.close();" >
-							<f:setPropertyActionListener value="#{clienteHandler.endereco}" target="#{clienteHandler.endereco}" />
-						</p:commandButton>	
-		     		</div>
+	     			resizable="true" showEffect="fold" hideEffect="fold" width="600" height="300">     
+	     			<ui:include src="include/includeEditEndereco.xhtml" /> 
 		   		</p:dialog>
   			</h:form>
 			
 			<!-- TELEFONE -->
 			<h:form id="formDialogTelefoneCliente">  
 	     		<p:dialog id="novoTelefoneClienteDiaglog" widgetVar="novoTelefoneClienteDiaglog" header="Endereço Cliente" 
-	     			resizable="true" showEffect="fold" hideEffect="fold" width="780" height="420">   
-					<h:inputHidden id="idClienteTelefone" value="#{clienteHandler.telefone.cliente.id}" />
-	     			<h:inputHidden id="idTelefone" value="#{clienteHandler.telefone.id}" />
-			     	<h:panelGrid columns="1">
-				     	<h:panelGrid columns="2">
-							<h:outputLabel value="Cliente:"  />
-							<h:outputLabel value="#{clienteHandler.telefone.cliente.nome}" />
-						</h:panelGrid>						
-						<h:outputLabel value="Tipo Telefone:" for="tipoTelefone" />
-						<p:selectOneRadio id="tipoTelefone" value="#{clienteHandler.telefone.tipoTelefone}" disabled="#{clienteHandler.disabled}">
-							<f:selectItems value="#{clienteHandler.telefone.classificadorEnum}" itemLabel="#{tipoTelefone}" var="tipoTelefone" />
-						</p:selectOneRadio>
-
-						<h:outputLabel value="Operadora" for="operadoraTelefone"/>
-						<p:inputText id="operadoraTelefone" value="#{clienteHandler.telefone.operadora}" size="25" disabled="#{clienteHandler.disabled}" />
-		     		</h:panelGrid>
-					
-			     	<h:panelGrid columns="3">
-
-			     		<h:panelGrid columns="1">
-							<h:outputLabel value="DDI:" for="ddiTelefone"/>
-							<p:inputMask id="ddiTelefone" value="#{clienteHandler.telefone.ddi}" mask="99" size="2" disabled="#{clienteHandler.disabled}"/>
-			     		</h:panelGrid>
-						
-			     		<h:panelGrid columns="1">
-							<h:outputLabel value="DDD:" for="dddTelefone"/>
-							<p:inputMask id="dddTelefone" value="#{clienteHandler.telefone.ddd}" mask="99" size="2" disabled="#{clienteHandler.disabled}"/>
-			     		</h:panelGrid>
-						
-			     		<h:panelGrid columns="1">
-							<h:outputLabel value="Número:" for="numeroTelefone"/>
-							<p:inputText id="numeroTelefone" value="#{clienteHandler.telefone.numero}" size="10" disabled="#{clienteHandler.disabled}"/>
-			     		</h:panelGrid>
-
-
-					</h:panelGrid>
-		     		<div style="visibility: #{clienteHandler.evento eq 'Confirmar'? 'visible': 'hidden'};">
-						<p:commandButton id="btnConcluirTelefone" value="Confirmar" title="Concluir" icon="ui-icon-pencil" actionListener="#{clienteHandler.persistirTelefone}" style="align:right" 
-						 update=":formCliente" onclick="novoTelefoneClienteDiaglog.close();" />
-		     		</div>
-		     		<div style="visibility: #{clienteHandler.evento eq 'Remover'? 'visible': 'hidden'};">
-						<p:commandButton id="btnRemoverTelefone" value="Remover" title="Remover" icon="ui-icon-close" actionListener="#{clienteHandler.excluirTelefone}" style="align:right" 
-							update=":formCliente" onclick="novoTelefoneClienteDiaglog.close();" />
-		     		</div>
+	     			resizable="true" showEffect="fold" hideEffect="fold" width="500" height="300">   
+	     			
 		   		</p:dialog>
   			</h:form>
   			
   			<!-- HABILITACAO -->
 			<h:form id="formHabilit">  
 	     		<p:dialog id="habilitacaoDiaglog" widgetVar="habilitacaoDiaglog" header="Habilitação Cliente" 
-	     			resizable="true" showEffect="fold" hideEffect="fold" width="780" height="420">   
-					<h:inputHidden id="idClienteHabilitacao" value="#{clienteHandler.habilitacao.cliente.id}" />
+	     			resizable="true" showEffect="fold" hideEffect="fold" width="380" height="220">   
 	     			<h:inputHidden id="idHabilitacao" value="#{clienteHandler.habilitacao.id}" />
 		     		<h:panelGrid columns="2">
 						<h:outputLabel value="Cliente:"  />
-						<h:outputLabel value="#{clienteHandler.habilitacao.cliente.nome}" />
+						<h:outputLabel value="#{clienteHandler.cliente.nome}" />
 					</h:panelGrid>
 
 			     	<h:panelGrid columns="2">
@@ -453,11 +344,11 @@
 						</h:panelGrid>
 					</h:panelGrid>
 		     		<div style="visibility: #{clienteHandler.evento eq 'Confirmar'? 'visible': 'hidden'};">
-						<p:commandButton id="btnConcluirHabilitacao" value="Confirmar" title="Concluir" icon="ui-icon-pencil" actionListener="#{clienteHandler.persistirHabilitacao}" style="align:right" 
+						<p:commandButton id="btnConcluirHabilitacao" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{clienteHandler.persistirHabilitacao}" style="align:right" 
 							update=":formCliente" onclick="habilitacaoDiaglog.close();" />
 		     		</div>
 		     		<div style="visibility: #{clienteHandler.evento eq 'Remover'? 'visible': 'hidden'};">
-						<p:commandButton id="btnRemoverHabilitacao" value="Remover" title="Remover" icon="ui-icon-close" actionListener="#{clienteHandler.excluirHabilitacao}" style="align:right" 
+						<p:commandButton id="btnRemoverHabilitacao" value="Remover" title="Remover" icon="ui-icon-close" action="#{clienteHandler.excluirHabilitacao}" style="align:right" 
 							update=":formCliente" onclick="habilitacaoDiaglog.close();" />
 		     		</div>
 		   		</p:dialog>

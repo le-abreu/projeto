@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+		
+	<h:panelGrid>					
+		<h:inputHidden id="idTelefone" value="#{clienteHandler.telefone.id}" />
+     	<h:panelGrid columns="1">
+	     	<h:panelGrid columns="2">
+				<h:outputLabel value="Cliente:"  />
+				<h:outputLabel value="#{clienteHandler.cliente.nome}" />
+			</h:panelGrid>						
+			<h:outputLabel value="Tipo Telefone:" for="tipoTelefone" />
+			<p:selectOneRadio id="tipoTelefone" value="#{clienteHandler.telefone.tipoTelefone}" disabled="#{clienteHandler.disabled}">
+				<f:selectItems value="#{clienteHandler.telefone.classificadorEnum}" itemLabel="#{tipoTelefone}" var="tipoTelefone" />
+			</p:selectOneRadio>
+
+			<h:outputLabel value="Operadora" for="operadoraTelefone"/>
+			<p:inputText id="operadoraTelefone" value="#{clienteHandler.telefone.operadora}" size="25" disabled="#{clienteHandler.disabled}" />
+    		</h:panelGrid>
+		
+     	<h:panelGrid columns="3">
+
+     		<h:panelGrid columns="1">
+				<h:outputLabel value="DDI:" for="ddiTelefone"/>
+				<p:inputMask id="ddiTelefone" value="#{clienteHandler.telefone.ddi}" mask="99" size="2" disabled="#{clienteHandler.disabled}"/>
+     		</h:panelGrid>
+			
+     		<h:panelGrid columns="1">
+				<h:outputLabel value="DDD:" for="dddTelefone"/>
+				<p:inputMask id="dddTelefone" value="#{clienteHandler.telefone.ddd}" mask="99" size="2" disabled="#{clienteHandler.disabled}"/>
+     		</h:panelGrid>
+			
+     		<h:panelGrid columns="1">
+				<h:outputLabel value="Número:" for="numeroTelefone"/>
+				<p:inputText id="numeroTelefone" value="#{clienteHandler.telefone.numero}" size="10" disabled="#{clienteHandler.disabled}"/>
+     		</h:panelGrid>
+
+
+		</h:panelGrid>
+    		<div style="visibility: #{clienteHandler.evento eq 'Confirmar'? 'visible': 'hidden'};">
+			<p:commandButton id="btnConcluirTelefone" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{clienteHandler.persistirTelefone}" style="align:right" 
+			 update=":formCliente" onclick="novoTelefoneClienteDiaglog.close();" />
+    		</div>
+    		<div style="visibility: #{clienteHandler.evento eq 'Remover'? 'visible': 'hidden'};">
+			<p:commandButton id="btnRemoverTelefone" value="Remover" title="Remover" icon="ui-icon-close" action="#{clienteHandler.excluirTelefone}" style="align:right" 
+				update=":formCliente" onclick="novoTelefoneClienteDiaglog.close();" />
+    		</div>
+	</h:panelGrid>				
+</html>

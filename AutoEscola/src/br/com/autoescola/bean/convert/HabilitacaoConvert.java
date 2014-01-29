@@ -24,7 +24,7 @@ public class HabilitacaoConvert implements Converter{
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object object) {
-		return ((Habilitacao) object).getCliente().getNome();
+		return ((Habilitacao) object).getCodigo();
 	}
 
 

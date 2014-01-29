@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -23,9 +22,6 @@ import br.com.autoescola.bean.Habilitacao;
 import br.com.autoescola.bean.Imagem;
 import br.com.autoescola.bean.Telefone;
 import br.com.autoescola.dao.ClienteDAO;
-import br.com.autoescola.dao.EnderecoDAO;
-import br.com.autoescola.dao.HabilitacaoDAO;
-import br.com.autoescola.dao.TelefoneDAO;
 import br.com.autoescola.util.ControllerArquivo;
 
 @SessionScoped
@@ -34,14 +30,8 @@ public class ClienteHandler implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	public ClienteHandler() {
-		this.endereco.setCliente(new Cliente());
-		this.habilitacao.setCliente(new Cliente());
-		this.telefone.setCliente(new Cliente());
-	}
-	
 	//BEAN
-	private Cliente cliente;
+	private  Cliente cliente;
 	private  Endereco endereco = new Endereco();
 	private  Telefone telefone = new Telefone();
 	private  Habilitacao habilitacao = new Habilitacao();
@@ -53,9 +43,6 @@ public class ClienteHandler implements Serializable{
 
 	//DAO
 	private ClienteDAO clienteDAO = new ClienteDAO();
-	private TelefoneDAO telefoneDAO = new TelefoneDAO();
-	private EnderecoDAO enderecoDAO = new EnderecoDAO();
-	private HabilitacaoDAO habilitacaoDAO = new HabilitacaoDAO();
 
 	//VARIAVEIS AUXILIARES
 	private boolean disabled = false;
@@ -129,56 +116,44 @@ public class ClienteHandler implements Serializable{
 		return clientes = clienteDAO.lista();
 	}
 	
-	public void persistirCliente() {
+	public String persistirCliente() {
 		salvarFoto();
 		this.clienteDAO.persist(cliente);
+		return "formClienteList.xhtml";
 	}
 	
 	public void persistirEndereco() {
-		salvarCliente();
-		enderecoDAO.update(endereco);
-	}
-
-	private void salvarCliente() {
-		if(this.cliente.getId() == 0){
-			this.clienteDAO.persist(cliente);
-			this.cliente = this.clienteDAO.buscaPorParametro(this.cliente.getCpf(), this.cliente);
+		if(!this.cliente.getEnderecos().contains(endereco)){
+			this.cliente.getEnderecos().add(endereco);
 		}
+		endereco = new Endereco();
 	}
 
 	public void excluirEndereco() {
-		Endereco endereco = enderecoDAO.find(this.endereco.getId());
-		Cliente cliente = endereco.getCliente();
-		endereco.setCliente(null); 
 		cliente.getEnderecos().remove(endereco);
-		enderecoDAO.delete(endereco);
 	}
 
 	public void persistirTelefone() {
-		salvarCliente();
-		telefoneDAO.update(telefone);
+		if (!this.cliente.getTelefones().contains(telefone)) {
+			this.cliente.getTelefones().add(telefone);
+		}
+		telefone = new Telefone();
 	}
 
 	public void excluirTelefone() {
-		Telefone telefone = telefoneDAO.find(this.telefone.getId());
-		Cliente cliente = telefone.getCliente();
-		telefone.setCliente(null);
 		cliente.getTelefones().remove(telefone);
-		telefoneDAO.delete(telefone);
 	}
 
 	public void persistirHabilitacao() {
-		salvarCliente();
-		cliente.getHabilitacoes().add(habilitacao);
-		clienteDAO.update(cliente);
+		
+		if(!this.cliente.getHabilitacoes().contains(habilitacao)){
+			this.cliente.getHabilitacoes().add(habilitacao);
+		}
+		habilitacao = new Habilitacao();
 	}
 	
 	public void excluirHabilitacao() {
-		Habilitacao habilitacao = habilitacaoDAO.find(this.habilitacao.getId());
-		Cliente cliente = habilitacao.getCliente();
-		habilitacao.setCliente(null);
 		cliente.getHabilitacoes().remove(habilitacao);
-		habilitacaoDAO.delete(habilitacao);
 	}
 
 	public Cliente getNovoCliente() {
@@ -187,19 +162,16 @@ public class ClienteHandler implements Serializable{
 
 	public Habilitacao getNovoHabilitacao() {
 		Habilitacao habilitacao = new Habilitacao() ;
-		habilitacao.setCliente(this.cliente);
 		return habilitacao;
 	}
 
 	public Telefone getNovoTelefone() {
 		Telefone telefone = new Telefone() ;
-		telefone.setCliente(this.cliente);
 		return telefone;
 	}
 	
 	public Endereco getNovoEndereco() {
 		Endereco endereco = new Endereco();
-		endereco.setCliente(this.cliente);
 		return endereco;
 	}
 
