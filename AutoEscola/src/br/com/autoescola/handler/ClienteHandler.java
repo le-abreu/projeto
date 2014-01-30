@@ -145,7 +145,6 @@ public class ClienteHandler implements Serializable{
 	}
 
 	public void persistirHabilitacao() {
-		
 		if(!this.cliente.getHabilitacoes().contains(habilitacao)){
 			this.cliente.getHabilitacoes().add(habilitacao);
 		}
@@ -161,18 +160,15 @@ public class ClienteHandler implements Serializable{
 	}
 
 	public Habilitacao getNovoHabilitacao() {
-		Habilitacao habilitacao = new Habilitacao() ;
-		return habilitacao;
+		return new Habilitacao();
 	}
 
 	public Telefone getNovoTelefone() {
-		Telefone telefone = new Telefone() ;
-		return telefone;
+		return new Telefone();
 	}
 	
 	public Endereco getNovoEndereco() {
-		Endereco endereco = new Endereco();
-		return endereco;
+		return new Endereco();
 	}
 
 	public List<Classificador> getClassificadorEnum() {

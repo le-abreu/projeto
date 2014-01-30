@@ -78,248 +78,26 @@
 		        	</h:panelGrid>
 				</h:panelGrid>
 				<p:tabView effect="blind" effectDuration="normal" id="tab">
+
+					<!-- TELEFONE -->
 					<p:tab title="Telefones" id="tabTelefone">
- 						<p:commandButton id="btnNovoTelefone" value="Novo Telefone" style="font-size: 0.8em;" icon="ui-icon-contact" oncomplete="novoTelefoneClienteDiaglog.show();" update=":formDialogTelefoneCliente">
-							<f:setPropertyActionListener value="Confirmar" target="#{clienteHandler.evento}" />
-							<f:setPropertyActionListener value="" target="#{clienteHandler.disabled}" />
-							<f:setPropertyActionListener value="#{clienteHandler.novoTelefone}" target="#{clienteHandler.telefone}" />
-						</p:commandButton>
-						
-							<!-- LISTAR TELEFONES CLIENTE-->
-						<p:dataTable id="dataTableTelefonesResults" var="telefone"
-							value="#{clienteHandler.cliente.telefones}"
-							paginator="true" rows="5" 
-							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-							rowsPerPageTemplate="5,10,15"
-							emptyMessage="Nenhum telefone esta cadastrado para o cliente"
-							selection="#{clienteHandler.telefone}" style="margin-top: 8px">
-
-							<f:facet name="header">
-								<h:outputText value="" />
-							</f:facet>
-
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="Tipo Telefone" />
-								</f:facet>
-								<h:outputText value="#{telefone.tipoTelefone}" />
-							</p:column>
-
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="DDI" />
-								</f:facet>
-								<h:outputText value="#{telefone.ddi}" />
-							</p:column>
-
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="DDD" />
-								</f:facet>
-								<h:outputText value="#{telefone.ddd}" />
-							</p:column>
-
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="Nº" />
-								</f:facet>
-								<h:outputText value="#{telefone.numero}" />
-							</p:column>
-
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="Operadora" />
-								</f:facet>
-								<h:outputText value="#{telefone.operadora}" />
-							</p:column>
-
-							<p:column style="width:90px" headerText="Visualizar">
-								<p:commandButton id="btnViewTelefone" icon="ui-icon-search" oncomplete="novoTelefoneClienteDiaglog.show();" update=":formDialogTelefoneCliente">
-									<f:setPropertyActionListener value="#{telefone}" target="#{clienteHandler.telefone}" />
-									<f:setPropertyActionListener value="Visualizar" target="#{clienteHandler.evento}" />
-									<f:setPropertyActionListener value="true" target="#{clienteHandler.disabled}" />
-								</p:commandButton>
-							</p:column>
-							<p:column style="width:90px" headerText="Editar">
-								<p:commandButton id="btnEditarTelefone" title="Editar" icon="ui-icon-pencil" oncomplete="novoTelefoneClienteDiaglog.show();" update=":formDialogTelefoneCliente">
-									<f:setPropertyActionListener value="#{telefone}" target="#{clienteHandler.telefone}" />
-									<f:setPropertyActionListener value="Confirmar" target="#{clienteHandler.evento}" />
-									<f:setPropertyActionListener value="false" target="#{clienteHandler.disabled}" />
-								</p:commandButton>
-							</p:column>
-							<p:column style="width:90px" headerText="Remover">
-								<p:commandButton id="btnRemoverTelefone" title="Remover" icon="ui-icon-close" oncomplete="novoTelefoneClienteDiaglog.show();" update=":formDialogTelefoneCliente">
-									<f:setPropertyActionListener value="#{telefone}" target="#{clienteHandler.telefone}" />
-									<f:setPropertyActionListener value="Remover" target="#{clienteHandler.evento}" />
-									<f:setPropertyActionListener value="true" target="#{clienteHandler.disabled}" />
-								</p:commandButton>
-							</p:column>
-						</p:dataTable>
+					
+						<ui:include src="include/includeEditTelefone.xhtml" />
 					</p:tab>
 					
+					<!-- ENDEREÇO -->
 					<p:tab title="Endereços" id="tabEnderecos">
-						<p:commandButton id="btnNovoEndereco" value="Novo Endereço" style="font-size: 0.8em;" icon="ui-icon-contact" oncomplete="novoEnderecoClienteDiaglog.show();" update=":formDialogEnderecoCliente">
-							<f:setPropertyActionListener value="Confirmar" target="#{clienteHandler.evento}" />
-							<f:setPropertyActionListener value="" target="#{clienteHandler.disabled}" />
-							<f:setPropertyActionListener value="#{clienteHandler.novoEndereco}" target="#{clienteHandler.endereco}" />
-						</p:commandButton>
-						
-						<p:dataTable id="dataTableEnderecosResults" var="endereco" 
-							paginator="true" rows="5" 
-							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-							rowsPerPageTemplate="5,10,15"
-							value="#{clienteHandler.cliente.enderecos}" emptyMessage="Nenhum endereço esta cadastrado para o cliente" 
-							selection="#{endereco}" style="margin-top: 8px">
-
-							<f:facet name="header">
-								<h:outputText value="" />
-							</f:facet>
-
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="Tipo Endereço" />
-								</f:facet>
-								<h:outputText value="#{endereco.tipoEndereco}" />
-							</p:column>
-
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="CEP" />
-								</f:facet>
-								<h:outputText value="#{endereco.cep}" />
-							</p:column>
-
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="Lougradouro" />
-								</f:facet>
-								<h:outputText value="#{endereco.logradouro}" />
-							</p:column>
-
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="Bairro" />
-								</f:facet>
-								<h:outputText value="#{endereco.bairro}" />
-							</p:column>
-
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="Cidade" />
-								</f:facet>
-								<h:outputText value="#{endereco.cidade}" />
-							</p:column>
-													
-							<p:column style="width:90px" headerText="Visualizar">
-								<p:commandButton id="btnViewEndereco" icon="ui-icon-search" oncomplete="novoEnderecoClienteDiaglog.show();" update=":formDialogEnderecoCliente">
-									<f:setPropertyActionListener value="#{endereco}" target="#{clienteHandler.endereco}" />
-									<f:setPropertyActionListener value="Visualizar" target="#{clienteHandler.evento}" />
-									<f:setPropertyActionListener value="true" target="#{clienteHandler.disabled}" />
-								</p:commandButton>
-							</p:column>
-							
-							<p:column style="width:90px" headerText="Editar">
-								<p:commandButton id="btnEditarEndereco" title="Editar" icon="ui-icon-pencil" oncomplete="novoEnderecoClienteDiaglog.show();" update=":formDialogEnderecoCliente">
-									<f:setPropertyActionListener value="#{endereco}" target="#{clienteHandler.endereco}" />
-									<f:setPropertyActionListener value="Confirmar" target="#{clienteHandler.evento}" />
-									<f:setPropertyActionListener value="false" target="#{clienteHandler.disabled}" />
-								</p:commandButton>
-							</p:column>
-							<p:column style="width:90px" headerText="Remover">
-								<p:commandButton id="btnRemoverEndereco" title="Remover" icon="ui-icon-close" oncomplete="novoEnderecoClienteDiaglog.show();" update=":formDialogEnderecoCliente">
-									<f:setPropertyActionListener value="#{endereco}" target="#{clienteHandler.endereco}" />
-									<f:setPropertyActionListener value="Remover" target="#{clienteHandler.evento}" />
-									<f:setPropertyActionListener value="true" target="#{clienteHandler.disabled}" />
-								</p:commandButton>
-							</p:column>
-						</p:dataTable>
+						<ui:include src="include/includeEditEndereco.xhtml" /> 
 					</p:tab>
 					
+		  			<!-- HABILITACAO -->
  					<p:tab title="Habilitações" id="tabHabilitacao">
- 						<p:commandButton id="btnNovoHabilitacao" value="Nova Habilitação" style="font-size: 0.8em;" icon="ui-icon-document" oncomplete="habilitacaoDiaglog.show();" update=":formHabilit">
-							<f:setPropertyActionListener value="#{clienteHandler.novoHabilitacao}" target="#{clienteHandler.habilitacao}" />
-							<f:setPropertyActionListener value="Confirmar" target="#{clienteHandler.evento}" />
-							<f:setPropertyActionListener value="" target="#{clienteHandler.disabled}" />
-						</p:commandButton>
-						
- 						<p:dataTable id="dataTableHabilitacaosResults" var="habilitacao"
-							value="#{clienteHandler.cliente.habilitacoes}" emptyMessage="Nenhuma habilitação esta cadastrado para o cliente"
-							selection="#{clienteHandler.habilitacao}"
-							paginator="true" rows="5" 
-							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-							rowsPerPageTemplate="5,10,15"
-							style="margin-top: 8px">
-	
-							<f:facet name="header">
-								<h:outputText value="" />
-							</f:facet>
-
-							<p:column sortable="true" sortBy="#{habilitacao.categoria}">
-								<f:facet name="header">
-									<h:outputText value="Categoria" />
-								</f:facet>
-								<h:outputText value="#{habilitacao.categoria}" />
-							</p:column>
-	
-							<p:column sortable="true" sortBy="#{habilitacao.codigo}">
-								<f:facet name="header">
-									<h:outputText value="Código" />
-								</f:facet>
-								<h:outputText value="#{habilitacao.codigo}" />
-							</p:column>
-	
-							<p:column style="width:90px" headerText="Visualizar">
-								<p:commandButton id="btnViewHabilitacao" icon="ui-icon-search" oncomplete="habilitacaoDiaglog.show();" update=":formHabilit">
-									<f:setPropertyActionListener value="#{habilitacao}" target="#{clienteHandler.habilitacao}" />
-									<f:setPropertyActionListener value="Visualizar" target="#{clienteHandler.evento}" />
-									<f:setPropertyActionListener value="true" target="#{clienteHandler.disabled}" />
-								</p:commandButton>
-							</p:column>
-							
-							<p:column style="width:90px" headerText="Editar">
-								<p:commandButton id="btnEditarHabilitacao" title="Editar" icon="ui-icon-pencil" oncomplete="habilitacaoDiaglog.show();" update=":formHabilit">
-									<f:setPropertyActionListener value="#{habilitacao}" target="#{clienteHandler.habilitacao}" />
-									<f:setPropertyActionListener value="Confirmar" target="#{clienteHandler.evento}" />
-									<f:setPropertyActionListener value="false" target="#{clienteHandler.disabled}" />
-								</p:commandButton>
-							</p:column>
-							
-							<p:column style="width:90px" headerText="Remover">
-								<p:commandButton id="btnRemoverHabilitacao" title="Remover" icon="ui-icon-close" oncomplete="habilitacaoDiaglog.show();" update=":formHabilit">
-									<f:setPropertyActionListener value="#{habilitacao}" target="#{clienteHandler.habilitacao}" />
-									<f:setPropertyActionListener value="Remover" target="#{clienteHandler.evento}" />
-									<f:setPropertyActionListener value="true" target="#{clienteHandler.disabled}" />
-								</p:commandButton>
-							</p:column>
-						</p:dataTable>
-  	 					</p:tab>
+ 						<ui:include src="include/includeEditHabilitacao.xhtml" />
+ 					</p:tab>
+ 					
 				</p:tabView>
 			</h:form>
-						
-			<!-- ENDEREÇO -->
-			<h:form id="formDialogEnderecoCliente">  
-	     		<p:dialog id="novoEnderecoClienteDiaglog" widgetVar="novoEnderecoClienteDiaglog" header="Endereço Cliente" 
-	     			resizable="true" showEffect="fold" hideEffect="fold" width="600" height="300">     
-	     			<ui:include src="include/includeEditEndereco.xhtml" /> 
-		   		</p:dialog>
-  			</h:form>
-			
-			<!-- TELEFONE -->
-			<h:form id="formDialogTelefoneCliente">  
-	     		<p:dialog id="novoTelefoneClienteDiaglog" widgetVar="novoTelefoneClienteDiaglog" header="Endereço Cliente" 
-	     			resizable="true" showEffect="fold" hideEffect="fold" width="500" height="300">   
-	     			<ui:include src="include/includeEditTelefone.xhtml" /> 
-		   		</p:dialog>
-  			</h:form>
-  			
-  			<!-- HABILITACAO -->
-			<h:form id="formHabilit">  
-	     		<p:dialog id="habilitacaoDiaglog" widgetVar="habilitacaoDiaglog" header="Habilitação Cliente" 
-	     			resizable="true" showEffect="fold" hideEffect="fold" width="380" height="220">   
-	     			<ui:include src="include/includeEditHabilitacao.xhtml" /> 
-		   		</p:dialog>
-  			</h:form>
-  			
+
   			<!-- FOTO -->
 			<h:form id="formFoto">  
 	     		<p:dialog id="fotoDiaglog" widgetVar="fotoDiaglog" header="Foto Cliente" 

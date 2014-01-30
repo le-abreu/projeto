@@ -8,10 +8,69 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
+	
+	
+	<p:commandButton id="btnNovoHabilitacao" value="Nova Habilitação" style="font-size: 0.8em;" icon="ui-icon-document" oncomplete="habilitacaoDiaglog.show();" update=":formCliente">
+		<f:setPropertyActionListener value="Confirmar" target="#{clienteHandler.evento}" />
+		<f:setPropertyActionListener value="" target="#{clienteHandler.disabled}" />
+		<f:setPropertyActionListener value="#{clienteHandler.novoHabilitacao}" target="#{clienteHandler.habilitacao}" />
+	</p:commandButton>
+	
+	<p:dataTable id="dataTableHabilitacaosResults" var="habilitacao"
+		value="#{clienteHandler.cliente.habilitacoes}" emptyMessage="Nenhuma habilitação esta cadastrado para o cliente"
+		paginator="true" rows="5" 
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15"
+		style="margin-top: 8px">
+
+		<f:facet name="header">
+			<h:outputText value="" />
+		</f:facet>
+
+		<p:column sortable="true" sortBy="#{habilitacao.categoria}">
+			<f:facet name="header">
+				<h:outputText value="Categoria" />
+			</f:facet>
+			<h:outputText value="#{habilitacao.categoria}" />
+		</p:column>
+
+		<p:column sortable="true" sortBy="#{habilitacao.codigo}">
+			<f:facet name="header">
+				<h:outputText value="Código" />
+			</f:facet>
+			<h:outputText value="#{habilitacao.codigo}" />
+		</p:column>
+
+		<p:column style="width:90px" headerText="Visualizar">
+			<p:commandButton id="btnViewHabilitacao" icon="ui-icon-search" oncomplete="habilitacaoDiaglog.show();" update=":formCliente">
+				<f:setPropertyActionListener value="#{habilitacao}" target="#{clienteHandler.habilitacao}" />
+				<f:setPropertyActionListener value="Visualizar" target="#{clienteHandler.evento}" />
+				<f:setPropertyActionListener value="true" target="#{clienteHandler.disabled}" />
+			</p:commandButton>
+		</p:column>
 		
-	<h:panelGrid>					
+		<p:column style="width:90px" headerText="Editar">
+			<p:commandButton id="btnEditarHabilitacao" title="Editar" icon="ui-icon-pencil" oncomplete="habilitacaoDiaglog.show();" update=":formCliente">
+				<f:setPropertyActionListener value="#{habilitacao}" target="#{clienteHandler.habilitacao}" />
+				<f:setPropertyActionListener value="Confirmar" target="#{clienteHandler.evento}" />
+				<f:setPropertyActionListener value="false" target="#{clienteHandler.disabled}" />
+			</p:commandButton>
+		</p:column>
+		
+		<p:column style="width:90px" headerText="Remover">
+			<p:commandButton id="btnRemoverHabilitacao" title="Remover" icon="ui-icon-close" oncomplete="habilitacaoDiaglog.show();" update=":formCliente">
+				<f:setPropertyActionListener value="#{habilitacao}" target="#{clienteHandler.habilitacao}" />
+				<f:setPropertyActionListener value="Remover" target="#{clienteHandler.evento}" />
+				<f:setPropertyActionListener value="true" target="#{clienteHandler.disabled}" />
+			</p:commandButton>
+		</p:column>
+	</p:dataTable>	
+	
+	<p:dialog id="habilitacaoDiaglog" widgetVar="habilitacaoDiaglog" header="Habilitação Cliente" 
+		resizable="true" showEffect="fold" hideEffect="fold" width="380" height="220" rendered="#{clienteHandler.habilitacao != null}"> 
+   			  
 		<h:inputHidden id="idHabilitacao" value="#{clienteHandler.habilitacao.id}" />
-    		<h:panelGrid columns="2">
+   		<h:panelGrid columns="2">
 			<h:outputLabel value="Cliente:"  />
 			<h:outputLabel value="#{clienteHandler.cliente.nome}" />
 		</h:panelGrid>
@@ -37,9 +96,10 @@
 			   	<p:calendar id="dataExpedicao" value="#{clienteHandler.habilitacao.dataExpedicao}" pattern="dd/MM/yyyy" showButtonPanel="true" disabled="#{clienteHandler.disabled}" />  
 			</h:panelGrid>
 		</h:panelGrid>
-			<p:commandButton id="btnConcluirHabilitacao" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{clienteHandler.persistirHabilitacao}" style="align:right" 
-				update=":formCliente" onclick="habilitacaoDiaglog.close();" rendered="#{clienteHandler.evento eq 'Confirmar'}"/>
-			<p:commandButton id="btnRemoverHabilitacao" value="Remover" title="Remover" icon="ui-icon-close" action="#{clienteHandler.excluirHabilitacao}" style="align:right" 
-				update=":formCliente" onclick="habilitacaoDiaglog.close();" rendered="#{clienteHandler.evento eq 'Remover'}"/>
-	</h:panelGrid>				
+		
+		<p:commandButton id="btnConcluirHabilitacao" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{clienteHandler.persistirHabilitacao}" style="align:right" 
+			update=":formCliente" onclick="habilitacaoDiaglog.close();" rendered="#{clienteHandler.evento eq 'Confirmar'}" immediate="true"/>
+		<p:commandButton id="btnRemoverHabilitacao" value="Remover" title="Remover" icon="ui-icon-close" action="#{clienteHandler.excluirHabilitacao}" style="align:right" 
+			update=":formCliente" onclick="habilitacaoDiaglog.close();" rendered="#{clienteHandler.evento eq 'Remover'}" immediate="true"/>
+	</p:dialog>			
 </html>
