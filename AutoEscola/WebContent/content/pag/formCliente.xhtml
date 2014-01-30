@@ -308,7 +308,7 @@
 			<h:form id="formDialogTelefoneCliente">  
 	     		<p:dialog id="novoTelefoneClienteDiaglog" widgetVar="novoTelefoneClienteDiaglog" header="Endereço Cliente" 
 	     			resizable="true" showEffect="fold" hideEffect="fold" width="500" height="300">   
-	     			
+	     			<ui:include src="include/includeEditTelefone.xhtml" /> 
 		   		</p:dialog>
   			</h:form>
   			
@@ -316,41 +316,7 @@
 			<h:form id="formHabilit">  
 	     		<p:dialog id="habilitacaoDiaglog" widgetVar="habilitacaoDiaglog" header="Habilitação Cliente" 
 	     			resizable="true" showEffect="fold" hideEffect="fold" width="380" height="220">   
-	     			<h:inputHidden id="idHabilitacao" value="#{clienteHandler.habilitacao.id}" />
-		     		<h:panelGrid columns="2">
-						<h:outputLabel value="Cliente:"  />
-						<h:outputLabel value="#{clienteHandler.cliente.nome}" />
-					</h:panelGrid>
-
-			     	<h:panelGrid columns="2">
-			     		<h:panelGrid columns="1">
-							<h:outputLabel value="Categoria:"  for="categoria"/>
-							<p:inputText id="categoria" value="#{clienteHandler.habilitacao.categoria}" disabled="#{clienteHandler.disabled}" />
-						</h:panelGrid>
-						
-			     		<h:panelGrid columns="1">
-							<h:outputLabel value="Código:"  for="codigo"/>
-							<p:inputText id="codigo" value="#{clienteHandler.habilitacao.codigo}" disabled="#{clienteHandler.disabled}" />
-						</h:panelGrid>
-						
-			     		<h:panelGrid columns="1">
-							<h:outputLabel value="Data Validade:" for="dataValidade"/>
-						   	<p:calendar id="dataValidade" value="#{clienteHandler.habilitacao.validadeCNH}" pattern="dd/MM/yyyy" showButtonPanel="true" disabled="#{clienteHandler.disabled}" />  
-						</h:panelGrid>
-						
-			     		<h:panelGrid columns="1">
-							<h:outputLabel value="Data Expedição:" for="dataExpedicao"/>
-						   	<p:calendar id="dataExpedicao" value="#{clienteHandler.habilitacao.dataExpedicao}" pattern="dd/MM/yyyy" showButtonPanel="true" disabled="#{clienteHandler.disabled}" />  
-						</h:panelGrid>
-					</h:panelGrid>
-		     		<div style="visibility: #{clienteHandler.evento eq 'Confirmar'? 'visible': 'hidden'};">
-						<p:commandButton id="btnConcluirHabilitacao" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{clienteHandler.persistirHabilitacao}" style="align:right" 
-							update=":formCliente" onclick="habilitacaoDiaglog.close();" />
-		     		</div>
-		     		<div style="visibility: #{clienteHandler.evento eq 'Remover'? 'visible': 'hidden'};">
-						<p:commandButton id="btnRemoverHabilitacao" value="Remover" title="Remover" icon="ui-icon-close" action="#{clienteHandler.excluirHabilitacao}" style="align:right" 
-							update=":formCliente" onclick="habilitacaoDiaglog.close();" />
-		     		</div>
+	     			<ui:include src="include/includeEditHabilitacao.xhtml" /> 
 		   		</p:dialog>
   			</h:form>
   			

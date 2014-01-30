@@ -41,16 +41,10 @@
 				<h:outputLabel value="Número:" for="numeroTelefone"/>
 				<p:inputText id="numeroTelefone" value="#{clienteHandler.telefone.numero}" size="10" disabled="#{clienteHandler.disabled}"/>
      		</h:panelGrid>
-
-
 		</h:panelGrid>
-    		<div style="visibility: #{clienteHandler.evento eq 'Confirmar'? 'visible': 'hidden'};">
 			<p:commandButton id="btnConcluirTelefone" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{clienteHandler.persistirTelefone}" style="align:right" 
-			 update=":formCliente" onclick="novoTelefoneClienteDiaglog.close();" />
-    		</div>
-    		<div style="visibility: #{clienteHandler.evento eq 'Remover'? 'visible': 'hidden'};">
+			 update=":formCliente" onclick="novoTelefoneClienteDiaglog.close();" rendered="#{clienteHandler.evento eq 'Confirmar'}" />
 			<p:commandButton id="btnRemoverTelefone" value="Remover" title="Remover" icon="ui-icon-close" action="#{clienteHandler.excluirTelefone}" style="align:right" 
-				update=":formCliente" onclick="novoTelefoneClienteDiaglog.close();" />
-    		</div>
+				update=":formCliente" onclick="novoTelefoneClienteDiaglog.close();" rendered="#{clienteHandler.evento eq 'Remover'}"/>
 	</h:panelGrid>				
 </html>

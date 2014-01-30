@@ -10,64 +10,36 @@
 	xmlns:p="http://primefaces.org/ui">
 		
 	<h:panelGrid>					
-		<h:inputHidden id="idEndereco" value="#{clienteHandler.endereco.id}" />
-     	<h:panelGrid columns="2">
+		<h:inputHidden id="idHabilitacao" value="#{clienteHandler.habilitacao.id}" />
+    		<h:panelGrid columns="2">
 			<h:outputLabel value="Cliente:"  />
 			<h:outputLabel value="#{clienteHandler.cliente.nome}" />
 		</h:panelGrid>
-						
-     	<h:panelGrid columns="1">
-			<h:outputLabel value="Tipo Endereço:" for="tipoEndereco" />
-			<p:selectOneRadio id="tipoEndereco" value="#{clienteHandler.endereco.tipoEndereco}" disabled="#{clienteHandler.disabled}">
-				<f:selectItems value="#{clienteHandler.endereco.classificadorEnum}" itemLabel="#{tipoEndereco}" var="tipoEndereco" />
-			</p:selectOneRadio>
-		</h:panelGrid>
-					
-     	<h:panelGrid columns="3">
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="Logradouro:" for="logradouro"/>
-				<p:inputText id="logradouro" value="#{clienteHandler.endereco.logradouro}" size="60" disabled="#{clienteHandler.disabled}"/>
-			</h:panelGrid>
-				
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="Nº" for="numero"/>
-				<p:inputText id="numero" value="#{clienteHandler.endereco.numero}" size="4" disabled="#{clienteHandler.disabled}" />
-			</h:panelGrid>
 
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="Complemento" for="complemento"/>
-				<p:inputText id="complemento" value="#{clienteHandler.endereco.complemento}" size="6" disabled="#{clienteHandler.disabled}" />
-			</h:panelGrid>
-		</h:panelGrid>
-		
-     	<h:panelGrid columns="4">
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="CEP:" for="cep"/>
-				<p:inputMask id="cep" value="#{clienteHandler.endereco.cep}" mask="99999-999" size="9" disabled="#{clienteHandler.disabled}"/>
+     	<h:panelGrid columns="2">
+     		<h:panelGrid columns="1">
+				<h:outputLabel value="Categoria:"  for="categoria"/>
+				<p:inputText id="categoria" value="#{clienteHandler.habilitacao.categoria}" disabled="#{clienteHandler.disabled}" />
 			</h:panelGrid>
 			
-
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="Bairro" for="bairro"/>
-				<p:inputText id="bairro" value="#{clienteHandler.endereco.bairro}" size="25" disabled="#{clienteHandler.disabled}" />
+     		<h:panelGrid columns="1">
+				<h:outputLabel value="Código:"  for="codigo"/>
+				<p:inputText id="codigo" value="#{clienteHandler.habilitacao.codigo}" disabled="#{clienteHandler.disabled}" />
 			</h:panelGrid>
-
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="Cidade" for="cidade"/>
-				<p:inputText id="cidade" value="#{clienteHandler.endereco.cidade}" size="25" disabled="#{clienteHandler.disabled}" />
+			
+     		<h:panelGrid columns="1">
+				<h:outputLabel value="Data Validade:" for="dataValidade"/>
+			   	<p:calendar id="dataValidade" value="#{clienteHandler.habilitacao.validadeCNH}" pattern="dd/MM/yyyy" showButtonPanel="true" disabled="#{clienteHandler.disabled}" />  
 			</h:panelGrid>
-
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="Estado" for="uf"/>
-				<p:inputText id="uf" value="#{clienteHandler.endereco.uf}" size="2" disabled="#{clienteHandler.disabled}" />
+			
+     		<h:panelGrid columns="1">
+				<h:outputLabel value="Data Expedição:" for="dataExpedicao"/>
+			   	<p:calendar id="dataExpedicao" value="#{clienteHandler.habilitacao.dataExpedicao}" pattern="dd/MM/yyyy" showButtonPanel="true" disabled="#{clienteHandler.disabled}" />  
 			</h:panelGrid>
-
 		</h:panelGrid>
-			<p:commandButton id="btnConcluirEndereco" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{clienteHandler.persistirEndereco}" style="align:right" 
-			 	update=":formCliente" onclick="novoEnderecoClienteDiaglog.close();" rendered="#{clienteHandler.evento eq 'Confirmar'}" />
-			<p:commandButton id="btnRemoverEndereco" value="Remover" title="Remover" icon="ui-icon-close" action="#{clienteHandler.excluirEndereco}" style="align:right" 
-				update=":formCliente" onclick="novoEnderecoClienteDiaglog.close();" rendered="#{clienteHandler.evento eq 'Remover'}" >
-				<f:setPropertyActionListener value="#{clienteHandler.endereco}" target="#{clienteHandler.endereco}" />
-			</p:commandButton>	
+			<p:commandButton id="btnConcluirHabilitacao" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{clienteHandler.persistirHabilitacao}" style="align:right" 
+				update=":formCliente" onclick="habilitacaoDiaglog.close();" rendered="#{clienteHandler.evento eq 'Confirmar'}"/>
+			<p:commandButton id="btnRemoverHabilitacao" value="Remover" title="Remover" icon="ui-icon-close" action="#{clienteHandler.excluirHabilitacao}" style="align:right" 
+				update=":formCliente" onclick="habilitacaoDiaglog.close();" rendered="#{clienteHandler.evento eq 'Remover'}"/>
 	</h:panelGrid>				
 </html>
