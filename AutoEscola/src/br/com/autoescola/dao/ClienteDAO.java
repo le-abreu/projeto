@@ -18,6 +18,8 @@ public class ClienteDAO extends DAO<Cliente>{
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		if(pessoa != null)
 			parametros.put("cpf", pessoa.getCpf());
+		if(cpf != null)
+			parametros.put("cpf", cpf);
 
 		return super.buscaPorParametro(parametros);
 	}

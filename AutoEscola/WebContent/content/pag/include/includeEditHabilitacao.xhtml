@@ -98,8 +98,8 @@
 		</h:panelGrid>
 		
 		<p:commandButton id="btnConcluirHabilitacao" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{clienteHandler.persistirHabilitacao}" style="align:right" 
-			update=":formCliente" onclick="habilitacaoDiaglog.close();" rendered="#{clienteHandler.evento eq 'Confirmar'}" immediate="true"/>
+			update=":formCliente" onclick="habilitacaoDiaglog.close();" rendered="#{clienteHandler.evento eq 'Confirmar'}" />
 		<p:commandButton id="btnRemoverHabilitacao" value="Remover" title="Remover" icon="ui-icon-close" action="#{clienteHandler.excluirHabilitacao}" style="align:right" 
-			update=":formCliente" onclick="habilitacaoDiaglog.close();" rendered="#{clienteHandler.evento eq 'Remover'}" immediate="true"/>
+			update=":formCliente" onclick="habilitacaoDiaglog.close();" rendered="#{clienteHandler.evento eq 'Remover'}" />
 	</p:dialog>			
 </html>

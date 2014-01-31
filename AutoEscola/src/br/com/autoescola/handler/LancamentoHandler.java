@@ -2,8 +2,10 @@ package br.com.autoescola.handler;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import br.com.autoescola.bean.Cliente;
@@ -12,7 +14,7 @@ import br.com.autoescola.bean.TipoLancamentoEnum;
 import br.com.autoescola.dao.ClienteDAO;
 import br.com.autoescola.dao.LancamentoDAO;
 
-@ViewScoped
+@SessionScoped
 @ManagedBean(name = "lancamentoHandler")
 public class LancamentoHandler {
 
@@ -22,7 +24,9 @@ public class LancamentoHandler {
 	
 	//VARIAVEIS AUXILIARES
 	private boolean disabled = false;
+	private boolean rendered = false;
 	private String evento;
+	private String cpf;
 	
 	public boolean isDisabled() {
 		return disabled;
@@ -59,10 +63,26 @@ public class LancamentoHandler {
 	public void setLancamento(Lancamento lancamento) {
 		this.lancamento = lancamento;
 	}
+	
+	public boolean isRendered() {
+		return rendered;
+	}
+
+	public void setRendered(boolean rendered) {
+		this.rendered = rendered;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
 	public void salvarLancamento() {
-		cliente.getLancamentos().add(lancamento);
-		
+		lancamento.setCliente(cliente);
+
 		if (lancamento.getId() == 0)
 			lancamentoDAO.persist(lancamento);
 		else
@@ -92,12 +112,30 @@ public class LancamentoHandler {
 	}
 	
 	public void selecionaCliente() {
-		cliente = new ClienteDAO().buscaPorParametro(null, cliente);
+		cliente = new ClienteDAO().buscaPorParametro(cpf, null);
+		if(cliente != null)
+		{
+			rendered = true;
+		}
+		else
+		{
+			rendered = false;
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Não existe esse cliente!!!"));
+			
+		}
 	}
 	
-	public Lancamento getNovoLancamento() {
+	public Lancamento getNovoLancamentoDebito() {
 		Lancamento lancamento = new Lancamento() ;
 		lancamento.setCliente(this.cliente);
+		lancamento.setTipoLancamento(TipoLancamentoEnum.DEBITO);
+		return lancamento;
+	}
+
+	public Lancamento getNovoLancamentoCredito() {
+		Lancamento lancamento = new Lancamento() ;
+		lancamento.setCliente(this.cliente);
+		lancamento.setTipoLancamento(TipoLancamentoEnum.CREDITO);
 		return lancamento;
 	}
 	
