@@ -1,5 +1,10 @@
 package br.com.autoescola.handler;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -8,11 +13,17 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
 import br.com.autoescola.bean.Cliente;
 import br.com.autoescola.bean.Lancamento;
 import br.com.autoescola.bean.TipoLancamentoEnum;
 import br.com.autoescola.dao.ClienteDAO;
 import br.com.autoescola.dao.LancamentoDAO;
+import br.com.autoescola.util.Html2Pdf;
+
+import com.lowagie.text.DocumentException;
 
 @SessionScoped
 @ManagedBean(name = "lancamentoHandler")
@@ -91,6 +102,11 @@ public class LancamentoHandler {
 		lancamento =  new Lancamento();
 	}
 
+	public void excluirLancamento() {
+		lancamentoDAO.delete(lancamento);
+		lancamento =  new Lancamento();
+	}
+
 	public List<Lancamento> getLancamentosCliente() {
 		double saldo = 0;
 		if(cliente.getId() != 0){
@@ -148,4 +164,39 @@ public class LancamentoHandler {
 		return items;
 	}
 	
+	public StreamedContent getComprovantePdf() {
+		File file;
+		try {
+			file = Html2Pdf.convertComprovanteLancamento(new File("comprovante.pdf"), lancamento);
+			InputStream inputStream;
+			inputStream = new FileInputStream(file);
+			byte[] bytes = new byte[(int) file.length()];
+	
+			int offset = 0; 
+			int numRead = 0;
+			while (offset < bytes.length && (numRead = inputStream.read(bytes, offset, bytes.length - offset)) >= 0)
+			{
+				offset += numRead;
+			}
+			if (offset < bytes.length)
+			{
+				throw new IOException("Could not completely read file " + file.getName());
+			}
+	
+			file.delete();
+			inputStream.close();
+			String fileName = lancamento.getTitulo() + lancamento.getCliente().getNome();
+			if (fileName.indexOf(".pdf") < 0)
+				fileName += ".pdf";
+	
+			ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+			StreamedContent contratoFichaPdf = new DefaultStreamedContent(bais, "application/pdf", fileName);
+			return contratoFichaPdf;
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

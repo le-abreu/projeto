@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"	  
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+	  
+	<h:body>
+	    <ui:composition>
+			<div valign="top">
+				<h:form>
+					<p:menu style="width:200px; border: 0; margin-left:0px; font-size: 15px; font-family: Arial,sans-serif" effect="FADE">
+						<p:submenu label="Segurança" >
+							<p:menuitem title="Grupo de Permiss&#227;o" value="Grupo de Permiss&#227;o"
+								url="/permissionGroupList.elaw" />
+							<p:menuitem id="menuUsuario" title="Usuário"  value="Usuário"
+								action="/lawyerList.elaw?faces-redirect=true" actionListener="#{lawyerBean.restart}">
+							</p:menuitem>
+							<p:menuitem title="Grupo de Usu&#225;rios (GED)"  value="Grupo de Usu&#225;rios (GED)" 
+								action="/userGroup.elaw?faces-redirect=true" actionListener="#{userGroupBean.loadUserGroups}" 
+								rendered="#{organizationBean.userSession.organization.ged}" />
+							<p:menuitem title="Configura&#231;&#227;o de Login"  value="Configura&#231;&#227;o de Login" 
+								action="/serverConfigurationEdit.elaw?faces-redirect=true" actionListener="#{serverConfigurationBean.newConfiguration}"
+								ajax="false" />							
+							<p:menuitem ajax="false" title="Criptografar Senha Banco de Dados"  value="Criptografar Senha Banco de Dados" 
+								action="/passwordEncryptor.elaw?faces-redirect=true" />
+							<p:menuitem id="menuLawConfiguration" title="Configurações Tela"  value="Configurações Tela"
+								action="/lawConfigurationList.elaw?faces-redirect=true" >
+							</p:menuitem>
+							
+						</p:submenu>
+						<p:submenu label="Administrativo" >
+							<p:menuitem id="menuClientGroup" title="Grupos" value="Grupos"
+								 action="/clientGroupList.elaw?faces-redirect=true" actionListener="#{clientGroupBean.restart}">
+							</p:menuitem>
+							<p:menuitem id="menuClient" title="Cliente" value="#{msg['commons.cliente']}"
+								 action="/clientList.elaw?faces-redirect=true" actionListener="#{clientBean.restart}">
+							</p:menuitem>
+
+							<p:menuitem id="menuEmailAccount" title="Conta de email" value="Conta de email"
+								 action="/emailAccountList.elaw?faces-redirect=true" actionListener="#{emailAccountBean.restart}">
+							</p:menuitem>
+
+							<p:menuitem id="menuCountryStateCity" title="Pa&#237;s/Estado/Cidade" value="Pa&#237;s/Estado/Cidade"
+								 action="/countryStateCityView.elaw?faces-redirect=true" actionListener="#{countryBean.view}"
+								 rendered="#{userSession.organization.societario}">
+							</p:menuitem>
+							
+							<p:menuitem id="menuOrganization" title="Organização" value="Organização"
+								action="/organizationEdit.elaw?faces-redirect=true">
+								<f:setPropertyActionListener target="#{organizationBean.organization}" value="#{organizationBean.userSession.organization}"></f:setPropertyActionListener>
+							</p:menuitem>
+							
+							<p:menuitem title="Empresas" value="Empresas"
+								 action="#{companyBean.menu}" ajax="false"/>
+
+							<p:menuitem id="menuUnidades" title="Unidades" value="Unidades"
+								 action="/unidadeList.elaw?faces-redirect=true">
+							</p:menuitem>
+							<p:menuitem id="menuCentroDeCustos" title="Centro de custos" value="Centro de custos"
+								 action="/costCenterList.elaw?faces-redirect=true">
+							</p:menuitem>
+							<p:menuitem id="menuRh" title="RH" value="RH"
+								 action="/employeeList.elaw?faces-redirect=true" actionListener="#{employeeBean.restart}">
+							</p:menuitem>
+						</p:submenu>
+						
+					</p:menu>
+					
+					
+				</h:form>	
+			</div>
+	    </ui:composition>
+    </h:body>
+</html>

@@ -1,8 +1,11 @@
 package br.com.autoescola.handler;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +17,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.CaptureEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import br.com.autoescola.bean.Classificador;
 import br.com.autoescola.bean.Cliente;
@@ -23,6 +28,13 @@ import br.com.autoescola.bean.Imagem;
 import br.com.autoescola.bean.Telefone;
 import br.com.autoescola.dao.ClienteDAO;
 import br.com.autoescola.util.ControllerArquivo;
+import br.com.autoescola.util.Html2Pdf;
+
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.PageSize;
+
 
 @SessionScoped
 @ManagedBean(name = "clienteHandler")
@@ -209,4 +221,49 @@ public class ClienteHandler implements Serializable{
 			e.printStackTrace();
 		}
 	}
+	
+	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {  
+	    Document pdf = (Document) document;  
+	    pdf.open();  
+	    pdf.setPageSize(PageSize.A4);  
+	}  
+	
+	public StreamedContent getContratoFichaPdf() {
+		File file;
+		try {
+			file = Html2Pdf.convertContratoCliente(new File("contrato.pdf"), cliente);
+			InputStream inputStream;
+			inputStream = new FileInputStream(file);
+			byte[] bytes = new byte[(int) file.length()];
+	
+			int offset = 0; 
+			int numRead = 0;
+			while (offset < bytes.length && (numRead = inputStream.read(bytes, offset, bytes.length - offset)) >= 0)
+			{
+				offset += numRead;
+			}
+			if (offset < bytes.length)
+			{
+				throw new IOException("Could not completely read file " + file.getName());
+			}
+	
+			inputStream.close();
+			file.delete();
+
+		String fileName = cliente.getNome();
+		if (fileName.indexOf(".pdf") < 0)
+			fileName += ".pdf";
+
+		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+		StreamedContent contratoFichaPdf = new DefaultStreamedContent(bais, "application/pdf", fileName);
+		return contratoFichaPdf;
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
 }

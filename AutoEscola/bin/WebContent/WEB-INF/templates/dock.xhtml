@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"	  
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+	  
+
+		
+		<style type="text/css">
+			.ui-dock-container-top
+			{
+			   position:absolute;
+			   left:50px;
+			   background-image: none;
+			   background-color: #000000;
+			   border-color: #000000;
+			   font-size:13px;
+			   z-index: 100;
+			}
+			.productionRunEvent
+			{
+			   background-color: #000000;
+			   border-color: #000000;
+			}
+			.notifyArrived
+			{
+			   font-size:12px;
+			   font-weight: bold;
+			   color: red;
+			}
+			.columnAlignTop
+			{
+			  	vertical-align: top;
+			}
+	
+		</style>
+		<h:panelGrid style="position:fixed; z-index:1000; font-size: 0.8em; right: 10px; top: 10px;">
+			<p:ajaxStatus>
+				<f:facet name="start">
+					<p:panel>
+						<h:graphicImage value="/images/ajax-loader.gif" />
+					    <h:outputText value="Aguarde, carregando..." />
+				    </p:panel>
+				</f:facet>  
+				      
+				<f:facet name="complete">
+				    <h:outputText value="" />
+				</f:facet>
+	        </p:ajaxStatus>
+	       </h:panelGrid>  
+	
+		<table border="0" align="center" cellpadding="0" cellspacing="0" width="100%" height="110" bgcolor="#000000" style="margin:0;padding:0;">
+			<tr>
+				<td align="center">		
+					<h:form id="dockForm">
+					<div style="width: 60%; position:absolute; top:0; left:50; background-color: #000000;">
+						<p:dock position="top" halign="center" styleClass="ui-dock-container-top">
+							<p:menuitem icon="/content/images/dock/rh.png" url="formFuncionario.xhtml" target="_parent" style="color:#FFFFFF;"  value="Funcionario"/>
+							<p:menuitem icon="/content/images/dock/financeiro.png" url="formCliente.xhtml" target="_parent" style="color:#FFFFFF;" value="Cliente/Lançamentos"/>
+							<p:menuitem icon="/content/images/dock/logout.png" ajax="false"  target="_parent" style="color:#FFFFFF;" value="Logout" action="#{loginHandler.sair}"/>
+						</p:dock>
+	
+						<h:panelGrid id="alertGrid" columns="1">
+							<p:growl id="alertGrowl" showDetail="false" sticky="true" autoUpdate="true" />
+						</h:panelGrid>	
+					</div>	
+					</h:form>
+				</td>
+			</tr>
+		</table>
+		
+		
+</ui:composition>

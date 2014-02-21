@@ -52,7 +52,7 @@ public class Pessoa implements Serializable {
 	private String mae;
 
 	@Temporal(TemporalType.DATE)
-	private Date dataMatricula;
+	private Date dataMatricula = new Date();
 
 	@Column()
 	private String email;

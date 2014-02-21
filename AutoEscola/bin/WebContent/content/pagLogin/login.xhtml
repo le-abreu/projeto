@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Login</title>
+	<link type="text/css" href="../estilo/estilo.css" rel="stylesheet"/>
+</h:head>
+<h:body styleClass="fundo">
+	<div class="fundo">
+			<div align="center">
+				<div class="fundo_branco" style=" " align="center">
+					<p:panel footer=":: @Copyright 2012 - Todos os direitos reservado a LM System ::" style="width: 550px; border:0px;" >
+						<h:panelGrid columns="1">
+							<h:panelGrid columns="2">
+								<p:panel header="LOGIN">
+									<h:form>
+										<p:messages style="color:red" />
+										<h:panelGrid columns="3" style="width: 300px;">
+											<h:panelGrid columns="1">
+												<h:outputLabel value="CPF:" for="cpf"/>
+												<p:inputMask id="cpf" value="#{loginHandler.funcionario.cpf}" mask="999.999.999-99" />
+												<h:outputLabel value="Senha:" for="senha"/>
+												<p:password id="senha"  value="#{loginHandler.funcionario.senha}"  maxlength="12" size="12" lang="12"/>
+											</h:panelGrid>
+											
+											<h:commandButton style="width: 100px; height: 100px; margin-left: 0px;"  image="../img/imagem_cadeado.jpg" action="#{loginHandler.login}" />
+										</h:panelGrid>
+									</h:form>
+								</p:panel>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:panel>
+				</div>
+			</div>
+
+	</div>
+</h:body>
+</html>

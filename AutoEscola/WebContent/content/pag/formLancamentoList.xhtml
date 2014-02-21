@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO_8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/padraoEmpresa.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Lançamento</ui:define>
+	<ui:define name="content">
+		<p:panel header="Lancamento" toggleable="false" id="panelLancamento">
+		
+			<h:form id="formLancamento">
+				<p:toolbar style="margin-top: 8px">
+					<p:toolbarGroup>
+						<p:commandButton id="btnNovo" value="Cliente Lançamento" style="font-size: 0.8em;" icon="ui-icon-document" action="formLancamento">
+							<f:setPropertyActionListener target="#{lancamentoHandler.rendered}" value="false" />
+							<f:setPropertyActionListener target="#{lancamentoHandler.cpf}" value="" />
+						</p:commandButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+				
+				<!-- TABELA LANÇAMENTOS -->
+				<p:dataTable id="dataTableLancamentosResults" var="lancamento" value="#{lancamentoHandler.lancamentos}" 
+					emptyMessage="Nenhum lancamento encontrado." selection="#{lancamentoHandler.lancamento}"
+					paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,40"
+					style="margin-top: 8px">
+
+					<f:facet name="header">
+						<h:outputText value="" />
+					</f:facet>
+					<p:column sortable="true" sortBy="#{lancamento.id}">
+						<f:facet name="header">
+							<h:outputText value="ID" />
+						</f:facet>
+						<h:outputText value="#{lancamento.id}" />
+					</p:column>
+
+					<f:facet name="header">
+						<h:outputText value="" />
+					</f:facet>
+
+					<p:column sortable="true" sortBy="#{lancamento.dataLancamento}">
+						<f:facet name="header">
+							<h:outputText value="Data Lançamento" />
+						</f:facet>
+						<h:outputText value="#{lancamento.dataLancamento}" >
+			            	<f:convertDateTime pattern="dd/MM/yyyy"/>
+			            </h:outputText>
+					</p:column>
+
+					<p:column sortable="true" sortBy="#{lancamento.cliente.nome}">
+						<f:facet name="header">
+							<h:outputText value="Cliente" />
+						</f:facet>
+						<h:outputText value="#{lancamento.cliente.nome}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

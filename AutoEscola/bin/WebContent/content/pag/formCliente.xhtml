@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO_8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/padraoEmpresa.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Cliente</ui:define>
+	<ui:define name="content">
+		<p:panel header="Cliente" toggleable="false" id="panelCliente">
+		
+			<h:form id="formCliente">
+				<h:inputHidden id="idCliente" value="#{clienteHandler.cliente.id}" />
+				
+				<p:messages id="msgs"/>
+				<h:panelGrid columns="2">
+					<h:panelGrid columns="3" id="painelClient">
+						<p:commandButton id="btnCadastroCliente" value="Confirmar" title="Concluir" icon="ui-icon-check" action="#{clienteHandler.persistirCliente}" style="align:right" update=":formCliente" />
+						<h:outputLabel value=" "/>
+						<h:outputLabel value=" "/>
+						
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Nome:" for="nome" />
+							<p:inputText id="nome" value="#{clienteHandler.cliente.nome}" size="45"  rendered="true" requiredMessage="O campo nome é obrigátorio!"/>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<h:outputLabel value="CPF:" for="cpf" />
+							<p:inputMask id="cpf" value="#{clienteHandler.cliente.cpf}" mask="999.999.999-99" disabled="#{not empty clienteHandler.cliente.cpf}" rendered="true" requiredMessage="O campo CPF é obrigátorio!"/>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<h:outputLabel value="RG:" for="rg" />
+							<p:inputMask id="rg" value="#{clienteHandler.cliente.rg}" mask="99.999.999-9" disabled="#{not empty clienteHandler.cliente.rg}" rendered="true" requiredMessage="O campo RG é obrigátorio!"/>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Sexo:" for="sexo" />
+							<p:selectOneRadio id="sexo" value="#{clienteHandler.cliente.sexo}" rendered="true" requiredMessage="O campo sexo é obrigátorio!">
+								<f:selectItems value="#{clienteHandler.cliente.sexoEnum}" itemLabel="#{sexo}" var="sexo" />
+							</p:selectOneRadio>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Data Nascimento:" for="dataNascimento" />
+							<p:calendar id="dataNascimento" value="#{clienteHandler.cliente.dataNascimento}" pattern="dd/MM/yyyy" showButtonPanel="true"  rendered="true" requiredMessage="O campo data nascimentoé obrigátorio!"/>
+						</h:panelGrid>
+						
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Nacionalidade:" for="nacionalidade" />
+							<p:inputText id="nacionalidade" value="#{clienteHandler.cliente.nacionalidade}" size="20" />
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Mãe:" for="mae" />
+							<p:inputText id="mae" value="#{clienteHandler.cliente.mae}" size="45" />
+						</h:panelGrid>
+	
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Pai:" for="pai" />
+							<p:inputText id="pai" value="#{clienteHandler.cliente.pai}" size="45" />
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Email:" for="email" />
+							<p:inputText id="email" value="#{clienteHandler.cliente.email}" size="45"  rendered="true" requiredMessage="O campo email é obrigátorio!"/>
+						</h:panelGrid>
+	
+					</h:panelGrid>
+					<h:panelGrid columns="1" >
+						<p:graphicImage value="#{clienteHandler.cliente.imagem.imagem}"
+							id="foto" width="300" height="240" />
+						<p:commandButton id="btnNovoFoto" value="Nova Foto" style="font-size: 0.8em;" icon="ui-icon-document" oncomplete="fotoDiaglog.show();" update=":formFoto"/>
+		        	</h:panelGrid>
+				</h:panelGrid>
+				<p:tabView effect="blind" effectDuration="normal" id="tab">
+
+					<!-- TELEFONE -->
+					<p:tab title="Telefones" id="tabTelefone">
+					
+						<ui:include src="include/includeEditTelefone.xhtml" />
+					</p:tab>
+					
+					<!-- ENDEREÇO -->
+					<p:tab title="Endereços" id="tabEnderecos">
+						<ui:include src="include/includeEditEndereco.xhtml" /> 
+					</p:tab>
+					
+		  			<!-- HABILITACAO -->
+ 					<p:tab title="Habilitações" id="tabHabilitacao">
+ 						<ui:include src="include/includeEditHabilitacao.xhtml" />
+ 					</p:tab>
+ 					
+				</p:tabView>
+			</h:form>
+
+  			<!-- FOTO -->
+			<h:form id="formFoto">  
+	     		<p:dialog id="fotoDiaglog" widgetVar="fotoDiaglog" header="Foto Cliente" 
+	     			resizable="true" showEffect="fold" hideEffect="fold" >   
+	     			<h:panelGrid columns="2" >									   
+						<p:photoCam widgetVar="pc" listener="#{clienteHandler.oncapture}" update=":formCliente:foto" />
+						<p:commandButton type="button" value="Capture" onclick="pc.capture()"/>
+					</h:panelGrid>
+		   		</p:dialog>
+  			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

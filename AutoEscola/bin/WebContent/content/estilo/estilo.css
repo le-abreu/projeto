@@ -1,0 +1,108 @@
+.fundo {
+/* 	background: url(../img/FUNDO.jpg); */
+	background: silver;
+	width: 100%;
+	height: 100%;
+}
+
+.contato {
+	background: white;
+	margin-top: -8px;
+}
+
+.fundo_branco {
+	background: white;
+	margin-left: 15%;
+	margin-right: 15%;
+	width: 950px;
+	min-height: 400px;
+}
+
+.fundo_branco p div {
+	color: gray !important;
+}
+
+.logo {
+	margin-top: 1.5%;
+	margin-left: 15%;
+	position: relative;
+	width: 300px;
+	height: 70px;
+}
+
+.alpha {
+	padding: 5px;
+	background-color: #FFF;
+	text-align: justify;
+	border: 2px solid #666;
+	margin: 50px auto 0 auto;
+	filter: opacity(alpha =     60); /* para o IE */
+	-moz-opacity: 0.6; /* para o FireFox */
+	opacity: 0.6; /* para o outros Navegadores */
+}
+
+.ui-widget,.ui-widget .ui-widget {
+	font-size: 14px !important;
+	font-style: oblique !important;
+	font-family: "Eras Light ITC", sans-serif !important;
+}
+
+.tituloPag {
+	font-family: "Eras Light ITC" !important;
+	font-size: 35px !important;
+	margin: 2%;
+}
+
+body {
+	font-family: "Eras Light ITC" !important;
+}
+
+a {
+	font-family: "Eras Light ITC", sans-serif !important;
+	text-decoration: none;
+	color: gray;
+}
+
+.detalhe {
+	font: Batang !important;
+	font-size: 12px !important;
+	margin: 2%;
+}
+
+#lateral {
+	margin: 2%;
+	float: right;
+	margin-top: -42%;
+	margin-bottom: 2%;
+	position: relative;
+}
+
+#lateralEvento{
+	margin: 2%;
+	float: right;
+	margin-top: -46%;
+	margin-bottom: 2%;
+	position: relative;
+}
+
+#footer {
+	position: relative;
+	bottom: 0px;
+}
+
+#center{
+	max-width: 800px;
+}
+
+credit{
+	color: red;
+}
+
+debit{
+	color: green;
+}
+.ui-widget,  
+    .ui-widget .ui-widget {  
+    font-size: 12px !important;  
+} 
+
