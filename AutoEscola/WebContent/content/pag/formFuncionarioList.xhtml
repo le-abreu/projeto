@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO_8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/padraoEmpresa.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Funcionário</ui:define>
+	<ui:define name="content">
+		<h:form id="formFuncionario">
+			<p:panel header="Funcionario" toggleable="false" id="panelFuncionario">
+				<p:toolbar style="margin-top: 8px">
+					<p:toolbarGroup>
+						<p:commandButton id="btnNovo" value="Novo" style="font-size: 0.8em;" icon="ui-icon-document" action="formFuncionario.xhtml">
+							<f:setPropertyActionListener value="#{funcionarioHandler.novoFuncionario}" target="#{funcionarioHandler.funcionario}" />
+						</p:commandButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+
+				<p:dataTable id="dataTableFuncionariosResults" var="funcionario" value="#{funcionarioHandler.funcionarios}" 
+					emptyMessage="Nenhum funcionario encontrado." selection="#{funcionarioHandler.funcionario}"
+					paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,40"
+					style="margin-top: 8px">
+
+					<f:facet name="header">
+						<h:outputText value="" />
+					</f:facet>
+					<p:column sortable="true" sortBy="#{funcionario.id}">
+						<f:facet name="header">
+							<h:outputText value="ID" />
+						</f:facet>
+						<h:outputText value="#{funcionario.id}" />
+					</p:column>
+
+					<p:column sortable="true" sortBy="#{funcionario.cpf}">
+						<f:facet name="header">
+							<h:outputText value="CPF" />
+						</f:facet>
+						<h:outputText value="#{funcionario.cpf}" />
+					</p:column>
+
+					<p:column sortable="true" sortBy="#{funcionario.nome}">
+						<f:facet name="header">
+							<h:outputText value="Nome" />
+						</f:facet>
+						<h:outputText value="#{funcionario.nome}" />
+					</p:column>
+					<p:column style="width:90px">
+						<p:commandButton id="btnEditar" title="Editar" icon="ui-icon-pencil" action="formFuncionario.xhtml">
+							<f:setPropertyActionListener value="#{funcionario}" target="#{funcionarioHandler.funcionario}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -25,6 +25,7 @@ import br.com.autoescola.bean.Cliente;
 import br.com.autoescola.bean.Endereco;
 import br.com.autoescola.bean.Habilitacao;
 import br.com.autoescola.bean.Imagem;
+import br.com.autoescola.bean.NacionalidadeEnum;
 import br.com.autoescola.bean.Telefone;
 import br.com.autoescola.dao.ClienteDAO;
 import br.com.autoescola.util.ControllerArquivo;
@@ -52,7 +53,8 @@ public class ClienteHandler implements Serializable{
 	private List<Cliente> clientes = new ArrayList<Cliente>();
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	private List<Telefone> telefones = new ArrayList<Telefone>();
-
+	private List<NacionalidadeEnum> nacionalidadeEnum;
+	
 	//DAO
 	private ClienteDAO clienteDAO = new ClienteDAO();
 
@@ -139,6 +141,21 @@ public class ClienteHandler implements Serializable{
 			this.cliente.getEnderecos().add(endereco);
 		}
 		endereco = new Endereco();
+	}
+	
+	public List<NacionalidadeEnum> getNacionalidadeEnum() {
+		if(nacionalidadeEnum == null || nacionalidadeEnum.isEmpty()){
+			nacionalidadeEnum = new ArrayList<NacionalidadeEnum>();
+		for (NacionalidadeEnum nacEnum : NacionalidadeEnum.values()) {
+			nacionalidadeEnum.add(nacEnum);
+		}
+
+		}
+		return nacionalidadeEnum;
+		}
+	
+	public void setNacionalidadeEnum(List<NacionalidadeEnum> nacionalidadeEnum) {
+		this.nacionalidadeEnum = nacionalidadeEnum;
 	}
 
 	public void excluirEndereco() {

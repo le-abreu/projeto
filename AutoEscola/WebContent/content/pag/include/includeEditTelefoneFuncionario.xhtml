@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:commandButton id="btnNovoTelefone" value="Novo Telefone" style="font-size: 0.8em;" icon="ui-icon-contact" oncomplete="novoTelefoneFuncionarioDiaglog.show();" update=":formFuncionario">
+		<f:setPropertyActionListener value="Confirmar" target="#{funcionarioHandler.evento}" />
+		<f:setPropertyActionListener value="" target="#{funcionarioHandler.disabled}" />
+		<f:setPropertyActionListener value="#{funcionarioHandler.novoTelefone}" target="#{funcionarioHandler.telefone}" />
+	</p:commandButton>
+	
+		<!-- LISTAR TELEFONES FUNCIONARIO-->
+	<p:dataTable id="dataTableTelefonesResults" var="telefone"
+		value="#{funcionarioHandler.funcionario.telefones}"
+		paginator="true" rows="5" 
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15"
+		emptyMessage="Nenhum telefone esta cadastrado para o funcionario" style="margin-top: 8px">
+
+		<f:facet name="header">
+			<h:outputText value="" />
+		</f:facet>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Tipo Telefone" />
+			</f:facet>
+			<h:outputText value="#{telefone.tipoTelefone}" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="DDI" />
+			</f:facet>
+			<h:outputText value="#{telefone.ddi}" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="DDD" />
+			</f:facet>
+			<h:outputText value="#{telefone.ddd}" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Nº" />
+			</f:facet>
+			<h:outputText value="#{telefone.numero}" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Operadora" />
+			</f:facet>
+			<h:outputText value="#{telefone.operadora}" />
+		</p:column>
+
+		<p:column style="width:90px" headerText="Visualizar">
+			<p:commandButton id="btnViewTelefone" icon="ui-icon-search" oncomplete="novoTelefoneFuncionarioDiaglog.show();" update=":formFuncionario">
+				<f:setPropertyActionListener value="#{telefone}" target="#{funcionarioHandler.telefone}" />
+				<f:setPropertyActionListener value="Visualizar" target="#{funcionarioHandler.evento}" />
+				<f:setPropertyActionListener value="true" target="#{funcionarioHandler.disabled}" />
+			</p:commandButton>
+		</p:column>
+		<p:column style="width:90px" headerText="Editar">
+			<p:commandButton id="btnEditarTelefone" title="Editar" icon="ui-icon-pencil" oncomplete="novoTelefoneFuncionarioDiaglog.show();" update=":formFuncionario">
+				<f:setPropertyActionListener value="#{telefone}" target="#{funcionarioHandler.telefone}" />
+				<f:setPropertyActionListener value="Confirmar" target="#{funcionarioHandler.evento}" />
+				<f:setPropertyActionListener value="false" target="#{funcionarioHandler.disabled}" />
+			</p:commandButton>
+		</p:column>
+		<p:column style="width:90px" headerText="Remover">
+			<p:commandButton id="btnRemoverTelefone" title="Remover" icon="ui-icon-close" oncomplete="novoTelefoneFuncionarioDiaglog.show();" update=":formFuncionario" >
+				<f:setPropertyActionListener value="#{telefone}" target="#{funcionarioHandler.telefone}" />
+				<f:setPropertyActionListener value="Remover" target="#{funcionarioHandler.evento}" />
+				<f:setPropertyActionListener value="true" target="#{funcionarioHandler.disabled}" />
+			</p:commandButton>
+		</p:column>
+	</p:dataTable>	
+	
+	
+	<p:dialog id="novoTelefoneFuncionarioDiaglog" widgetVar="novoTelefoneFuncionarioDiaglog" header="Telefone Funcionário" 
+		resizable="true" showEffect="fold" hideEffect="fold" width="500" height="300" rendered="#{funcionarioHandler.telefone != null}">   
+   			 
+		<h:inputHidden id="idTelefone" value="#{funcionarioHandler.telefone.id}" />
+     	<h:panelGrid columns="1">
+	     	<h:panelGrid columns="2">
+				<h:outputLabel value="Funcionário:"  />
+				<h:outputLabel value="#{funcionarioHandler.funcionario.nome}" />
+			</h:panelGrid>						
+			<h:outputLabel value="Tipo Telefone:" for="tipoTelefone" />
+			<p:selectOneRadio id="tipoTelefone" value="#{funcionarioHandler.telefone.tipoTelefone}" disabled="#{funcionarioHandler.disabled}">
+				<f:selectItems value="#{funcionarioHandler.telefone.classificadorEnum}" itemLabel="#{tipoTelefone}" var="tipoTelefone" />
+			</p:selectOneRadio>
+
+			<h:outputLabel value="Operadora" for="operadoraTelefone"/>
+			<p:inputText id="operadoraTelefone" value="#{funcionarioHandler.telefone.operadora}" size="25" disabled="#{funcionarioHandler.disabled}" />
+    		</h:panelGrid>
+		
+     	<h:panelGrid columns="3">
+
+     		<h:panelGrid columns="1">
+				<h:outputLabel value="DDI:" for="ddiTelefone"/>
+				<p:inputMask id="ddiTelefone" value="#{funcionarioHandler.telefone.ddi}" mask="99" size="2" disabled="#{funcionarioHandler.disabled}"/>
+     		</h:panelGrid>
+			
+     		<h:panelGrid columns="1">
+				<h:outputLabel value="DDD:" for="dddTelefone"/>
+				<p:inputMask id="dddTelefone" value="#{funcionarioHandler.telefone.ddd}" mask="99" size="2" disabled="#{funcionarioHandler.disabled}"/>
+     		</h:panelGrid>
+			
+     		<h:panelGrid columns="1">
+				<h:outputLabel value="Número:" for="numeroTelefone"/>
+				<p:inputText id="numeroTelefone" value="#{funcionarioHandler.telefone.numero}" size="10" disabled="#{funcionarioHandler.disabled}"/>
+     		</h:panelGrid>
+		</h:panelGrid>
+		<p:commandButton id="btnConcluirTelefone" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{funcionarioHandler.persistirTelefone}" style="align:right" 
+			update=":formFuncionario" onclick="novoTelefoneFuncionarioDiaglog.close();" rendered="#{funcionarioHandler.evento eq 'Confirmar'}" />
+		<p:commandButton id="btnRemoverTelefone" value="Remover" title="Remover" icon="ui-icon-close" action="#{funcionarioHandler.excluirTelefone}" style="align:right" 
+			update=":formFuncionario" onclick="novoTelefoneFuncionarioDiaglog.close();" rendered="#{funcionarioHandler.evento eq 'Remover'}"/>
+	</p:dialog>	
+</html>

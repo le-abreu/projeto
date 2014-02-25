@@ -52,9 +52,11 @@
 						
 						<h:panelGrid columns="1">
 							<h:outputLabel value="Nacionalidade:" for="nacionalidade" />
-							<p:inputText id="nacionalidade" value="#{clienteHandler.cliente.nacionalidade}" size="20" />
+							<p:selectOneMenu id="nacionalidade" value="#{clienteHandler.cliente.nacionalidade}" effect="fold" editable="true"  >
+								<f:selectItem itemLabel=""   />
+								<f:selectItems value="#{clienteHandler.nacionalidadeEnum}" var="n" itemValue="#{n}" itemLabel="#{n.nacionalidade}"/>
+							</p:selectOneMenu>
 						</h:panelGrid>
-
 						<h:panelGrid columns="1">
 							<h:outputLabel value="Mãe:" for="mae" />
 							<p:inputText id="mae" value="#{clienteHandler.cliente.mae}" size="45" />

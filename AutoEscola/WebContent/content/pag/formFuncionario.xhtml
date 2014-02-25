@@ -9,524 +9,108 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="title">Funcionario</ui:define>
+	<ui:define name="title">Funcionário</ui:define>
 	<ui:define name="content">
-     	<p:panel header="Funcionario" toggleable="false" id="panelDadosFuncionario">
-			<h:form id="formFuncionario">  
-				<p:toolbar style="margin-top: 8px">
-					<p:toolbarGroup>
-						<p:commandButton id="btnNovo" value="Novo" style="font-size: 0.8em;" icon="ui-icon-document" oncomplete="novoFuncionarioDiaglog.show();" update=":formDialogFuncionario">
-							<f:setPropertyActionListener value="#{funcionarioHandler.novoFuncionario}" target="#{funcionarioHandler.funcionario}" />
-						</p:commandButton>	
-					</p:toolbarGroup>
-				</p:toolbar>
+		<p:panel header="Funcionario" toggleable="false" id="panelFuncionario">
+		
+			<h:form id="formFuncionario">
+				<h:inputHidden id="idFuncionario" value="#{funcionarioHandler.funcionario.id}" />
 				
-				<!-- TABELA FUNCIONARIOS -->
-				<p:dataTable id="dataTableFuncionariosResults" var="funcionario"
-					value="#{funcionarioHandler.funcionarios}"
-					emptyMessage="Nenhum funcionario encontrado." paginator="true" rows="5"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					rowsPerPageTemplate="5,10,15"
-					selection="#{funcionarioHandler.funcionario}"
-					style="margin-top: 8px">
+				<p:messages id="msgs"/>
+				<h:panelGrid columns="2">
+					<h:panelGrid columns="3" id="painelFuncionario">
+						<p:commandButton id="btnCadastroFuncionario" value="Confirmar" title="Concluir" icon="ui-icon-check" action="#{funcionarioHandler.persistirFuncionario}" style="align:right" update=":formFuncionario" />
+						<h:outputLabel value=" "/>
+						<h:outputLabel value=" "/>
+						
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Nome:" for="nome" />
+							<p:inputText id="nome" value="#{funcionarioHandler.funcionario.nome}" size="45"  rendered="true" requiredMessage="O campo nome é obrigátorio!"/>
+						</h:panelGrid>
 
-					<f:facet name="header">
-						<h:outputText value="" />
-					</f:facet>
-					<p:column style="width:2%">  
-		            	<p:rowToggler /> 
-			        </p:column>
+						<h:panelGrid columns="1">
+							<h:outputLabel value="CPF:" for="cpf" />
+							<p:inputMask id="cpf" value="#{funcionarioHandler.funcionario.cpf}" mask="999.999.999-99" disabled="#{not empty funcionarioHandler.funcionario.cpf}" rendered="true" requiredMessage="O campo CPF é obrigátorio!"/>
+						</h:panelGrid>
 
-					<p:column sortable="true" sortBy="#{funcionario.cpf}">
-						<f:facet name="header">
-							<h:outputText value="CPF" />
-						</f:facet>
-						<h:outputText value="#{funcionario.cpf}" />
-					</p:column>
+						<h:panelGrid columns="1">
+							<h:outputLabel value="RG:" for="rg" />
+							<p:inputMask id="rg" value="#{funcionarioHandler.funcionario.rg}" mask="99.999.999-9" disabled="#{not empty funcionarioHandler.funcionario.rg}" rendered="true" requiredMessage="O campo RG é obrigátorio!"/>
+						</h:panelGrid>
 
-					<p:column sortable="true" sortBy="#{funcionario.nome}">
-						<f:facet name="header">
-							<h:outputText value="Nome" />
-						</f:facet>
-						<h:outputText value="#{funcionario.nome}" />
-					</p:column>
-					<p:column style="width:90px">
-						<p:commandButton id="btnEditar" title="Editar" icon="ui-icon-pencil" oncomplete="novoFuncionarioDiaglog.show();" update=":formDialogFuncionario">
-							<f:setPropertyActionListener value="#{funcionario}" target="#{funcionarioHandler.funcionario}" />
-						</p:commandButton>
-					</p:column>
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Sexo:" for="sexo" />
+							<p:selectOneRadio id="sexo" value="#{funcionarioHandler.funcionario.sexo}" rendered="true" requiredMessage="O campo sexo é obrigátorio!">
+								<f:selectItems value="#{funcionarioHandler.funcionario.sexoEnum}" itemLabel="#{sexo}" var="sexo" />
+							</p:selectOneRadio>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Data Nascimento:" for="dataNascimento" />
+							<p:calendar id="dataNascimento" value="#{funcionarioHandler.funcionario.dataNascimento}" pattern="dd/MM/yyyy" showButtonPanel="true" navigator="true" yearRange="c-80:c+70" rendered="true" requiredMessage="O campo data nascimento é obrigátorio!"/>
+							
+						</h:panelGrid>
+						
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Nacionalidade:" for="nacionalidade" />
+							<p:selectOneMenu id="nacionalidade" value="#{funcionarioHandler.funcionario.nacionalidade}" effect="fold" editable="true"  >
+								<f:selectItem itemLabel=""   />
+								<f:selectItems value="#{funcionarioHandler.nacionalidadeEnum}" var="n" itemValue="#{n}" itemLabel="#{n.nacionalidade}"/>
+							</p:selectOneMenu>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Mãe:" for="mae" />
+							<p:inputText id="mae" value="#{funcionarioHandler.funcionario.mae}" size="45" />
+						</h:panelGrid>
+	
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Pai:" for="pai" />
+							<p:inputText id="pai" value="#{funcionarioHandler.funcionario.pai}" size="45" />
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<h:outputLabel value="Email:" for="email" />
+							<p:inputText id="email" value="#{funcionarioHandler.funcionario.email}" size="45"  rendered="true" requiredMessage="O campo email é obrigátorio!"/>
+						</h:panelGrid>
+	
+					</h:panelGrid>
+					<h:panelGrid columns="1" >
+						<p:graphicImage value="#{funcionarioHandler.funcionario.imagem.imagem}"
+							id="foto" width="300" height="240" />
+						<p:commandButton id="btnNovoFoto" value="Nova Foto" style="font-size: 0.8em;" icon="ui-icon-document" oncomplete="fotoDiaglog.show();" update=":formFoto"/>
+		        	</h:panelGrid>
+				</h:panelGrid>
+				<p:tabView effect="blind" effectDuration="normal" id="tab">
+				
+				<!-- TELEFONE -->
+					<p:tab title="Telefones" id="tabTelefone">
+						<ui:include src="include/includeEditTelefoneFuncionario.xhtml" />
+					</p:tab>
+				
+				<!-- ENDEREÇO -->
+					<p:tab title="Endereços" id="tabEnderecos">
+						<ui:include src="include/includeEditEnderecoFuncionario.xhtml" /> 
+					</p:tab>
 					
-					<p:rowExpansion id="rowFuncionario">
-     	 				<p:tabView effect="blind" effectDuration="normal" id="tab"> 
-							<!-- TABELA ENDEREÇOS CLIENTE-->
-     	 					<p:tab title="Endereços" id="tabEndereco">
-     	 						<p:commandButton id="btnNovoEndereco" value="Novo Endereço" style="font-size: 0.8em;" icon="ui-icon-document" oncomplete="novoEnderecoFuncionarioDiaglog.show();" update=":formDialogEnderecoFuncionario">
-									<f:setPropertyActionListener value="#{funcionario}" target="#{funcionarioHandler.funcionario}" />
-									<f:setPropertyActionListener value="Confirmar" target="#{funcionarioHandler.evento}" />
-									<f:setPropertyActionListener value="" target="#{funcionarioHandler.disabled}" />
-									<f:setPropertyActionListener value="#{funcionarioHandler.novoEndereco}" target="#{funcionarioHandler.endereco}" />
-								</p:commandButton>
-     	 						<p:dataTable id="dataTableEnderecosResults" var="endereco"
-									value="#{funcionario.enderecos}"
-									emptyMessage="Nenhum endereço esta cadastrado para o funcionario" paginator="true" rows="2"
-									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-									rowsPerPageTemplate="2,4,6"
-									selection="#{funcionarioHandler.endereco}"
-									style="margin-top: 8px">
-			
-									<f:facet name="header">
-										<h:outputText value="" />
-									</f:facet>
-
-									<p:column sortable="true" sortBy="#{endereco.tipoEndereco}">
-										<f:facet name="header">
-											<h:outputText value="Tipo Endereço" />
-										</f:facet>
-										<h:outputText value="#{endereco.tipoEndereco}" />
-									</p:column>
-			
-									<p:column sortable="true" sortBy="#{endereco.cep}">
-										<f:facet name="header">
-											<h:outputText value="CEP" />
-										</f:facet>
-										<h:outputText value="#{endereco.cep}" />
-									</p:column>
-			
-									<p:column sortable="true" sortBy="#{endereco.logradouro}">
-										<f:facet name="header">
-											<h:outputText value="Lougradouro" />
-										</f:facet>
-										<h:outputText value="#{endereco.logradouro}" />
-									</p:column>
-									
-									<p:column sortable="true" sortBy="#{endereco.bairro}">
-										<f:facet name="header">
-											<h:outputText value="Bairro" />
-										</f:facet>
-										<h:outputText value="#{endereco.bairro}" />
-									</p:column>
-									
-									<p:column sortable="true" sortBy="#{endereco.cidade}">
-										<f:facet name="header">
-											<h:outputText value="Cidade" />
-										</f:facet>
-										<h:outputText value="#{endereco.cidade}" />
-									</p:column>
-									
-									<p:column sortable="true" sortBy="#{endereco.uf}">
-										<f:facet name="header">
-											<h:outputText value="UF" />
-										</f:facet>
-										<h:outputText value="#{endereco.uf}" />
-									</p:column>
-
-									<p:column style="width:90px" headerText="Visualizar">
-										<p:commandButton id="btnNovoEndereco" icon="ui-icon-search" oncomplete="novoEnderecoFuncionarioDiaglog.show();" update=":formDialogEnderecoFuncionario">
-											<f:setPropertyActionListener value="#{endereco}" target="#{funcionarioHandler.endereco}" />
-											<f:setPropertyActionListener value="Visualizar" target="#{funcionarioHandler.evento}" />
-											<f:setPropertyActionListener value="true" target="#{funcionarioHandler.disabled}" />
-										</p:commandButton>
-									</p:column>
-									<p:column style="width:90px" headerText="Editar">
-										<p:commandButton id="btnEditarEndereco" title="Editar" icon="ui-icon-pencil" oncomplete="novoEnderecoFuncionarioDiaglog.show();" update=":formDialogEnderecoFuncionario">
-											<f:setPropertyActionListener value="#{endereco}" target="#{funcionarioHandler.endereco}" />
-											<f:setPropertyActionListener value="Confirmar" target="#{funcionarioHandler.evento}" />
-											<f:setPropertyActionListener value="false" target="#{funcionarioHandler.disabled}" />
-										</p:commandButton>
-									</p:column>
-									<p:column style="width:90px" headerText="Remover">
-										<p:commandButton id="btnRemoverEndereco" title="Remover" icon="ui-icon-close" oncomplete="novoEnderecoFuncionarioDiaglog.show();" update=":formDialogEnderecoFuncionario">
-											<f:setPropertyActionListener value="#{endereco}" target="#{funcionarioHandler.endereco}" />
-											<f:setPropertyActionListener value="Remover" target="#{funcionarioHandler.evento}" />
-											<f:setPropertyActionListener value="true" target="#{funcionarioHandler.disabled}" />
-										</p:commandButton>
-									</p:column>
-								</p:dataTable>
-     	 					</p:tab>
-     	 					
-							<!-- TABELA TELEFONES FUNCIONARIO-->
-     	 					<p:tab title="Telefones" id="tabTelefone">
-     	 						<p:commandButton id="btnNovoTelefone" value="Novo Telefone" style="font-size: 0.8em;" icon="ui-icon-document" oncomplete="novoTelefoneFuncionarioDiaglog.show();" update=":formDialogTelefoneFuncionario">
-									<f:setPropertyActionListener value="#{funcionario}" target="#{funcionarioHandler.funcionario}" />
-									<f:setPropertyActionListener value="#{funcionarioHandler.novoTelefone}" target="#{funcionarioHandler.telefone}" />
-									<f:setPropertyActionListener value="Confirmar" target="#{funcionarioHandler.evento}" />
-									<f:setPropertyActionListener value="" target="#{funcionarioHandler.disabled}" />
-								</p:commandButton>
-     	 						<p:dataTable id="dataTableTelefonesResults" var="telefone"
-									value="#{funcionario.telefones}"
-									emptyMessage="Nenhum telefone esta cadastrado para o funcionario" paginator="true" rows="2"
-									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-									rowsPerPageTemplate="2,4,6"
-									selection="#{funcionarioHandler.telefone}"
-									style="margin-top: 8px">
-			
-									<f:facet name="header">
-										<h:outputText value="" />
-									</f:facet>
-
-									<p:column sortable="true" sortBy="#{telefone.tipoTelefone}">
-										<f:facet name="header">
-											<h:outputText value="Tipo Telefone" />
-										</f:facet>
-										<h:outputText value="#{telefone.tipoTelefone}" />
-									</p:column>
-			
-									<p:column sortable="true" sortBy="#{telefone.ddi}">
-										<f:facet name="header">
-											<h:outputText value="DDI" />
-										</f:facet>
-										<h:outputText value="#{telefone.ddi}" />
-									</p:column>
-			
-									<p:column sortable="true" sortBy="#{telefone.ddd}">
-										<f:facet name="header">
-											<h:outputText value="DDD" />
-										</f:facet>
-										<h:outputText value="#{telefone.ddd}" />
-									</p:column>
-
-									<p:column sortable="true" sortBy="#{telefone.numero}">
-										<f:facet name="header">
-											<h:outputText value="Nº" />
-										</f:facet>
-										<h:outputText value="#{telefone.numero}" />
-									</p:column>
-
-									<p:column sortable="true" sortBy="#{telefone.operadora}">
-										<f:facet name="header">
-											<h:outputText value="Operadora" />
-										</f:facet>
-										<h:outputText value="#{telefone.operadora}" />
-									</p:column>
-
-									<p:column style="width:90px" headerText="Visualizar">
-										<p:commandButton id="btnViewTelefone" icon="ui-icon-search" oncomplete="novoTelefoneFuncionarioDiaglog.show();" update=":formDialogTelefoneFuncionario">
-											<f:setPropertyActionListener value="#{telefone}" target="#{funcionarioHandler.telefone}" />
-											<f:setPropertyActionListener value="Visualizar" target="#{funcionarioHandler.evento}" />
-											<f:setPropertyActionListener value="true" target="#{funcionarioHandler.disabled}" />
-										</p:commandButton>
-									</p:column>
-									<p:column style="width:90px" headerText="Editar">
-										<p:commandButton id="btnEditarTelefone" title="Editar" icon="ui-icon-pencil" oncomplete="novoTelefoneFuncionarioDiaglog.show();" update=":formDialogTelefoneFuncionario">
-											<f:setPropertyActionListener value="#{telefone}" target="#{funcionarioHandler.telefone}" />
-											<f:setPropertyActionListener value="Confirmar" target="#{funcionarioHandler.evento}" />
-											<f:setPropertyActionListener value="false" target="#{funcionarioHandler.disabled}" />
-										</p:commandButton>
-									</p:column>
-									<p:column style="width:90px" headerText="Remover">
-										<p:commandButton id="btnRemoverTelefone" title="Remover" icon="ui-icon-close" oncomplete="novoTelefoneFuncionarioDiaglog.show();" update=":formDialogTelefoneFuncionario">
-											<f:setPropertyActionListener value="#{telefone}" target="#{funcionarioHandler.telefone}" />
-											<f:setPropertyActionListener value="Remover" target="#{funcionarioHandler.evento}" />
-											<f:setPropertyActionListener value="true" target="#{funcionarioHandler.disabled}" />
-										</p:commandButton>
-									</p:column>
-								</p:dataTable>
-     	 					</p:tab>
-     	 					
-     	 					
-							<!-- TABELA HABILITAÇÕES FUNCIONARIO-->
-     	 					<p:tab title="Habilitações" id="tabHabilitacao">
-     	 						
-     	 						<p:commandButton id="btnNovoHabilitacao" value="Nova Habilitação" style="font-size: 0.8em;" icon="ui-icon-document" oncomplete="habilitacaoDiaglog.show();" update=":formHabilit">
-									<f:setPropertyActionListener value="#{funcionario}" target="#{funcionarioHandler.funcionario}" />
-									<f:setPropertyActionListener value="#{funcionarioHandler.novoHabilitacao}" target="#{funcionarioHandler.habilitacao}" />
-									<f:setPropertyActionListener value="Confirmar" target="#{funcionarioHandler.evento}" />
-									<f:setPropertyActionListener value="" target="#{funcionarioHandler.disabled}" />
-								</p:commandButton>
-								
-     	 						<p:dataTable id="dataTableHabilitacaosResults" var="habilitacao"
-									value="#{funcionario.habilitacoes}"
-									emptyMessage="Nenhuma habilitação esta cadastrado para o funcionario" paginator="true" rows="2"
-									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-									rowsPerPageTemplate="2,4,6"
-									selection="#{funcionarioHandler.habilitacao}"
-									style="margin-top: 8px">
-			
-									<f:facet name="header">
-										<h:outputText value="" />
-									</f:facet>
-
-									<p:column sortable="true" sortBy="#{habilitacao.categoria}">
-										<f:facet name="header">
-											<h:outputText value="Categoria" />
-										</f:facet>
-										<h:outputText value="#{habilitacao.categoria}" />
-									</p:column>
-			
-									<p:column sortable="true" sortBy="#{habilitacao.codigo}">
-										<f:facet name="header">
-											<h:outputText value="Código" />
-										</f:facet>
-										<h:outputText value="#{habilitacao.codigo}" />
-									</p:column>
-			
-									<p:column style="width:90px" headerText="Visualizar">
-										<p:commandButton id="btnViewHabilitacao" icon="ui-icon-search" oncomplete="habilitacaoDiaglog.show();" update=":formHabilit">
-											<f:setPropertyActionListener value="#{habilitacao}" target="#{funcionarioHandler.habilitacao}" />
-											<f:setPropertyActionListener value="Visualizar" target="#{funcionarioHandler.evento}" />
-											<f:setPropertyActionListener value="true" target="#{funcionarioHandler.disabled}" />
-										</p:commandButton>
-									</p:column>
-									
-									<p:column style="width:90px" headerText="Editar">
-										<p:commandButton id="btnEditarHabilitacao" title="Editar" icon="ui-icon-pencil" oncomplete="habilitacaoDiaglog.show();" update=":formHabilit">
-											<f:setPropertyActionListener value="#{habilitacao}" target="#{funcionarioHandler.habilitacao}" />
-											<f:setPropertyActionListener value="Confirmar" target="#{funcionarioHandler.evento}" />
-											<f:setPropertyActionListener value="false" target="#{funcionarioHandler.disabled}" />
-										</p:commandButton>
-									</p:column>
-									
-									<p:column style="width:90px" headerText="Remover">
-										<p:commandButton id="btnRemoverHabilitacao" title="Remover" icon="ui-icon-close" oncomplete="habilitacaoDiaglog.show();" update=":formHabilit">
-											<f:setPropertyActionListener value="#{habilitacao}" target="#{funcionarioHandler.habilitacao}" />
-											<f:setPropertyActionListener value="Remover" target="#{funcionarioHandler.evento}" />
-											<f:setPropertyActionListener value="true" target="#{funcionarioHandler.disabled}" />
-										</p:commandButton>
-									</p:column>
-								</p:dataTable>
-     	 					</p:tab>
-     	 					
-     	 					<!-- SENHA/LOGIN-->
-     	 					<p:tab title="Senha" id="tabSenha">
-	     	 					<h:panelGrid columns="2" cellpadding="1" id="painelFuncionarioSenha">
-									<h:outputLabel value="senha:" for="senha"/>
-									<p:password id="senha" value="#{funcionario.senha}" size="8" />
-								</h:panelGrid>
-								<p:commandButton id="btnCadastroFuncionarioSenha" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{funcionarioHandler.persistirFuncionario}" style="align:right"  update=":formFuncionario" >
-									<f:setPropertyActionListener value="#{funcionario}" target="#{funcionarioHandler.funcionario}" />
-								</p:commandButton>	
-     	 					</p:tab>
-     	 					
-     	 					<!-- CARGOS-->
-     	 					<p:tab title="Cargo" id="tabCargo">
-	     	 					<h:panelGrid columns="5" toggleable="true" id="painelCargos">
-									<h:outputLabel value="Cargo:" for="cargo"/>
-									<p:autoComplete id="cargo" value="#{funcionarioHandler.cargo.titulo}" dropdown="true" completeMethod="#{funcionarioHandler.completeCargo}" size="60"/>  
-									<p:commandButton id="btnVincularCargo" value="Confirmar" title="Confirmar" icon="ui-icon-add"  style="align:right" update=":formCargos" oncomplete="novoCargoDiaglog.show()">
-										<f:setPropertyActionListener value="#{funcionario}" target="#{funcionarioHandler.funcionario}" />
-										<f:setPropertyActionListener value="Confirmar" target="#{funcionarioHandler.evento}" />
-									</p:commandButton>
-			 					</h:panelGrid>
-			 					<p:dataTable id="dataTableCargos" var="cargo"
-									value="#{funcionario.cargos}"
-									emptyMessage="Nenhum cargo esta cadastrado para o funcionario" paginator="true" rows="4"
-									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-									rowsPerPageTemplate="4,8,12"
-									style="margin-top: 8px">
-			
-									<f:facet name="header">
-										<h:outputText value="" />
-									</f:facet>
-				
-									<p:column sortable="true" sortBy="#{cargo.titulo}">
-										<f:facet name="header">
-											<h:outputText value="Titulo" />
-										</f:facet>
-										<h:outputText value="#{cargo.titulo}" />
-									</p:column>
-				
-									<p:column style="width:90px" headerText="Remover">
-										<p:commandButton id="btnRemoverCargo" title="Remover" icon="ui-icon-close" update=":formCargos" oncomplete="novoCargoDiaglog.show()">
-											<f:setPropertyActionListener value="#{cargo}" target="#{funcionarioHandler.cargo}" />
-											<f:setPropertyActionListener value="#{funcionario}" target="#{funcionarioHandler.funcionario}" />
-											<f:setPropertyActionListener value="Remover" target="#{funcionarioHandler.evento}" />
-										</p:commandButton>
-									</p:column>
-									
-								</p:dataTable>
-     	 					
-     	 					</p:tab>
-     	 				</p:tabView>
-			        </p:rowExpansion>
-				</p:dataTable>
-	   	 	</h:form>				
-				
-	   		
-			<!-- PESSOA -->	
-			<h:form id="formDialogFuncionario">  
-	     		<p:dialog id="novoFuncionarioDiaglog" widgetVar="novoFuncionarioDiaglog" header="Cadastro Funcionario" resizable="true" showEffect="fold" hideEffect="fold" width="700" height="350"> 
-					<h:inputHidden id="idFuncionario" value="#{funcionarioHandler.funcionario.id}" />
-			     	<h:panelGrid columns="2" cellpadding="1" id="painelClient">
-						<h:outputLabel value="Nome:" for="nome"/>
-						<p:inputText id="nome" value="#{funcionarioHandler.funcionario.nome}" size="60" />
-
-						<h:outputLabel value="Sexo:" for="sexo" />
-						<p:selectOneRadio id="sexo" value="#{funcionarioHandler.funcionario.sexo}">
-							<f:selectItems value="#{funcionarioHandler.funcionario.sexoEnum}" itemLabel="#{s}" var="s" />
-						</p:selectOneRadio>
-
-						<h:outputLabel value="CPF:" for="cpf"/>
-						<p:inputMask id="cpf" value="#{funcionarioHandler.funcionario.cpf}" mask="999.999.999-99" />
-
-						<h:outputLabel value="RG:" for="rg"/>
-						<p:inputMask id="rg" value="#{funcionarioHandler.funcionario.rg}" mask="99.999.999-9" />
-
-						<h:outputLabel value="Data Nascimento:" for="dataNascimento"/>
-					   	<p:calendar id="dataNascimento" value="#{funcionarioHandler.funcionario.dataNascimento}" pattern="dd/MM/yyyy" showButtonPanel="true"/>  
-						
-						<h:outputLabel value="Nacionalidade:" for="nacionalidade"/>
-						<p:inputText id="nacionalidade" value="#{funcionarioHandler.funcionario.nacionalidade}" size="20" />
-
-						<h:outputLabel value="Mãe:" for="mae"/>
-						<p:inputText id="mae" value="#{funcionarioHandler.funcionario.mae}" size="60" />
-
-						<h:outputLabel value="Pai:" for="pai"/>
-						<p:inputText id="pai" value="#{funcionarioHandler.funcionario.pai}" size="60" />
-					</h:panelGrid>
-					<p:commandButton id="btnCadastroFuncionario" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{funcionarioHandler.persistirFuncionario}" style="align:right" 
-						update=":formFuncionario" onclick="novoFuncionarioDiaglog.close();"/>
-		   		</p:dialog>
+					<!-- HABILITACAO -->
+ 					<p:tab title="Habilitações" id="tabHabilitacao">
+ 						<ui:include src="include/includeEditHabilitacaoFuncionario.xhtml" />
+ 					</p:tab>
+ 					
+				</p:tabView>
 			</h:form>
-			
-			
-			<!-- ENDEREÇO -->
-			<h:form id="formDialogEnderecoFuncionario">  
-	     		<p:dialog id="novoEnderecoFuncionarioDiaglog" widgetVar="novoEnderecoFuncionarioDiaglog" header="Endereço Funcionario" 
-	     			resizable="true" showEffect="fold" hideEffect="fold" width="720" height="420">   
-					<h:inputHidden id="idFuncionarioEndereco" value="#{funcionarioHandler.endereco.funcionario.id}" />
-	     			<h:inputHidden id="idEndereco" value="#{funcionarioHandler.endereco.id}" />
-			     	<h:panelGrid columns="2" cellpadding="1" >
-						<h:outputLabel value="Funcionario:"  />
-						<h:outputLabel value="#{funcionarioHandler.endereco.funcionario.nome}" />
 
-						<h:outputLabel value="CEP:" for="cep"/>
-						<p:inputMask id="cep" value="#{funcionarioHandler.endereco.cep}" mask="99999-999" size="9" disabled="#{funcionarioHandler.disabled}"/>
-						
-						<h:outputLabel value="Tipo Endereço:" for="tipoEndereco" />
-						<p:selectOneRadio id="tipoEndereco" value="#{funcionarioHandler.endereco.tipoEndereco}" disabled="#{funcionarioHandler.disabled}">
-							<f:selectItems value="#{funcionarioHandler.endereco.classificadorEnum}" itemLabel="#{tipoEndereco}" var="tipoEndereco" />
-						</p:selectOneRadio>
-						
-						<h:outputLabel value="Logradouro:" for="logradouro"/>
-						<p:inputText id="logradouro" value="#{funcionarioHandler.endereco.logradouro}" size="50" disabled="#{funcionarioHandler.disabled}"/>
-
-						<h:outputLabel value="Bairro" for="bairro"/>
-						<p:inputText id="bairro" value="#{funcionarioHandler.endereco.bairro}" size="25" disabled="#{funcionarioHandler.disabled}" />
-
-						<h:outputLabel value="Cidade" for="cidade"/>
-						<p:inputText id="cidade" value="#{funcionarioHandler.endereco.cidade}" size="25" disabled="#{funcionarioHandler.disabled}" />
-
-						<h:outputLabel value="Estado" for="uf"/>
-						<p:inputText id="uf" value="#{funcionarioHandler.endereco.uf}" size="2" disabled="#{funcionarioHandler.disabled}" />
-
-						<h:outputLabel value="Nº" for="numero"/>
-						<p:inputText id="numero" value="#{funcionarioHandler.endereco.numero}" size="4" disabled="#{funcionarioHandler.disabled}" />
-
-						<h:outputLabel value="Complemento" for="complemento"/>
-						<p:inputText id="complemento" value="#{funcionarioHandler.endereco.complemento}" size="6" disabled="#{funcionarioHandler.disabled}" />
+  			<!-- FOTO -->
+			<h:form id="formFoto">  
+	     		<p:dialog id="fotoDiaglog" widgetVar="fotoDiaglog" header="Foto Funcionário" 
+	     			resizable="true" showEffect="fold" hideEffect="fold" >   
+	     			<h:panelGrid columns="2" >									   
+						<p:photoCam widgetVar="pc" listener="#{funcionarioHandler.oncapture}" update=":formFuncionario:foto" />
+						<p:commandButton type="button" value="Capture" onclick="pc.capture()"  update=":formFuncionario:foto" oncomplete="fotoDiaglog.hide()"/>
 					</h:panelGrid>
-		     		<div style="visibility: #{funcionarioHandler.evento eq 'Confirmar'? 'visible': 'hidden'};">
-						<p:commandButton id="btnConcluirEndereco" value="Confirmar" title="Concluir" icon="ui-icon-pencil" actionListener="#{funcionarioHandler.persistirEndereco}" style="align:right" 
-						 	onclick="novoEnderecoFuncionarioDiaglog.close();" update=":formFuncionario"  />
-		     		</div>
-		     		<div style="visibility: #{funcionarioHandler.evento eq 'Remover'? 'visible': 'hidden'};">
-						<p:commandButton id="btnRemoverEndereco" value="Remover" title="Remover" icon="ui-icon-close" actionListener="#{funcionarioHandler.excluirEndereco}" style="align:right" 
-							onclick="novoEnderecoFuncionarioDiaglog.close();">
-							<f:setPropertyActionListener value="#{funcionarioHandler.endereco}" target="#{funcionarioHandler.endereco}" />
-						</p:commandButton>	
-		     		</div>
 		   		</p:dialog>
   			</h:form>
-			
-			<!-- TELEFONE -->
-			<h:form id="formDialogTelefoneFuncionario">  
-	     		<p:dialog id="novoTelefoneFuncionarioDiaglog" widgetVar="novoTelefoneFuncionarioDiaglog" header="Endereço Funcionario" 
-	     			resizable="true" showEffect="fold" hideEffect="fold" width="720" height="420">   
-					<h:inputHidden id="idFuncionarioTelefone" value="#{funcionarioHandler.telefone.funcionario.id}" />
-	     			<h:inputHidden id="idTelefone" value="#{funcionarioHandler.telefone.id}" />
-			     	<h:panelGrid columns="2" cellpadding="1" >
-						<h:outputLabel value="Funcionario:"  />
-						<h:outputLabel value="#{funcionarioHandler.telefone.funcionario.nome}" />
-						
-						<h:outputLabel value="Tipo Telefone:" for="tipoTelefone" />
-						<p:selectOneRadio id="tipoTelefone" value="#{funcionarioHandler.telefone.tipoTelefone}" disabled="#{funcionarioHandler.disabled}">
-							<f:selectItems value="#{funcionarioHandler.telefone.classificadorEnum}" itemLabel="#{tipoTelefone}" var="tipoTelefone" />
-						</p:selectOneRadio>
-
-						<h:outputLabel value="DDI:" for="ddiTelefone"/>
-						<p:inputMask id="ddiTelefone" value="#{funcionarioHandler.telefone.ddi}" mask="99" size="2" disabled="#{funcionarioHandler.disabled}"/>
-						
-						<h:outputLabel value="DDD:" for="dddTelefone"/>
-						<p:inputMask id="dddTelefone" value="#{funcionarioHandler.telefone.ddd}" mask="99" size="2" disabled="#{funcionarioHandler.disabled}"/>
-						
-						<h:outputLabel value="Número:" for="numeroTelefone"/>
-						<p:inputText id="numeroTelefone" value="#{funcionarioHandler.telefone.numero}" size="10" disabled="#{funcionarioHandler.disabled}"/>
-
-						<h:outputLabel value="Operadora" for="operadoraTelefone"/>
-						<p:inputText id="operadoraTelefone" value="#{funcionarioHandler.telefone.operadora}" size="25" disabled="#{funcionarioHandler.disabled}" />
-
-					</h:panelGrid>
-		     		<div style="visibility: #{funcionarioHandler.evento eq 'Confirmar'? 'visible': 'hidden'};">
-						<p:commandButton id="btnConcluirTelefone" value="Confirmar" title="Concluir" icon="ui-icon-pencil" actionListener="#{funcionarioHandler.persistirTelefone}" style="align:right" 
-						 	onclick="novoTelefoneFuncionarioDiaglog.close();" update=":formFuncionario"  />
-		     		</div>
-		     		<div style="visibility: #{funcionarioHandler.evento eq 'Remover'? 'visible': 'hidden'};">
-						<p:commandButton id="btnRemoverTelefone" value="Remover" title="Remover" icon="ui-icon-close" actionListener="#{funcionarioHandler.excluirTelefone}" style="align:right" 
-							onclick="novoTelefoneFuncionarioDiaglog.close();"/>
-		     		</div>
-		   		</p:dialog>
-  			</h:form>
-  			
-			<!-- HABILITACAO -->
-			<h:form id="formHabilit">  
-	     		<p:dialog id="habilitacaoDiaglog" widgetVar="habilitacaoDiaglog" header="Habilitação Funcionario" 
-	     			resizable="true" showEffect="fold" hideEffect="fold" width="720" height="420">   
-					<h:inputHidden id="idFuncionarioHabilitacao" value="#{funcionarioHandler.habilitacao.funcionario.id}" />
-	     			<h:inputHidden id="idHabilitacao" value="#{funcionarioHandler.habilitacao.id}" />
-			     	<h:panelGrid columns="2" cellpadding="1" >
-						<h:outputLabel value="Funcionario:"  />
-						<h:outputLabel value="#{funcionarioHandler.habilitacao.funcionario.nome}" />
-
-						<h:outputLabel value="Categoria:"  for="categoria"/>
-						<p:inputText id="categoria" value="#{funcionarioHandler.habilitacao.categoria}" />
-
-						<h:outputLabel value="Código:"  for="codigo"/>
-						<p:inputText id="codigo" value="#{funcionarioHandler.habilitacao.codigo}" />
-						
-						<h:outputLabel value="Data Validade:" for="dataValidade"/>
-					   	<p:calendar id="dataValidade" value="#{funcionarioHandler.habilitacao.validadeCNH}" pattern="dd/MM/yyyy" showButtonPanel="true"/>  
-						
-						<h:outputLabel value="Data Expedição:" for="dataExpedicao"/>
-					   	<p:calendar id="dataExpedicao" value="#{funcionarioHandler.habilitacao.dataExpedicao}" pattern="dd/MM/yyyy" showButtonPanel="true"/>  
-					</h:panelGrid>
-		     		<div style="visibility: #{funcionarioHandler.evento eq 'Confirmar'? 'visible': 'hidden'};">
-						<p:commandButton id="btnConcluirHabilitacao" value="Confirmar" title="Concluir" icon="ui-icon-pencil" actionListener="#{funcionarioHandler.persistirHabilitacao}" style="align:right" 
-						 	onclick="habilitacaoDiaglog.close();" update=":formFuncionario"  />
-		     		</div>
-		     		<div style="visibility: #{funcionarioHandler.evento eq 'Remover'? 'visible': 'hidden'};">
-						<p:commandButton id="btnRemoverHabilitacao" value="Remover" title="Remover" icon="ui-icon-close" actionListener="#{funcionarioHandler.excluirHabilitacao}" style="align:right" 
-							onclick="habilitacaoDiaglog.close();" update=":formFuncionario"/>
-		     		</div>
-		   		</p:dialog>
-  			</h:form>
-  			
-  			<!-- CARGOS -->
-			<h:form id="formCargos">  
-	     		<p:dialog id="novoCargoDiaglog" widgetVar="novoCargoDiaglog" header="Cargo" resizable="true" showEffect="fold" hideEffect="fold" width="720" height="420">   
-					<h:inputHidden id="cargoIdH" value="#{funcionarioHandler.cargo.id}" />
-					<h:inputHidden id="idFuncionarioH" value="#{funcionarioHandler.funcionario.id}" />
-			     	<h:panelGrid columns="2" cellpadding="1" id="painelCargo">
-						<h:outputLabel value="Funcionario:" for="funcionario"/>
-						<p:inputText id="funcionario" value="#{funcionarioHandler.funcionario.nome}" size="60" disabled="true"/>
-						
-						<h:outputLabel value="Cargo:" for="cargo"/>
-						<p:inputText id="cargo" value="#{funcionarioHandler.cargo.titulo}" size="60" disabled="true"/>
-
-						<h:outputLabel value="Descrição:" for="descricao"/>
-						<p:inputTextarea id="descricao" value="#{funcionarioHandler.cargo.descricao}" rows="4" cols="60" disabled="true"/>
-
-					</h:panelGrid>
-		     		<div style="visibility: #{funcionarioHandler.evento eq 'Confirmar'? 'visible': 'hidden'};">
-						<p:commandButton id="btnConcluirCargo" value="Confirmar" title="Concluir" icon="ui-icon-pencil" actionListener="#{funcionarioHandler.adicionarCargo}" style="align:right" 
-						 	onclick="novoCargoDiaglog.close();" update=":formFuncionario"  />
-		     		</div>
-		     		<div style="visibility: #{funcionarioHandler.evento eq 'Remover'? 'visible': 'hidden'};">
-						<p:commandButton id="btnRemoverCargo" value="Remover" title="Remover" icon="ui-icon-close" actionListener="#{funcionarioHandler.removerCargo}" style="align:right" 
-							onclick="novoCargoDiaglog.close();"/>
-		     		</div>
-		   		</p:dialog>
-  			</h:form>
-			
-	    </p:panel>
+		</p:panel>
 	</ui:define>
 </ui:composition>

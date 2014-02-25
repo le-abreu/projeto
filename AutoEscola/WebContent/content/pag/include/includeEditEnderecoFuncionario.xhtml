@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:commandButton id="btnNovoEndereco" value="Novo Endereço" style="font-size: 0.8em;" icon="ui-icon-contact" oncomplete="novoEnderecoFuncionarioDiaglog.show();" update=":formFuncionario">
+		<f:setPropertyActionListener value="Confirmar" target="#{funcionarioHandler.evento}" />
+		<f:setPropertyActionListener value="" target="#{funcionarioHandler.disabled}" />
+		<f:setPropertyActionListener value="#{funcionarioHandler.novoEndereco}" target="#{funcionarioHandler.endereco}" />
+	</p:commandButton>	
+	
+	<p:dataTable id="dataTableEnderecosResults" var="endereco" 
+		paginator="true" rows="5" 
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15"
+		value="#{funcionarioHandler.funcionario.enderecos}" emptyMessage="Nenhum endereço esta cadastrado para o funcionario" 
+		selection="#{endereco}" style="margin-top: 8px">
+
+		<f:facet name="header">
+			<h:outputText value="" />
+		</f:facet>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Tipo Endereço" />
+			</f:facet>
+			<h:outputText value="#{endereco.tipoEndereco}" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="CEP" />
+			</f:facet>
+			<h:outputText value="#{endereco.cep}" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Lougradouro" />
+			</f:facet>
+			<h:outputText value="#{endereco.logradouro}" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Bairro" />
+			</f:facet>
+			<h:outputText value="#{endereco.bairro}" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Cidade" />
+			</f:facet>
+			<h:outputText value="#{endereco.cidade}" />
+		</p:column>
+								
+		<p:column style="width:90px" headerText="Visualizar">
+			<p:commandButton id="btnViewEndereco" icon="ui-icon-search" oncomplete="novoEnderecoFuncionarioDiaglog.show();" update=":formFuncionario">
+				<f:setPropertyActionListener value="#{endereco}" target="#{funcionarioHandler.endereco}" />
+				<f:setPropertyActionListener value="Visualizar" target="#{funcionarioHandler.evento}" />
+				<f:setPropertyActionListener value="true" target="#{funcionarioHandler.disabled}" />
+			</p:commandButton>
+		</p:column>
+		
+		<p:column style="width:90px" headerText="Editar">
+			<p:commandButton id="btnEditarEndereco" title="Editar" icon="ui-icon-pencil" oncomplete="novoEnderecoFuncionarioDiaglog.show();" update=":formFuncionario">
+				<f:setPropertyActionListener value="#{endereco}" target="#{funcionarioHandler.endereco}" />
+				<f:setPropertyActionListener value="Confirmar" target="#{funcionarioHandler.evento}" />
+				<f:setPropertyActionListener value="false" target="#{funcionarioHandler.disabled}" />
+			</p:commandButton>
+		</p:column>
+		<p:column style="width:90px" headerText="Remover">
+			<p:commandButton id="btnRemoverEndereco" title="Remover" icon="ui-icon-close" oncomplete="novoEnderecoFuncionarioDiaglog.show();" update=":formFuncionario">
+				<f:setPropertyActionListener value="#{endereco}" target="#{funcionarioHandler.endereco}" />
+				<f:setPropertyActionListener value="Remover" target="#{funcionarioHandler.evento}" />
+				<f:setPropertyActionListener value="true" target="#{funcionarioHandler.disabled}" />
+			</p:commandButton>
+		</p:column>
+	</p:dataTable>
+	
+	<p:dialog id="novoEnderecoFuncionarioDiaglog" widgetVar="novoEnderecoFuncionarioDiaglog" header="Endereço Funcionário" 
+		resizable="true" showEffect="fold" hideEffect="fold" width="600" height="300">     
+		<h:inputHidden id="idEndereco" value="#{funcionarioHandler.endereco.id}" />
+     	<h:panelGrid columns="2">
+			<h:outputLabel value="Funcionario:"  />
+			<h:outputLabel value="#{funcionarioHandler.funcionario.nome}" />
+		</h:panelGrid>
+						
+     	<h:panelGrid columns="1">
+			<h:outputLabel value="Tipo Endereço:" for="tipoEndereco" />
+			<p:selectOneRadio id="tipoEndereco" value="#{funcionarioHandler.endereco.tipoEndereco}" disabled="#{funcionarioHandler.disabled}">
+				<f:selectItems value="#{funcionarioHandler.endereco.classificadorEnum}" itemLabel="#{tipoEndereco}" var="tipoEndereco" />
+			</p:selectOneRadio>
+		</h:panelGrid>
+					
+     	<h:panelGrid columns="3">
+	     	<h:panelGrid columns="1">
+				<h:outputLabel value="Logradouro:" for="logradouro"/>
+				<p:inputText id="logradouro" value="#{funcionarioHandler.endereco.logradouro}" size="60" disabled="#{funcionarioHandler.disabled}"/>
+			</h:panelGrid>
+				
+	     	<h:panelGrid columns="1">
+				<h:outputLabel value="Nº" for="numero"/>
+				<p:inputText id="numero" value="#{funcionarioHandler.endereco.numero}" size="4" disabled="#{funcionarioHandler.disabled}" />
+			</h:panelGrid>
+
+	     	<h:panelGrid columns="1">
+				<h:outputLabel value="Complemento" for="complemento"/>
+				<p:inputText id="complemento" value="#{funcionarioHandler.endereco.complemento}" size="6" disabled="#{funcionarioHandler.disabled}" />
+			</h:panelGrid>
+		</h:panelGrid>
+		
+     	<h:panelGrid columns="4">
+	     	<h:panelGrid columns="1">
+				<h:outputLabel value="CEP:" for="cep"/>
+				<p:inputMask id="cep" value="#{funcionarioHandler.endereco.cep}" mask="99999-999" size="9" disabled="#{funcionarioHandler.disabled}"/>
+			</h:panelGrid>
+
+	     	<h:panelGrid columns="1">
+				<h:outputLabel value="Bairro" for="bairro"/>
+				<p:inputText id="bairro" value="#{funcionarioHandler.endereco.bairro}" size="25" disabled="#{funcionarioHandler.disabled}" />
+			</h:panelGrid>
+
+	     	<h:panelGrid columns="1">
+				<h:outputLabel value="Cidade" for="cidade"/>
+				<p:inputText id="cidade" value="#{funcionarioHandler.endereco.cidade}" size="25" disabled="#{funcionarioHandler.disabled}" />
+			</h:panelGrid>
+
+	     	<h:panelGrid columns="1">
+				<h:outputLabel value="Estado" for="uf"/>
+				<p:inputText id="uf" value="#{funcionarioHandler.endereco.uf}" size="2" disabled="#{funcionarioHandler.disabled}" />
+			</h:panelGrid>
+
+		</h:panelGrid>
+		<p:commandButton id="btnConcluirEndereco" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{funcionarioHandler.persistirEndereco}" style="align:right" 
+		 	update=":formFuncionario" onclick="novoEnderecoFuncionarioDiaglog.close();" rendered="#{funcionarioHandler.evento eq 'Confirmar'}" />
+		<p:commandButton id="btnRemoverEndereco" value="Remover" title="Remover" icon="ui-icon-close" action="#{funcionarioHandler.excluirEndereco}" style="align:right" 
+			update=":formFuncionario" onclick="novoEnderecoFuncionarioDiaglog.close();" rendered="#{funcionarioHandler.evento eq 'Remover'}" >
+			<f:setPropertyActionListener value="#{funcionarioHandler.endereco}" target="#{funcionarioHandler.endereco}" />
+		</p:commandButton>	
+	</p:dialog>				
+</html>

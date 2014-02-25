@@ -1,23 +1,33 @@
 package br.com.autoescola.handler;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.CaptureEvent;
 
 import br.com.autoescola.bean.Cargo;
 import br.com.autoescola.bean.Classificador;
 import br.com.autoescola.bean.Endereco;
 import br.com.autoescola.bean.Funcionario;
 import br.com.autoescola.bean.Habilitacao;
+import br.com.autoescola.bean.Imagem;
+import br.com.autoescola.bean.NacionalidadeEnum;
 import br.com.autoescola.bean.Telefone;
 import br.com.autoescola.dao.CargoDAO;
 import br.com.autoescola.dao.FuncionarioDAO;
+import br.com.autoescola.util.ControllerArquivo;
 
-@ViewScoped()
+@SessionScoped
 @ManagedBean(name = "funcionarioHandler")
 public class FuncionarioHandler implements Serializable{
 
@@ -27,7 +37,7 @@ public class FuncionarioHandler implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	//BEAN
-	private Funcionario funcionario = new Funcionario();
+	private Funcionario funcionario;
 	private  Endereco endereco = new Endereco();
 	private  Telefone telefone = new Telefone();
 	private  Habilitacao habilitacao = new Habilitacao();
@@ -37,6 +47,7 @@ public class FuncionarioHandler implements Serializable{
 	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	private List<Telefone> telefones = new ArrayList<Telefone>();
+	private List<NacionalidadeEnum> nacionalidadeEnum;
 
 	//DAO
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
@@ -123,8 +134,10 @@ public class FuncionarioHandler implements Serializable{
 		return funcionarios = funcionarioDAO.lista();
 	}
 	
-	public void persistirFuncionario() {
+	public String persistirFuncionario() {
+		salvarFoto();
 		this.funcionarioDAO.persist(funcionario);
+		return "formFuncionarioList.xhtml";
 	}
 	
 	public Cargo getCargo() {
@@ -208,6 +221,23 @@ public class FuncionarioHandler implements Serializable{
 		cargo = new Cargo();
 	}
 	
+	public List<NacionalidadeEnum> getNacionalidadeEnum() {
+		if(nacionalidadeEnum == null || nacionalidadeEnum.isEmpty()){
+			nacionalidadeEnum = new ArrayList<NacionalidadeEnum>();
+		for (NacionalidadeEnum nacEnum : NacionalidadeEnum.values()) {
+			nacionalidadeEnum.add(nacEnum);
+		}
+
+		}
+		return nacionalidadeEnum;
+		}
+	
+	public void setNacionalidadeEnum(List<NacionalidadeEnum> nacionalidadeEnum) {
+		this.nacionalidadeEnum = nacionalidadeEnum;
+	}
+
+	
+
 	public List<String> completeCargo(String titulo) {  
         List<String> results = new ArrayList<String>();  
           
@@ -216,5 +246,40 @@ public class FuncionarioHandler implements Serializable{
         }  
           
         return results;  
-    } 
+    }
+	
+	public void oncapture(CaptureEvent captureEvent) {
+		FacesMessage msg = new FacesMessage("Sucesso!!");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+
+		Imagem imagem = funcionario.getImagem();
+		imagem.setCaminho("imagemSistema//temp//fotoPessoa//");
+		imagem.setArquivo("fotoPerfil.jpg");
+		imagem.setTipo("JPG");
+		
+		ControllerArquivo.guardarArquivo(captureEvent.getData(), imagem.getCaminho(), imagem.getArquivo());
+	}
+	
+	private void salvarFoto() {
+		boolean isDeletar = true;
+		Imagem imagem = funcionario.getImagem();
+		imagem.setCaminho("imagemSistema//producao//fotofuncionario");
+		imagem.setArquivo(funcionario.getCpf() + ".jpg");
+		imagem.setTipo("JPG");
+		
+		try {
+			File file = new File(ControllerArquivo.criarArquivo("imagemSistema//temp//fotoPessoa","fotoPerfil.jpg"));
+			if (!file.exists()) {
+				file = new File(ControllerArquivo.criarArquivo(funcionario.getImagem().getCaminho(),funcionario.getImagem().getArquivo()));
+			}if (!file.exists()) {
+				isDeletar = false;
+				file = new File(ControllerArquivo.criarArquivo("imagemSistema//temp//fotoPessoa","fotoPerfilPadrao.jpg"));
+			}
+			ControllerArquivo.guardarArquivo(new FileInputStream(file), imagem.getCaminho(), imagem.getArquivo());
+			if (isDeletar)
+				file.delete();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 }
