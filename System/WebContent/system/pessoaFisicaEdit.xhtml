@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO_8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/WEB-INF/templates/padraoSystem.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Pessoa Fisica</ui:define>
+
+	<ui:define name="content">
+	
+		<p:panel header="Pessoa Fisica" toggleable="false" id="panelPessoaFisica">
+
+			<p:form id="formPessoaFisica">
+				
+				<p:messages id="msgs"/>
+  				
+				<h:panelGrid columns="2" id="pnGridCpf">
+					<h:outputLabel value="CPF:" for="cpf" />
+					<p:inputMask id="cpf" value="#{pessoaFisicaBean.pessoaFisica.cpf}"  mask="999.999.999-99" disabled="#{not empty pessoaFisicaBean.pessoaFisica.cpf}" rendered="true" requiredMessage="O campo CPF é obrigátorio!"/>
+				</h:panelGrid>
+
+				<h:panelGrid columns="6" id="panelGridDados" rendered="">
+					<h:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{pessoaFisicaBean.pessoaFisica.nome}" size="45"  rendered="true" requiredMessage="O campo nome é obrigátorio!"/>
+				</h:panelGrid>
+
+  			</p:form>
+
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional/PT" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<title>
+			<ui:insert name="title" />
+		</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="expires" content="-1" />
+		<meta http-equiv="pragma" content="no-cache" />
+	  	<style type="text/css">
+  			.ui-widget, .ui-widget .ui-widget 
+		  	{     
+		  		font-size: 14px !important;     
+			}   
+	 	 </style>
+
+	</h:head>
+
+	<h:body>
+	
+			<ui:insert name="menu">
+				<ui:include src="menuEmpresa.xhtml" />
+			</ui:insert>	
+	  
+			<ui:insert name="content">
+				<ui:include src="/pag/index.xhtml" />
+			</ui:insert>  
+	</h:body>
+</html>
+

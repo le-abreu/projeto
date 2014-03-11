@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO_8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/WEB-INF/templates/padraoSystem.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Clientes</ui:define>
+	
+	<ui:define name="content">
+		
+		<h:form id="formCliente">
+		
+			<p:panel header="Cliente" toggleable="false" id="panelSearchClientes">
+				
+				<p:toolbar style="margin-top: 8px">
+				
+					<p:toolbarGroup>
+				
+						<p:commandButton id="btnNovoCliente" value="Novo" style="font-size: 0.8em;" icon="ui-icon-document" action="clienteEdit.xhtml" immediate="true" ajax="false" />
+
+					</p:toolbarGroup>
+
+				</p:toolbar>
+			</p:panel>
+			
+			<p:panel header="Clientes" toggleable="false" id="panelClientes">
+			
+				<p:dataTable id="dataTableClientesResults" var="cliente" value="#{clienteBean.clientes}" 
+					emptyMessage="Nenhum cliente encontrado." selection="#{clienteBean.cliente}"
+					paginator="true" rows="10"
+					rowsPerPageTemplate="10,20,40"
+					style="margin-top: 8px">
+
+					<f:facet name="header">
+						<h:outputText value="" />
+					</f:facet>
+	
+					<p:column sortable="true" sortBy="#{cliente.id}">
+						<f:facet name="header">
+							<h:outputText value="ID" />
+						</f:facet>
+						<h:outputText value="#{cliente.id}" />
+					</p:column>
+
+					<p:column style="width:90px">
+					
+						<p:commandButton id="btnEditar" title="Editar" icon="ui-icon-pencil" action="clienteEdit.xhtml">
+							<f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.cliente}" />
+						</p:commandButton>
+					
+					</p:column>
+					
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
