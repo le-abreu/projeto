@@ -37,9 +37,6 @@ public class Telefone {
 	@Column
 	private Classificador tipoTelefone;
 
-	@Column 
-	private Documento documento;
-	
 	@Column
 	private String observacao;
 
@@ -106,14 +103,6 @@ public class Telefone {
 
 	public void setTipoTelefone(Classificador tipoTelefone) {
 		this.tipoTelefone = tipoTelefone;
-	}
-
-	public Documento getDocumento() {
-		return documento;
-	}
-
-	public void setDocumento(Documento documento) {
-		this.documento = documento;
 	}
 
 	public String getObservacao() {

@@ -9,8 +9,8 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import br.com.system.cadastro.dao.JPAUtil;
 import br.com.system.dao.GenericsDAO;
+import br.com.system.dao.JPAUtil;
 
 public class GenericsDAOImpl<T> implements GenericsDAO<T>
 {

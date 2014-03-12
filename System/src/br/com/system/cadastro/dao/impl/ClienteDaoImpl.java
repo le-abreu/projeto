@@ -3,8 +3,8 @@ package br.com.system.cadastro.dao.impl;
 import java.util.List;
 
 import br.com.system.cadastro.dao.ClienteDao;
-import br.com.system.cadastro.dao.JPAUtil;
 import br.com.system.cadastro.model.Cliente;
+import br.com.system.dao.JPAUtil;
 import br.com.system.dao.impl.GenericsDAOImpl;
 
 public class ClienteDaoImpl extends GenericsDAOImpl<Cliente> implements ClienteDao{

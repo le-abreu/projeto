@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:panelGrid id="pnGridTipoPessoa" columns="2" rendered="#{id eq null}">
+	
+		<h:outputLabel value="Selecionar Tipo Pessoa:" for="tipoPessoa" />
+		<p:selectOneMenu id="tipoPessoa" value="#{pessoaBean.tipoPessoa}" >
+			<f:selectItem itemLabel="Selecione" itemValue="#{null}"/>
+			<f:selectItems value="#{pessoaBean.tipoPessoaEnum}" itemLabel="#{tipoPessoa}" itemValue="#{tipoPessoa}" var="tipoPessoa" />
+			<p:ajax partialSubmit="#{pessoaBean.getInstance(pessoa)}" process="@this" update="pnGridTipoPessoaResult" />
+		</p:selectOneMenu>				
+	
+	</h:panelGrid>
+		
+
+	<h:panelGrid id="pnGridDadosPessoa" columns="6">
+		<h:panelGrid columns="1">
+			<h:outputLabel value="Nome:" for="nomePessoa" disabled="#{disabled}" />
+			<p:inputText id="nomePessoa" value="#{pessoa.nome}" disabled="#{disabled}" size="45" rendered="true" requiredMessage="O campo nome é obrigátorio!"/>
+		</h:panelGrid>
+
+		<h:panelGrid columns="1">
+			<h:outputLabel value="Data Nascimento:" for="dataNascimentoPessoa"  />
+			<p:calendar id="dataNascimentoPessoa" value="#{pessoa.dataNascimento}" disabled="#{disabled}" pattern="dd/MM/yyyy" showButtonPanel="true"  rendered="true" requiredMessage="O campo data nascimentoé obrigátorio!"/>
+		</h:panelGrid>
+
+	</h:panelGrid>
+
+	<h:panelGrid id="pnGridTipoPessoaResult">
+
+		<h:panelGrid id="pnGridTipoPessoaFisica" columns="6" rendered="#{pessoaBean.tipoPessoa.descricao eq 'Pessoa Fisica'}">
+			<ui:include src="pessoaFisicaEdit.xhtml" >
+				<ui:param name="disabled" value="#{disabled}" /> 
+			</ui:include>
+		</h:panelGrid>
+
+	</h:panelGrid> 
+	
+</html>

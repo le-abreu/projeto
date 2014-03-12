@@ -1,5 +1,6 @@
 package br.com.system.cadastro.model.enumaretor;
 
+
 public enum SexoEnum {
 
 	MASCULINO("Masculino"), 

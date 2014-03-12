@@ -1,5 +1,6 @@
 package br.com.system.cadastro.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +15,17 @@ import br.com.system.cadastro.model.Cliente;
 
 @SessionScoped
 @ManagedBean(name = "clienteBean")
-public class ClienteBean {
+public class ClienteBean implements Serializable{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// ATRIBUTOS CONTROLER
 	private ClienteBusiness clienteBusiness = new ClienteBusinessImpl();
+	private boolean disabled;
+	
 	
 	// CONTROLER
 	public String saveOrUpdate() {
@@ -55,12 +62,6 @@ public class ClienteBean {
 	}
 
 
-
-
-
-
-
-
 	// CONSTANTES
 	public static final String PAG_CLIENT_LISTA = "clienteList.xhtml"; 
 	public static final String PAG_CLIENT_EDIT = "clienteEdit.xhtml"; 
@@ -86,6 +87,14 @@ public class ClienteBean {
 		this.clientes = clientes;
 	}
 
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
+	
 
 	private void getFacesMessage(String msgTela) {
 		FacesMessage msg = new FacesMessage(msgTela);
@@ -96,4 +105,5 @@ public class ClienteBean {
 		FacesMessage msg = new FacesMessage(msgTela + e.getMessage() );
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
+	
 }

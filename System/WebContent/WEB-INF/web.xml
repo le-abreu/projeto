@@ -42,7 +42,7 @@
   </context-param>
   <filter>
     <filter-name>FiltroLogin</filter-name>
-    <filter-class>br.com.autoescola.filtro.FiltroLogin</filter-class>
+    <filter-class>br.com.system.filtro.FiltroLogin</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>FiltroLogin</filter-name>

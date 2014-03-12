@@ -50,9 +50,6 @@ public class Endereco implements Serializable {
 	@Column()
 	private String observacao;
 	
-	@Column()
-	private Documento documento;
-
 	// GET - SET
 	public long getId() {
 		return id;
@@ -132,14 +129,6 @@ public class Endereco implements Serializable {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
-	}
-
-	public Documento getDocumento() {
-		return documento;
-	}
-
-	public void setDocumento(Documento documento) {
-		this.documento = documento;
 	}
 
 	

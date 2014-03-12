@@ -1,86 +1,106 @@
 package br.com.system.cadastro.view;
 
+import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
-import br.com.system.cadastro.business.PessoaBusiness;
-import br.com.system.cadastro.business.impl.PessoaBusinessImpl;
 import br.com.system.cadastro.model.Pessoa;
+import br.com.system.cadastro.model.PessoaFisica;
+import br.com.system.cadastro.model.PessoaJuridica;
+import br.com.system.cadastro.model.enumaretor.SexoEnum;
 
 @SessionScoped
 @ManagedBean(name = "pessoaBean")
-public class PessoaBean {
+public class PessoaBean implements Serializable{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	// ATRIBUTOS CONTROLER
-	private PessoaBusiness pessoaBusiness = new PessoaBusinessImpl();
+	private TipoPessoa tipoPessoa;
 	
-	// CONTROLER
-	public String saveOrUpdate() {
-		
-		try {
-			pessoaBusiness.saveOrUpdate(pessoa);
-			getFacesMessage("Pessoa salvo com sucesso: ");
-			return PAG_CLIENT_LISTA;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			getFacesMessage("Erro ao salvar pessoa: " , e);
-			return PAG_CLIENT_EDIT;
+	private PessoaFisica pessoaFisica;
+	
+	private PessoaJuridica pessoaJuridica;
+	
+	public List<TipoPessoa> getTipoPessoaEnum(){
+		return Arrays.asList(TipoPessoa.values());
+	}
+	
+	public void getInstance(Pessoa pessoa) 
+	{
+		if(pessoa != null)
+		{
+			if(pessoa instanceof PessoaFisica)
+				pessoaFisica = (PessoaFisica) pessoa;
+			else
+				if(pessoa instanceof PessoaFisica)
+					pessoaJuridica = (PessoaJuridica) pessoa;
 		}
-
-	}
-
-	
-	public void pesquisarPessoas() {
-		try {
-			pessoas = pessoaBusiness.findPessoaDaoFilters();
-		} catch (Exception e) {
-			e.printStackTrace();
-			getFacesMessage("Erro ao pesquisar em pessoas: " , e);
+		else if(tipoPessoa != null)
+		{
+			if(tipoPessoa.equals(TipoPessoa.PESSOA_FISICA))
+				pessoaFisica = new PessoaFisica();
+			else
+				if(tipoPessoa.equals(TipoPessoa.PESSOA_JURIDICA))
+					pessoaJuridica = new PessoaJuridica();
 		}
 		
 	}
-	
 
 
-	// CONSTANTES
-	public static final String PAG_CLIENT_LISTA = "pessoaList.xhtml"; 
-	public static final String PAG_CLIENT_EDIT = "pessoaEdit.xhtml"; 
+	public enum TipoPessoa{
+		PESSOA_FISICA("Pessoa Fisica"),
+		PESSOA_JURIDICA("Pessoa Juridica");
+		
+		private String descricao;
 
-	// ATRIBUTOS
-	private Pessoa pessoa;
-	private List<Pessoa> pessoas;
-	
-	// GET - SET
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
-
-	public List<Pessoa> getPessoas() {
-		return pessoas;
-	}
-
-	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
-	}
-
-
-	private void getFacesMessage(String msgTela) {
-		FacesMessage msg = new FacesMessage(msgTela);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		private TipoPessoa(String descricao) {
+			this.descricao = descricao;
+		}
+		
+		public String getDescricao() {
+			return descricao;
+		}
+		
+		@Override
+		public String toString() {
+			return this.getDescricao();
+		}
 	}
 	
-	private void getFacesMessage(String msgTela, Exception e) {
-		FacesMessage msg = new FacesMessage(msgTela + e.getMessage() );
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+	public List<SexoEnum> getSexoEnum() {
+		return Arrays.asList(SexoEnum.values());
 	}
+
+	public TipoPessoa getTipoPessoa() {
+		return tipoPessoa;
+	}
+
+	public void setTipoPessoa(TipoPessoa tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
+
+	public PessoaFisica getPessoaFisica() {
+		return pessoaFisica;
+	}
+
+	public void setPessoaFisica(PessoaFisica pessoaFisica) {
+		this.pessoaFisica = pessoaFisica;
+	}
+
+	public PessoaJuridica getPessoaJuridica() {
+		return pessoaJuridica;
+	}
+
+	public void setPessoaJuridica(PessoaJuridica pessoaJuridica) {
+		this.pessoaJuridica = pessoaJuridica;
+	}
+	
 }
