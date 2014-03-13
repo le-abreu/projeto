@@ -25,7 +25,7 @@ public class PessoaBean implements Serializable{
 	// ATRIBUTOS CONTROLER
 	private TipoPessoa tipoPessoa;
 	
-	private PessoaFisica pessoaFisica;
+	private PessoaFisica pessoaFisica = new PessoaFisica();
 	
 	private PessoaJuridica pessoaJuridica;
 	
@@ -33,7 +33,7 @@ public class PessoaBean implements Serializable{
 		return Arrays.asList(TipoPessoa.values());
 	}
 	
-	public void getInstance(Pessoa pessoa) 
+	public void instanceTipoPessoa(Pessoa pessoa) 
 	{
 		if(pessoa != null)
 		{

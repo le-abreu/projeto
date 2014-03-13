@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import br.com.system.cadastro.business.ClienteBusiness;
 import br.com.system.cadastro.business.impl.ClienteBusinessImpl;
 import br.com.system.cadastro.model.Cliente;
+import br.com.system.cadastro.model.PessoaFisica;
 
 @SessionScoped
 @ManagedBean(name = "clienteBean")
@@ -26,6 +27,10 @@ public class ClienteBean implements Serializable{
 	private ClienteBusiness clienteBusiness = new ClienteBusinessImpl();
 	private boolean disabled;
 	
+	{
+		this.cliente = new Cliente();
+		this.cliente.setPessoa(new PessoaFisica());
+	}
 	
 	// CONTROLER
 	public String saveOrUpdate() {
