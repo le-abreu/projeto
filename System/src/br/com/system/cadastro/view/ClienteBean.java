@@ -23,9 +23,11 @@ public class ClienteBean implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	// ATRIBUTOS CONTROLER
 	private ClienteBusiness clienteBusiness = new ClienteBusinessImpl();
 	private boolean disabled;
+	private String evento;
 	
 	{
 		this.cliente = new Cliente();
@@ -49,6 +51,23 @@ public class ClienteBean implements Serializable{
 
 	}
 
+	// CONTROLER
+	public String excluirCliente() {
+		
+		try {
+			clienteBusiness.saveOrUpdate(cliente);
+			restart();
+			getFacesMessage("Cliente inativado com sucesso: ");
+			return PAG_CLIENT_LISTA;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			getFacesMessage("Erro ao inativar cliente: " , e);
+			return PAG_CLIENT_EDIT;
+		}
+		
+	}
+
 	
 	public void pesquisarClientes() {
 		try {
@@ -66,7 +85,10 @@ public class ClienteBean implements Serializable{
 		pesquisarClientes();
 	}
 
-
+	public Cliente getNovoCliente() {
+		return new Cliente();
+	}
+	
 	// CONSTANTES
 	public static final String PAG_CLIENT_LISTA = "clienteList.xhtml"; 
 	public static final String PAG_CLIENT_EDIT = "clienteEdit.xhtml"; 
@@ -99,7 +121,14 @@ public class ClienteBean implements Serializable{
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
 	}
-	
+
+	public String getEvento() {
+		return evento;
+	}
+
+	public void setEvento(String evento) {
+		this.evento = evento;
+	}
 
 	private void getFacesMessage(String msgTela) {
 		FacesMessage msg = new FacesMessage(msgTela);

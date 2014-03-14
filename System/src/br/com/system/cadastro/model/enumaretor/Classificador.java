@@ -1,5 +1,6 @@
 package br.com.system.cadastro.model.enumaretor;
 
+
 public enum Classificador {
 
 	CORRESPONDENCIA("Correspondência"), 
@@ -13,14 +14,13 @@ public enum Classificador {
 		this.tipo = tipo;
 	}
 	
-	
 	public String getTipo() {
 		return tipo;
 	}
-
 
 	@Override
 	public String toString() {
 		return getTipo();
 	}
+
 }

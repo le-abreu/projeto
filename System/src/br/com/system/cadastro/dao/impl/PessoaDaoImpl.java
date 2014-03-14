@@ -20,6 +20,6 @@ public class PessoaDaoImpl extends GenericsDAOImpl<Pessoa> implements PessoaDao{
 	}
 
 	public static class PessoaDaoFilters{
-		
+		 
 	}
 }

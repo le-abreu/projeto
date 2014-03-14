@@ -21,9 +21,13 @@
 				<p:toolbar style="margin-top: 8px">
 				
 					<p:toolbarGroup>
-				
-						<p:commandButton id="btnNovoCliente" value="Novo" style="font-size: 0.8em;" icon="ui-icon-document" action="clienteEdit.xhtml" immediate="true" ajax="false" />
-
+							
+						<p:commandButton id="btnNovoCliente" value="Novo Cliente" style="font-size: 0.8em;" icon="ui-icon-document" action="clienteEdit.xhtml" immediate="true" ajax="false">
+							<f:setPropertyActionListener value="Confirmar" target="#{clienteBean.evento}" />
+							<f:setPropertyActionListener value="" target="#{clienteBean.disabled}" />
+							<f:setPropertyActionListener value="#{clienteBean.novoCliente}" target="#{clienteBean.cliente}" />
+						</p:commandButton>	 
+						
 					</p:toolbarGroup>
 
 				</p:toolbar>
