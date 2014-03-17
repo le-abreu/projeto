@@ -9,21 +9,22 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
 
+
+
 	<h:panelGrid columns="1">
 		<h:outputLabel value="CPF:" for="cpfPessoaFisica" />
-		<p:inputMask id="cpfPessoaFisica" value="#{pessoaBean.pessoaFisica.cpf}"  mask="999.999.999-99" disabled="#{disabled}" rendered="true" requiredMessage="O campo CPF é obrigátorio!"/>
+		<p:inputMask id="cpfPessoaFisica" value="#{pessoaFisica.cpf}"  mask="999.999.999-99" disabled="#{disabled}" rendered="true" requiredMessage="O campo CPF é obrigátorio!"/>
 	</h:panelGrid>
 	
 	<h:panelGrid columns="1">
 		<h:outputLabel value="RG:" for="rgPessoaFisica"/>
-		<p:inputText id="rgPessoaFisica" value="#{pessoaBean.pessoaFisica.rg}"  disabled="#{disabled}" rendered="true" requiredMessage="O campo RG é obrigátorio!"/>
+		<p:inputText id="rgPessoaFisica" value="#{pessoaFisica.rg}"  disabled="#{disabled}" rendered="true" requiredMessage="O campo RG é obrigátorio!"/>
 	</h:panelGrid>
-	
 	
 	<h:panelGrid columns="1">
 		<h:outputLabel value="Sexo:" for="sexoPessoaFisica" />
-		<p:selectOneMenu id="sexoPessoaFisica" value="#{pessoaBean.pessoaFisica.sexo}" disabled="#{disabled}" requiredMessage="O campo sexo é obrigátorio!">
-			<f:selectItems value="#{pessoaBean.sexoEnum}" itemLabel="#{sexo}" itemValue="#{sexo}" var="sexo" />
+		<p:selectOneMenu id="sexoPessoaFisica" value="#{pessoaFisica.sexo}" disabled="#{disabled}" requiredMessage="O campo sexo é obrigátorio!">
+			<f:selectItems value="#{pessoaFisica.sexoEnum}" itemLabel="#{sexo}" itemValue="#{sexo}" var="sexo" />
 		</p:selectOneMenu>				
 	</h:panelGrid>
 

@@ -1,5 +1,8 @@
 package br.com.system.cadastro.model;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -42,4 +45,13 @@ public class PessoaFisica extends Pessoa {
 	public void setSexo(SexoEnum sexo) {
 		this.sexo = sexo;
 	}
+	@Override
+	public String getValue() {
+		return "pessoaFisica";
+	}
+
+	public List<SexoEnum> getSexoEnum() {
+		return Arrays.asList(SexoEnum.values());
+	}
+	
 }

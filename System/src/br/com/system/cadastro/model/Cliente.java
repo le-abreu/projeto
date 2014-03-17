@@ -2,13 +2,14 @@ package br.com.system.cadastro.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-@Entity
+@Entity(name = "cliente" )
 public class Cliente implements Serializable{
  
 	/**
@@ -21,8 +22,8 @@ public class Cliente implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@OneToOne()
-	private Pessoa pessoa;
+	@OneToOne(cascade = CascadeType.ALL)
+	private PessoaFisica pessoaFisica = new PessoaFisica();
 
 	// GET - SET
 	public Long getId() {
@@ -33,13 +34,12 @@ public class Cliente implements Serializable{
 		this.id = id;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
+	public PessoaFisica getPessoaFisica() {
+		return pessoaFisica;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setPessoaFisica(PessoaFisica pessoaFisica) {
+		this.pessoaFisica = pessoaFisica;
 	}
 
-	
 }

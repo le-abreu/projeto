@@ -8,18 +8,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
-	
-	<h:panelGrid id="pnGridTipoPessoa" columns="2" rendered="#{id eq null}">
-		<h:outputLabel value="Selecionar Tipo Pessoa:" for="tipoPessoa" />
-		<p:selectOneMenu id="tipoPessoa" value="#{pessoaBean.tipoPessoa}" >
-			<f:selectItem itemLabel="Selecione" itemValue="#{null}"/>
-			<f:selectItems value="#{pessoaBean.tipoPessoaEnum}" itemLabel="#{tipoPessoa}" var="tipoPessoa" itemValue="#{tipoPessoa}" />
-			<p:ajax listener="#{pessoaBean.instanceTipoPessoa(pessoa)}" process="@this" update="pnGridTipoPessoaResult" />
-		</p:selectOneMenu>				
-	</h:panelGrid>
+ 
 
-	<h:panelGrid id="pnGridDadosPessoa" columns="2">
-	
+	<h:panelGrid id="pnGridPessoaDados" columns="2" rendered="#{pessoa ne null}">
 		<h:panelGrid columns="1">
 			<h:outputLabel value="Nome:" for="nomePessoa" disabled="#{disabled}" />
 			<p:inputText id="nomePessoa" value="#{pessoa.nome}" disabled="#{disabled}" size="45" rendered="true" requiredMessage="O campo nome é obrigátorio!"/>
@@ -29,31 +20,30 @@
 			<h:outputLabel value="Data Nascimento:" for="dataNascimentoPessoa"  />
 			<p:calendar id="dataNascimentoPessoa" value="#{pessoa.dataNascimento}" disabled="#{disabled}" pattern="dd/MM/yyyy" showButtonPanel="true"  rendered="true" requiredMessage="O campo data nascimentoé obrigátorio!"/>
 		</h:panelGrid>
-	
 	</h:panelGrid>
-	
-	<h:panelGrid id="pnGridTipoPessoaResult">
-		<h:panelGrid id="pnGridTipoPessoaFisica" columns="6" rendered="#{pessoaBean.tipoPessoa.descricao eq 'Pessoa Fisica'}">
-			<ui:include src="pessoaFisicaEdit.xhtml" >
-				<ui:param name="disabled" value="#{disabled}" /> 
-			</ui:include>
-		</h:panelGrid>
+	 
+	<h:panelGrid id="pnGridTipoPessoaFisica" columns="6" rendered="#{pessoa.value eq 'pessoaFisica'}">
+		<ui:include src="pessoaFisicaEdit.xhtml" >
+			<ui:param name="disabled" value="#{disabled}" /> 
+			<ui:param name="pessoaFisica" value="#{pessoa}" /> 
+		</ui:include>
+	</h:panelGrid>
 
-		<h:panelGrid id="pnGridTipoPessoaJuridica" columns="6" rendered="#{pessoaBean.tipoPessoa.descricao eq 'Pessoa Juridica'}">
-			<ui:include src="pessoaJuridicaEdit.xhtml" > 
-				<ui:param name="disabled" value="#{disabled}" /> 
-			</ui:include>
-		</h:panelGrid>
-	</h:panelGrid> 
+	<h:panelGrid id="pnGridTipoPessoaJuridico" columns="6" rendered="#{pessoa.value eq 'pessoaJuridico'}">
+		<ui:include src="pessoaJuridicaEdit.xhtml" > 
+			<ui:param name="disabled" value="#{disabled}" /> 
+			<ui:param name="pessoaJuridica" value="#{pessoa}" /> 
+		</ui:include>
+	</h:panelGrid>
 
 	<p:tabView effect="blind" effectDuration="normal" id="tab">
 
 		<!-- ENDEREÇO -->
 		<p:tab title="Endereços" id="tabEnderecos">
 			<ui:include src="enderecoEdit.xhtml" >
-				<ui:param name="enderecoBean.disabled" value="#{disabled}" /> 
-				<ui:param name="enderecoBean.event" value="#{event}" /> 
-				<ui:param name="enderecoBean.endercos" value="#{pessoa.enderecos}" /> 
+				<ui:param name="disabledSelect" value="#{disabled}" /> 
+				<ui:param name="eventSelect" value="#{event}" /> 
+				<ui:param name="enderecos" value="#{pessoa.enderecos}" /> 
 			</ui:include> 
 		</p:tab>
 	

@@ -20,19 +20,22 @@
 				  
 				<p:messages id="msgs"/>
 				 
-				<p:commandButton id="btnConcluirEndereco" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{clienteBean.saveOrUpdate}" style="align:right" 
-				 	update="dataTableEnderecosResults" onclick="novoEnderecoClienteDiaglog.close();" rendered="#{clienteBean.evento eq 'Confirmar'}" />
-				<p:commandButton id="btnRemoverEndereco" value="Remover" title="Remover" icon="ui-icon-close" action="#{clienteBean.excluirCliente}" style="align:right" 
-					update="dataTableEnderecosResults" onclick="novoEnderecoClienteDiaglog.close();" rendered="#{clienteBean.evento eq 'Remover'}" />	
+				<p:commandButton id="btnConcluirCliente" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{clienteBean.saveOrUpdate}" style="align:right" 
+				 	rendered="#{clienteBean.evento eq 'Confirmar'}" />
+			
+				<p:commandButton id="btnRemoverCliente" value="Remover" title="Remover" icon="ui-icon-close" action="#{clienteBean.excluirCliente}" style="align:right" 
+					rendered="#{clienteBean.evento eq 'Remover'}" />	
 				
-				<ui:include src="include/pessoaEdit.xhtml" > 
-					<ui:param name="disabled" value="#{clienteBean.disabled}" /> 
-					<ui:param name="pessoa" value="#{clienteBean.cliente.pessoa}" /> 
-					<ui:param name="id" value="#{clienteBean.cliente.id}" /> 
-				</ui:include>
+				<h:panelGrid id="pnGridTipoPessoaResult" rendered="#{id eq null or pessoaBean.tipoPessoa.descricao eq 'Pessoa Juridica' or pessoaBean.tipoPessoa.descricao eq 'Pessoa Fisica'}">
+					<ui:include src="include/pessoaEdit.xhtml" > 
+						<ui:param name="disabled" value="#{clienteBean.disabled}" /> 
+						<ui:param name="pessoa" value="#{clienteBean.cliente.pessoaFisica}" />
+					</ui:include>
+				</h:panelGrid> 
+
 
   			</h:form>
-
+ 
 		</p:panel>
 
 	</ui:define>

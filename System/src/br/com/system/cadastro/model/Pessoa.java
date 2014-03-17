@@ -86,5 +86,8 @@ public abstract class Pessoa implements Serializable {
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
 	}
+	
+	
+	public abstract String getValue();
 
 }
