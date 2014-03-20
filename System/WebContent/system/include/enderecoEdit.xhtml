@@ -9,143 +9,156 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<p:commandButton id="btnNovoEndereco" value="Novo Endereço" style="font-size: 0.8em;" icon="ui-icon-contact" oncomplete="novoEnderecoClienteDiaglog.show();" update="novoEnderecoClienteDiaglog">
-		<f:setPropertyActionListener value="Confirmar" target="#{enderecoBean.evento}" />
-		<f:setPropertyActionListener value="" target="#{enderecoBean.disabled}" />
-		<f:setPropertyActionListener value="#{enderecoBean.novoEndereco}" target="#{enderecoBean.endereco}" />
-	</p:commandButton>	 
 	
-	<p:dataTable id="dataTableEnderecosResults" var="endereco" 
-		paginator="true" rows="5" 
-		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-		rowsPerPageTemplate="5,10,15"
-		value="#{enderecos}" emptyMessage="Nenhum endereço esta cadastrado para o cliente" 
-		selection="#{endereco}" style="margin-top: 8px">
- 
-		<f:facet name="header">
-			<h:outputText value="" />
-		</f:facet>
+	<h:panelGrid id="pnGridEndereco">
 
-		<p:column>
-			<f:facet name="header">
-				<h:outputText value="Tipo Endereço" />
-			</f:facet>
-			<h:outputText value="#{endereco.tipoEndereco}" />
-		</p:column>
-
-		<p:column>
-			<f:facet name="header">
-				<h:outputText value="CEP" />
-			</f:facet>
-			<h:outputText value="#{endereco.cep}" />
-		</p:column>
-
-		<p:column>
-			<f:facet name="header">
-				<h:outputText value="Lougradouro" />
-			</f:facet>
-			<h:outputText value="#{endereco.logradouro}" />
-		</p:column>
-
-		<p:column>
-			<f:facet name="header">
-				<h:outputText value="Bairro" />
-			</f:facet>
-			<h:outputText value="#{endereco.bairro}" />
-		</p:column>
-
-		<p:column>
-			<f:facet name="header">
-				<h:outputText value="Cidade" />
-			</f:facet>
-			<h:outputText value="#{endereco.cidade}" />
-		</p:column>
-								
-		<p:column style="width:90px" headerText="Visualizar">
-			<p:commandButton id="btnViewEndereco" icon="ui-icon-search" oncomplete="novoEnderecoClienteDiaglog.show();" update="novoEnderecoClienteDiaglog">
-				<f:setPropertyActionListener value="#{endereco}" target="#{enderecoBean.endereco}" />
-				<f:setPropertyActionListener value="Visualizar" target="#{enderecoBean.evento}" />
-				<f:setPropertyActionListener value="true" target="#{enderecoBean.disabled}" />
-			</p:commandButton>
-		</p:column>
-		
-		<p:column style="width:90px" headerText="Editar">
-			<p:commandButton id="btnEditarEndereco" title="Editar" icon="ui-icon-pencil" oncomplete="novoEnderecoClienteDiaglog.show();" update="novoEnderecoClienteDiaglog">
-				<f:setPropertyActionListener value="#{endereco}" target="#{enderecoBean.endereco}" />
-				<f:setPropertyActionListener value="Confirmar" target="#{enderecoBean.evento}" />
-				<f:setPropertyActionListener value="false" target="#{enderecoBean.disabled}" />
-			</p:commandButton>
-		</p:column>
-		<p:column style="width:90px" headerText="Remover">
-			<p:commandButton id="btnRemoverEndereco" title="Remover" icon="ui-icon-close" oncomplete="novoEnderecoClienteDiaglog.show();" update="novoEnderecoClienteDiaglog">
-				<f:setPropertyActionListener value="#{endereco}" target="#{enderecoBean.endereco}" />
-				<f:setPropertyActionListener value="Remover" target="#{enderecoBean.evento}" />
-				<f:setPropertyActionListener value="true" target="#{enderecoBean.disabled}" />
-			</p:commandButton>
-		</p:column>
-	</p:dataTable>
+		<p:commandButton id="btnNovoEndereco" value="Novo Endereço" style="font-size: 0.8em;" icon="ui-icon-contact"  update=":formCliente:tab:pnGridEndereco" oncomplete="novoEnderecoClienteDiaglog.show();">
+			<f:setPropertyActionListener value="Confirmar" target="#{enderecoBean.evento}" />
+			<f:setPropertyActionListener value="" target="#{enderecoBean.disabled}" />
+			<f:setPropertyActionListener value="#{enderecoBean.novoEndereco}" target="#{enderecoBean.endereco}" />
+		</p:commandButton>	 
 	
-	<p:dialog id="novoEnderecoClienteDiaglog" widgetVar="novoEnderecoClienteDiaglog" header="Endereço Cliente" 
-		resizable="true" showEffect="fold" hideEffect="fold" width="600" height="316">     
+	
+		<p:dialog id="novoEnderecoClienteDiaglog" widgetVar="novoEnderecoClienteDiaglog" header="Endereço Cliente" 
+			resizable="true" showEffect="fold" hideEffect="fold" width="600" height="350">  
+			
+			
+	     	<h:panelGrid rendered="#{enderecoBean.endereco ne null}" id="pnGridEditEndereco">
+				<h:panelGrid columns="1">
+					<h:outputLabel value="Tipo Endereço:" for="tipoEndereco" />
+					<p:selectOneMenu id="tipoEndereco" value="#{enderecoBean.endereco.tipoEndereco}" disabled="#{enderecoBean.disabled}">
+						<f:selectItems value="#{classificadorBean.classificadorEnum}" itemLabel="#{tipoEndereco}" var="tipoEndereco" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+							
+		     	<h:panelGrid columns="3">
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="Logradouro:" for="logradouro"/>
+						<p:inputText id="logradouro" value="#{enderecoBean.endereco.logradouro}" size="60" disabled="#{enderecoBean.disabled}"/>
+					</h:panelGrid>
+						
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="Nº" for="numero"/>
+						<p:inputText id="numero" value="#{enderecoBean.endereco.numero}" size="4" disabled="#{enderecoBean.disabled}" />
+					</h:panelGrid>
 		
-		<h:inputHidden id="idEndereco" value="#{enderecoBean.endereco.id}" />
-
-     	<h:panelGrid columns="1">
-			<h:outputLabel value="Tipo Endereço:" for="tipoEndereco" />
-			<p:selectOneRadio id="tipoEndereco" value="#{enderecoBean.endereco.tipoEndereco}" disabled="#{enderecoBean.disabled}">
-				<f:selectItems value="#{classificadorBean.classificadorEnum}" itemLabel="#{tipoEndereco}" var="tipoEndereco" />
-			</p:selectOneRadio>
-		</h:panelGrid>
-					
-     	<h:panelGrid columns="3">
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="Logradouro:" for="logradouro"/>
-				<p:inputText id="logradouro" value="#{enderecoBean.endereco.logradouro}" size="60" disabled="#{enderecoBean.disabled}"/>
-			</h:panelGrid>
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="Complemento" for="complemento"/>
+						<p:inputText id="complemento" value="#{enderecoBean.endereco.complemento}" size="6" disabled="#{enderecoBean.disabled}" />
+					</h:panelGrid>
+				</h:panelGrid>
 				
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="Nº" for="numero"/>
-				<p:inputText id="numero" value="#{enderecoBean.endereco.numero}" size="4" disabled="#{enderecoBean.disabled}" />
-			</h:panelGrid>
-
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="Complemento" for="complemento"/>
-				<p:inputText id="complemento" value="#{enderecoBean.endereco.complemento}" size="6" disabled="#{enderecoBean.disabled}" />
-			</h:panelGrid>
-		</h:panelGrid>
+		     	<h:panelGrid columns="4">
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="CEP:" for="cep"/>
+						<p:inputMask id="cep" value="#{enderecoBean.endereco.cep}" mask="99999-999" size="9" disabled="#{enderecoBean.disabled}"/>
+					</h:panelGrid>
 		
-     	<h:panelGrid columns="4">
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="CEP:" for="cep"/>
-				<p:inputMask id="cep" value="#{enderecoBean.endereco.cep}" mask="99999-999" size="9" disabled="#{enderecoBean.disabled}"/>
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="Bairro" for="bairro"/>
+						<p:inputText id="bairro" value="#{enderecoBean.endereco.bairro}" size="25" disabled="#{enderecoBean.disabled}" />
+					</h:panelGrid>
+		
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="Cidade" for="cidade"/>
+						<p:inputText id="cidade" value="#{enderecoBean.endereco.cidade}" size="25" disabled="#{enderecoBean.disabled}" />
+					</h:panelGrid>
+		
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="Estado" for="uf"/>
+						<p:inputText id="uf" value="#{enderecoBean.endereco.uf}" size="2" disabled="#{enderecoBean.disabled}" />
+					</h:panelGrid>
+		
+				</h:panelGrid>
+		
+		     	<h:panelGrid columns="1">
+					<h:outputLabel value="Observação" for="observacaoEndereco"/>
+					<p:inputTextarea id="observacaoEndereco" value="#{enderecoBean.endereco.observacao}" cols="80" rows="3" disabled="#{enderecoBean.disabled}" />
+				</h:panelGrid>
+	  
 			</h:panelGrid>
 
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="Bairro" for="bairro"/>
-				<p:inputText id="bairro" value="#{enderecoBean.endereco.bairro}" size="25" disabled="#{enderecoBean.disabled}" />
-			</h:panelGrid>
-
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="Cidade" for="cidade"/>
-				<p:inputText id="cidade" value="#{enderecoBean.endereco.cidade}" size="25" disabled="#{enderecoBean.disabled}" />
-			</h:panelGrid>
-
-	     	<h:panelGrid columns="1">
-				<h:outputLabel value="Estado" for="uf"/>
-				<p:inputText id="uf" value="#{enderecoBean.endereco.uf}" size="2" disabled="#{enderecoBean.disabled}" />
-			</h:panelGrid>
-
-		</h:panelGrid>
-
-     	<h:panelGrid columns="1">
-			<h:outputLabel value="Observação" for="observacaoEndereco"/>
-			<p:inputTextarea id="observacaoEndereco" value="#{enderecoBean.endereco.observacao}" cols="80" rows="3" disabled="#{enderecoBean.disabled}" />
-		</h:panelGrid>
-  
-		<p:commandButton id="btnConcluirEndereco" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{enderecoBean.persistirEndereco}" style="align:right" 
-		 	update="dataTableEnderecosResults" onclick="novoEnderecoClienteDiaglog.close();" rendered="#{enderecoBean.evento eq 'Confirmar'}" />
-		<p:commandButton id="btnRemoverEndereco" value="Remover" title="Remover" icon="ui-icon-close" action="#{enderecoBean.excluirEndereco}" style="align:right" 
-			update="dataTableEnderecosResults" onclick="novoEnderecoClienteDiaglog.close();" rendered="#{enderecoBean.evento eq 'Remover'}" />	
-	</p:dialog>		
+			<h:panelGrid columns="2" >
+				<p:commandButton id="btnCancelarEndereco" value="Cancelar" style="font-size: 0.8em;" icon="ui-icon-close" update="pnGridEndereco" onclick="novoEnderecoClienteDiaglog.close();" rendered="#{enderecoBean.endereco ne null}">
+					<f:setPropertyActionListener value="#{null}" target="#{enderecoBean.endereco}" />
+				</p:commandButton>	 
+				
+				<p:commandButton id="btnConcluirEndereco" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{enderecoBean.persistirEndereco(enderecos)}" style="align:right" 
+				 	update="pnGridEndereco" rendered="#{enderecoBean.evento eq 'Confirmar'}" onclick="novoEnderecoClienteDiaglog.close();" process="@this, pnGridEditEndereco" ajax="true"/>
+				 	
+				<p:commandButton id="btnRemoverEndereco" value="Remover" title="Remover" icon="ui-icon-close" action="#{enderecoBean.excluirEndereco(enderecos)}" style="align:right" 
+					update="pnGridEndereco" rendered="#{enderecoBean.evento eq 'Remover'}" onclick="novoEnderecoClienteDiaglog.close();" process="@this, pnGridEditEndereco" />
+			</h:panelGrid>			 	
+		</p:dialog>
 	
+		<p:dataTable id="dataTableEnderecosResults" var="endereco" 
+			paginator="true" rows="5" 
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15"
+			value="#{enderecos}" emptyMessage="Nenhum endereço esta cadastrado para o cliente" 
+			selection="#{endereco}" style="margin-top: 8px">
+	 
+			<f:facet name="header">
+				<h:outputText value="" />
+			</f:facet>
+	
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Tipo Endereço" />
+				</f:facet>
+				<h:outputText value="#{endereco.tipoEndereco}" />
+			</p:column>
+	
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="CEP" />
+				</f:facet>
+				<h:outputText value="#{endereco.cep}" />
+			</p:column>
+	
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Lougradouro" />
+				</f:facet>
+				<h:outputText value="#{endereco.logradouro}" />
+			</p:column>
+	
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Bairro" />
+				</f:facet>
+				<h:outputText value="#{endereco.bairro}" />
+			</p:column>
+	
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Cidade" />
+				</f:facet>
+				<h:outputText value="#{endereco.cidade}" />
+			</p:column>
+									
+			<p:column style="width:90px" headerText="Visualizar">
+				<p:commandButton id="btnViewEndereco" icon="ui-icon-search"  update=":formCliente:tab:pnGridEndereco" oncomplete="novoEnderecoClienteDiaglog.show();" >
+					<f:setPropertyActionListener value="#{endereco}" target="#{enderecoBean.endereco}" />
+					<f:setPropertyActionListener value="Visualizar" target="#{enderecoBean.evento}" />
+					<f:setPropertyActionListener value="true" target="#{enderecoBean.disabled}" />
+				</p:commandButton>
+			</p:column>
+			
+			<p:column style="width:90px" headerText="Editar">
+				<p:commandButton id="btnEditarEndereco" title="Editar" icon="ui-icon-pencil" update=":formCliente:tab:pnGridEndereco" oncomplete="novoEnderecoClienteDiaglog.show();" >
+					<f:setPropertyActionListener value="#{endereco}" target="#{enderecoBean.endereco}" />
+					<f:setPropertyActionListener value="Confirmar" target="#{enderecoBean.evento}" />
+					<f:setPropertyActionListener value="false" target="#{enderecoBean.disabled}" />
+				</p:commandButton>
+			</p:column>
+			<p:column style="width:90px" headerText="Remover">
+				<p:commandButton id="btnRemoverEndereco" title="Remover" icon="ui-icon-close" update=":formCliente:tab:pnGridEndereco" oncomplete="novoEnderecoClienteDiaglog.show();">
+					<f:setPropertyActionListener value="#{endereco}" target="#{enderecoBean.endereco}" />
+					<f:setPropertyActionListener value="Remover" target="#{enderecoBean.evento}" />
+					<f:setPropertyActionListener value="true" target="#{enderecoBean.disabled}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+	</h:panelGrid>	
 </html>

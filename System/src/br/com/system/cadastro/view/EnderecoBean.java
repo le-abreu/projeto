@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import br.com.system.cadastro.model.Endereco;
 
-@RequestScoped
+@ViewScoped
 @ManagedBean(name = "enderecoBean")
 public class EnderecoBean implements Serializable
 {
@@ -29,22 +29,27 @@ public class EnderecoBean implements Serializable
 		return new Endereco();
 	}
 	
-	public void persistirEndereco() 
+	public void persistirEndereco(List<Endereco> enderecos) 
 	{
-		if(!this.enderecos.contains(endereco)){
-			this.enderecos.add(endereco);
+		if(enderecos == null) 
+			enderecos = new ArrayList<Endereco>();
+			
+		if(!enderecos.contains(endereco)){
+			enderecos.add(endereco);
 		}
-		endereco = new Endereco();
+		
+		endereco = null;
 	}	
 
+	public void excluirEndereco(List<Endereco> enderecos) {
+		enderecos.remove(endereco);
+		endereco = null;
+	}
 	
 	// GET - SET
-	private Endereco endereco = new Endereco();
-	private List<Endereco> enderecos = new ArrayList<Endereco>();
+	private Endereco endereco;
+	private List<Endereco> enderecos;
 
-	public void excluirEndereco() {
-		enderecos.remove(endereco);
-	}
 
 	public String getEvento() {
 		return evento;
