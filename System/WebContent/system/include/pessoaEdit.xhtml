@@ -42,7 +42,17 @@
 			<ui:include src="enderecoEdit.xhtml" >
 				<ui:param name="disabledSelect" value="#{disabled}" /> 
 				<ui:param name="eventSelect" value="#{event}" /> 
-				<ui:param name="enderecos" value="#{pessoa.enderecos}" /> 
+				<ui:param name="enderecos" value="#{pessoa.enderecos}" />
+				<ui:param name="form" value="#{form}" /> 
+			</ui:include> 
+		</p:tab>
+
+		<p:tab title="Telefone" id="tabTelefones">
+			<ui:include src="telefoneEdit.xhtml" >
+				<ui:param name="disabledSelect" value="#{disabled}" /> 
+				<ui:param name="eventSelect" value="#{event}" /> 
+				<ui:param name="telefones" value="#{pessoa.telefones}" />
+				<ui:param name="form" value="#{form}" /> 
 			</ui:include> 
 		</p:tab>
 	

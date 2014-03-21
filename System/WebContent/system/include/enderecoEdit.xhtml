@@ -12,14 +12,14 @@
 	
 	<h:panelGrid id="pnGridEndereco">
 
-		<p:commandButton id="btnNovoEndereco" value="Novo Endereço" style="font-size: 0.8em;" icon="ui-icon-contact"  update="pnGridEndereco" oncomplete="novoEnderecoClienteDiaglog.show();">
+		<p:commandButton id="btnNovoEndereco" value="Novo Endereço" style="font-size: 0.8em;" icon="ui-icon-contact"  update="pnGridEndereco" oncomplete="novoEnderecoDiaglog.show();">
 			<f:setPropertyActionListener value="Confirmar" target="#{enderecoBean.evento}" />
 			<f:setPropertyActionListener value="" target="#{enderecoBean.disabled}" />
 			<f:setPropertyActionListener value="#{enderecoBean.novoEndereco}" target="#{enderecoBean.endereco}" />
 		</p:commandButton>	 
 	
 	
-		<p:dialog id="novoEnderecoClienteDiaglog" widgetVar="novoEnderecoClienteDiaglog" header="Endereço Cliente" 
+		<p:dialog id="novoEnderecoDiaglog" widgetVar="novoEnderecoDiaglog" header="Endereço " 
 			resizable="true" showEffect="fold" hideEffect="fold" width="600" height="350">  
 			
 			
@@ -79,15 +79,15 @@
 			</h:panelGrid>
 
 			<h:panelGrid columns="2" >
-				<p:commandButton id="btnCancelarEndereco" value="Cancelar" style="font-size: 0.8em;" icon="ui-icon-close" update="pnGridEndereco" onclick="novoEnderecoClienteDiaglog.close();" rendered="#{enderecoBean.endereco ne null}">
+				<p:commandButton id="btnCancelarEndereco" value="Cancelar" style="font-size: 0.8em;" icon="ui-icon-close" update="pnGridEndereco" onclick="novoEnderecoDiaglog.close();" rendered="#{enderecoBean.endereco ne null}">
 					<f:setPropertyActionListener value="#{null}" target="#{enderecoBean.endereco}" />
 				</p:commandButton>	 
 				
 				<p:commandButton id="btnConcluirEndereco" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{enderecoBean.persistirEndereco(enderecos)}" style="align:right" 
-				 	update="pnGridEndereco" rendered="#{enderecoBean.evento eq 'Confirmar'}" onclick="novoEnderecoClienteDiaglog.close();" process="@this, pnGridEditEndereco" ajax="true"/>
+				 	update="pnGridEndereco" rendered="#{enderecoBean.evento eq 'Confirmar'}" onclick="novoEnderecoDiaglog.close();" process="@this, pnGridEditEndereco" ajax="true"/>
 				 	
 				<p:commandButton id="btnRemoverEndereco" value="Remover" title="Remover" icon="ui-icon-close" action="#{enderecoBean.excluirEndereco(enderecos)}" style="align:right" 
-					update="pnGridEndereco" rendered="#{enderecoBean.evento eq 'Remover'}" onclick="novoEnderecoClienteDiaglog.close();" process="@this, pnGridEditEndereco" />
+					update="pnGridEndereco" rendered="#{enderecoBean.evento eq 'Remover'}" onclick="novoEnderecoDiaglog.close();" process="@this, pnGridEditEndereco" />
 			</h:panelGrid>			 	
 		</p:dialog>
 	
@@ -138,24 +138,22 @@
 			</p:column>
 									
 			<p:column style="width:90px" headerText="Visualizar">
-				<p:commandButton id="btnViewEndereco" icon="ui-icon-search"  update="pnGridEndereco" oncomplete="novoEnderecoClienteDiaglog.show();" >
-					<p:ajax update="pnGridEndereco"/>
-<!-- 					:formCliente:tab:pnGridEndereco -->
+				<p:commandButton id="btnViewEndereco" icon="ui-icon-search"  update=":#{form}" oncomplete="novoEnderecoDiaglog.show();" >
 					<f:setPropertyActionListener value="#{endereco}" target="#{enderecoBean.endereco}" />
-					<f:setPropertyActionListener value="Visualizar" target="#{enderecoBean.evento}" />
+					<f:setPropertyActionListener value="Visualizar" target="#{enderecoBean.evento}" /> 
 					<f:setPropertyActionListener value="true" target="#{enderecoBean.disabled}" />
 				</p:commandButton>
 			</p:column>
 			
 			<p:column style="width:90px" headerText="Editar">
-				<p:commandButton id="btnEditarEndereco" title="Editar" icon="ui-icon-pencil" update="pnGridEndereco" oncomplete="novoEnderecoClienteDiaglog.show();" >
+				<p:commandButton id="btnEditarEndereco" title="Editar" icon="ui-icon-pencil" update=":#{form}" oncomplete="novoEnderecoDiaglog.show();" >
 					<f:setPropertyActionListener value="#{endereco}" target="#{enderecoBean.endereco}" />
 					<f:setPropertyActionListener value="Confirmar" target="#{enderecoBean.evento}" />
 					<f:setPropertyActionListener value="false" target="#{enderecoBean.disabled}" />
 				</p:commandButton>
 			</p:column>
 			<p:column style="width:90px" headerText="Remover">
-				<p:commandButton id="btnRemoverEndereco" title="Remover" icon="ui-icon-close" update="pnGridEndereco" oncomplete="novoEnderecoClienteDiaglog.show();">
+				<p:commandButton id="btnRemoverEndereco" title="Remover" icon="ui-icon-close" update=":#{form}" oncomplete="novoEnderecoDiaglog.show();">
 					<f:setPropertyActionListener value="#{endereco}" target="#{enderecoBean.endereco}" />
 					<f:setPropertyActionListener value="Remover" target="#{enderecoBean.evento}" />
 					<f:setPropertyActionListener value="true" target="#{enderecoBean.disabled}" />

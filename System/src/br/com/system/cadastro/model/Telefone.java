@@ -17,10 +17,10 @@ public class Telefone {
 	private long id;
 	
 	@Column
-	private int ddi;
+	private String ddi;
 	
 	@Column
-	private int ddd;
+	private String ddd;
 	
 	@Column
 	private String numero;
@@ -49,19 +49,19 @@ public class Telefone {
 		this.id = id;
 	}
 
-	public int getDdi() {
+	public String getDdi() {
 		return ddi;
 	}
 
-	public void setDdi(int ddi) {
+	public void setDdi(String ddi) {
 		this.ddi = ddi;
 	}
 
-	public int getDdd() {
+	public String getDdd() {
 		return ddd;
 	}
 
-	public void setDdd(int ddd) {
+	public void setDdd(String ddd) {
 		this.ddd = ddd;
 	}
 

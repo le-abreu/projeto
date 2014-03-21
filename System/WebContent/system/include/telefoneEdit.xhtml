@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+	
+	
+	<h:panelGrid id="pnGridTelefone">
+
+		<p:commandButton id="btnNovoTelefone" value="Novo Telefone" style="font-size: 0.8em;" icon="ui-icon-contact"  update="pnGridTelefone" oncomplete="novoTelefoneDiaglog.show();">
+			<f:setPropertyActionListener value="Confirmar" target="#{telefoneBean.evento}" />
+			<f:setPropertyActionListener value="" target="#{telefoneBean.disabled}" />
+			<f:setPropertyActionListener value="#{telefoneBean.novoTelefone}" target="#{telefoneBean.telefone}" />
+		</p:commandButton>	 
+	
+	
+		<p:dialog id="novoTelefoneDiaglog" widgetVar="novoTelefoneDiaglog" header="Telefone " 
+			resizable="true" showEffect="fold" hideEffect="fold" width="600" height="350">  
+			
+			
+	     	<h:panelGrid rendered="#{telefoneBean.telefone ne null}" id="pnGridEditTelefone">
+				<h:panelGrid columns="1">
+					<h:outputLabel value="Tipo Telefone:" for="tipoTelefone" />
+					<p:selectOneMenu id="tipoTelefone" value="#{telefoneBean.telefone.tipoTelefone}" disabled="#{telefoneBean.disabled}">
+						<f:selectItems value="#{classificadorBean.classificadorEnum}" itemLabel="#{tipoTelefone}" var="tipoTelefone" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+							
+		     	<h:panelGrid columns="4">
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="DDI:" for="ddiTelefone"/>
+						<p:inputText id="ddiTelefone" value="#{telefoneBean.telefone.ddi}" size="3" maxlength="3" disabled="#{telefoneBean.disabled}"/>
+					</h:panelGrid>
+
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="DDD:" for="dddTelefone"/>
+						<p:inputText id="dddTelefone" value="#{telefoneBean.telefone.ddd}" size="3" maxlength="3" disabled="#{telefoneBean.disabled}"/>
+					</h:panelGrid>
+						
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="Nº" for="numeroTelefone"/>
+						<p:inputText id="numeroTelefone" value="#{telefoneBean.telefone.numero}" size="10" maxlength="10" disabled="#{telefoneBean.disabled}" />
+					</h:panelGrid>
+		
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="Ramal" for="ramalTelefone"/>
+						<p:inputText id="ramalTelefone" value="#{telefoneBean.telefone.ramal}" size="6" disabled="#{telefoneBean.disabled}" />
+					</h:panelGrid>
+				</h:panelGrid>
+
+		     	<h:panelGrid columns="4">
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="Operadora:" for="operadoraTelefone"/>
+						<p:inputText id="operadoraTelefone" value="#{telefoneBean.telefone.operadora}" size="12" disabled="#{telefoneBean.disabled}"/>
+					</h:panelGrid>
+		
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="Codigo Operadora" for="codigoOperadoraTelefone"/>
+						<p:inputText id="codigoOperadoraTelefone" value="#{telefoneBean.telefone.codigoOperadora}" size="3" maxlength="3" disabled="#{telefoneBean.disabled}" />
+					</h:panelGrid>
+		
+				</h:panelGrid>
+		
+		     	<h:panelGrid columns="1">
+					<h:outputLabel value="Observação" for="observacaoTelefone"/>
+					<p:inputTextarea id="observacaoTelefone" value="#{telefoneBean.telefone.observacao}" cols="80" rows="3" disabled="#{telefoneBean.disabled}" />
+				</h:panelGrid>
+	  
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" >
+				<p:commandButton id="btnCancelarTelefone" value="Cancelar" style="font-size: 0.8em;" icon="ui-icon-close" update="pnGridTelefone" onclick="novoTelefoneDiaglog.close();" rendered="#{telefoneBean.telefone ne null}">
+					<f:setPropertyActionListener value="#{null}" target="#{telefoneBean.telefone}" />
+				</p:commandButton>	 
+				
+				<p:commandButton id="btnConcluirTelefone" value="Confirmar" title="Concluir" icon="ui-icon-pencil" action="#{telefoneBean.persistirTelefone(telefones)}" style="align:right" 
+				 	update="pnGridTelefone" rendered="#{telefoneBean.evento eq 'Confirmar'}" onclick="novoTelefoneDiaglog.close();" process="@this, pnGridEditTelefone" ajax="true"/>
+				 	
+				<p:commandButton id="btnRemoverTelefone" value="Remover" title="Remover" icon="ui-icon-close" action="#{telefoneBean.excluirTelefone(telefones)}" style="align:right" 
+					update="pnGridTelefone" rendered="#{telefoneBean.evento eq 'Remover'}" onclick="novoTelefoneDiaglog.close();" process="@this, pnGridEditTelefone" />
+			</h:panelGrid>			 	
+		</p:dialog>
+	
+		<p:dataTable id="dataTableTelefonesResults" var="telefone" 
+			paginator="true" rows="5" 
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15"
+			value="#{telefones}" emptyMessage="Nenhum endereço esta cadastrado para o cliente" 
+			selection="#{telefone}" style="margin-top: 8px">
+	 
+			<f:facet name="header">
+				<h:outputText value="" />
+			</f:facet>
+	
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Tipo Telefone" />
+				</f:facet>
+				<h:outputText value="#{telefone.tipoTelefone}" />
+			</p:column>
+	
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Operadora" />
+				</f:facet>
+				<h:outputText value="#{telefone.operadora}" />
+			</p:column>
+	
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="DDI" />
+				</f:facet>
+				<h:outputText value="#{telefone.ddi}" />
+			</p:column>
+	
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="DDD" />
+				</f:facet>
+				<h:outputText value="#{telefone.ddd}" />
+			</p:column>
+	
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Codigo Operadora" />
+				</f:facet>
+				<h:outputText value="#{telefone.codigoOperadora}" />
+			</p:column>
+									
+			<p:column style="width:90px" headerText="Visualizar">
+				<p:commandButton id="btnViewTelefone" icon="ui-icon-search"  update=":#{form}" oncomplete="novoTelefoneDiaglog.show();" >
+					<f:setPropertyActionListener value="#{telefone}" target="#{telefoneBean.telefone}" />
+					<f:setPropertyActionListener value="Visualizar" target="#{telefoneBean.evento}" /> 
+					<f:setPropertyActionListener value="true" target="#{telefoneBean.disabled}" />
+				</p:commandButton>
+			</p:column>
+			
+			<p:column style="width:90px" headerText="Editar">
+				<p:commandButton id="btnEditarTelefone" title="Editar" icon="ui-icon-pencil" update=":#{form}" oncomplete="novoTelefoneDiaglog.show();" >
+					<f:setPropertyActionListener value="#{telefone}" target="#{telefoneBean.telefone}" />
+					<f:setPropertyActionListener value="Confirmar" target="#{telefoneBean.evento}" />
+					<f:setPropertyActionListener value="false" target="#{telefoneBean.disabled}" />
+				</p:commandButton>
+			</p:column>
+			<p:column style="width:90px" headerText="Remover">
+				<p:commandButton id="btnRemoverTelefone" title="Remover" icon="ui-icon-close" update=":#{form}" oncomplete="novoTelefoneDiaglog.show();">
+					<f:setPropertyActionListener value="#{telefone}" target="#{telefoneBean.telefone}" />
+					<f:setPropertyActionListener value="Remover" target="#{telefoneBean.evento}" />
+					<f:setPropertyActionListener value="true" target="#{telefoneBean.disabled}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+	</h:panelGrid>	
+</html>
