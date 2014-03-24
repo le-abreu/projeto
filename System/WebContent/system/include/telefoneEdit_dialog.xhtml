@@ -12,14 +12,14 @@
 	
 	<h:panelGrid id="#{id}pnGridTelefone">
 
-		<p:commandButton id="#{id}btnNovoTelefone" value="Novo Telefone" style="font-size: 0.8em;" icon="ui-icon-contact"  update="#{id}pnGridTelefone" oncomplete="novoTelefoneDiaglog.show();" rendered="#{telefoneBean.telefone eq null}">
+		<p:commandButton id="#{id}btnNovoTelefone" value="Novo Telefone" style="font-size: 0.8em;" icon="ui-icon-contact"  update="#{id}pnGridTelefone" oncomplete="novoTelefoneDiaglog.show();">
 			<f:setPropertyActionListener value="Confirmar" target="#{telefoneBean.evento}" />
 			<f:setPropertyActionListener value="" target="#{telefoneBean.disabled}" />
 			<f:setPropertyActionListener value="#{telefoneBean.novoTelefone}" target="#{telefoneBean.telefone}" />
 		</p:commandButton>	 
 	
 	
-		<h:panelGrid id="#{id}novoTelefoneDiaglog" widgetVar="novoTelefoneDiaglog" header="Telefone " 
+		<p:dialog id="#{id}novoTelefoneDiaglog" widgetVar="novoTelefoneDiaglog" header="Telefone " 
 			resizable="true" showEffect="fold" hideEffect="fold" width="600" height="350">  
 			
 			
@@ -85,14 +85,14 @@
 				</h:panelGrid>
 	  
 			</h:panelGrid>
-
-		</h:panelGrid>
+		 	
+		</p:dialog>
 	
 		<p:dataTable id="#{id}dataTableTelefonesResults" var="telefone" 
 			paginator="true" rows="5" 
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			rowsPerPageTemplate="5,10,15"
-			value="#{telefones}" emptyMessage="Nenhum endereço esta cadastrado para o cliente" 
+			value="#{telefones}" emptyMessage="Nenhum endereço esta cadastrado!" 
 			selection="#{telefone}" style="margin-top: 8px">
 	 
 			<f:facet name="header">

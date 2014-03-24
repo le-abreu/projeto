@@ -10,49 +10,53 @@
 	xmlns:p="http://primefaces.org/ui">
  
 
-	<h:panelGrid id="pnGridPessoaDados" columns="2" rendered="#{pessoa ne null}">
+	<h:panelGrid id="#{id}pnGridPessoaDados" columns="2" rendered="#{pessoa ne null}">
 		<h:panelGrid columns="1">
-			<h:outputLabel value="Nome:" for="nomePessoa" disabled="#{disabled}" />
-			<p:inputText id="nomePessoa" value="#{pessoa.nome}" disabled="#{disabled}" size="45" rendered="true" requiredMessage="O campo nome é obrigátorio!"/>
+			<h:outputLabel value="Nome:" for="#{id}nomePessoa" disabled="#{disabled}" />
+			<p:inputText id="#{id}nomePessoa" value="#{pessoa.nome}" disabled="#{disabled}" size="45" rendered="true" requiredMessage="O campo nome é obrigátorio!"/>
 		</h:panelGrid>
 
 		<h:panelGrid columns="1">
-			<h:outputLabel value="Data Nascimento:" for="dataNascimentoPessoa"  />
-			<p:calendar id="dataNascimentoPessoa" value="#{pessoa.dataNascimento}" disabled="#{disabled}" pattern="dd/MM/yyyy" showButtonPanel="true"  rendered="true" requiredMessage="O campo data nascimentoé obrigátorio!"/>
+			<h:outputLabel value="Data Nascimento:" for="#{id}dataNascimentoPessoa"  />
+			<p:calendar id="#{id}dataNascimentoPessoa" value="#{pessoa.dataNascimento}" disabled="#{disabled}" pattern="dd/MM/yyyy" showButtonPanel="true"  rendered="true" requiredMessage="O campo data nascimentoé obrigátorio!"/>
 		</h:panelGrid>
 	</h:panelGrid>
 	 
-	<h:panelGrid id="pnGridTipoPessoaFisica" columns="6" rendered="#{pessoa.value eq 'pessoaFisica'}">
+	<h:panelGrid id="#{id}pnGridTipoPessoaFisica" columns="6" rendered="#{pessoa.value eq 'pessoaFisica'}">
 		<ui:include src="pessoaFisicaEdit.xhtml" >
 			<ui:param name="disabled" value="#{disabled}" /> 
 			<ui:param name="pessoaFisica" value="#{pessoa}" /> 
 		</ui:include>
 	</h:panelGrid>
 
-	<h:panelGrid id="pnGridTipoPessoaJuridico" columns="6" rendered="#{pessoa.value eq 'pessoaJuridico'}">
+	<h:panelGrid id="#{id}pnGridTipoPessoaJuridico" columns="6" rendered="#{pessoa.value eq 'pessoaJuridico'}">
 		<ui:include src="pessoaJuridicaEdit.xhtml" > 
 			<ui:param name="disabled" value="#{disabled}" /> 
 			<ui:param name="pessoaJuridica" value="#{pessoa}" /> 
 		</ui:include>
 	</h:panelGrid>
 
-	<p:tabView effect="blind" effectDuration="normal" id="tab">
+	<p:tabView effect="blind" effectDuration="normal" id="#{id}tab">
+
 		<!-- ENDEREÇO -->  
-		<p:tab title="Endereços" id="tabEnderecos">
-			<ui:include src="enderecoEdit.xhtml" >
+		<p:tab title="Endereços" id="#{id}tabEnderecos">
+			<ui:include src="enderecoEdit_dialog.xhtml" >
 				<ui:param name="disabledSelect" value="#{disabled}" /> 
 				<ui:param name="eventSelect" value="#{event}" /> 
 				<ui:param name="enderecos" value="#{pessoa.enderecos}" />
 				<ui:param name="form" value="#{form}" /> 
+				<ui:param name="id" value="#{id}" /> 
 			</ui:include> 
 		</p:tab>
 
-		<p:tab title="Telefone" id="tabTelefones">
-			<ui:include src="telefoneEdit.xhtml" >
+		<!-- TELEFONE -->  
+		<p:tab title="Telefone" id="#{id}tabTelefones">
+			<ui:include src="telefoneEdit_dialog.xhtml" >
 				<ui:param name="disabledSelect" value="#{disabled}" /> 
 				<ui:param name="eventSelect" value="#{event}" /> 
 				<ui:param name="telefones" value="#{pessoa.telefones}" />
 				<ui:param name="form" value="#{form}" /> 
+				<ui:param name="id" value="#{id}" /> 
 			</ui:include> 
 		</p:tab>
 	
