@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+	
+	
+	<h:panelGrid id="#{id}pnGridPessoaFilters">
+
+		<h:panelGrid id="#{id}pnGridSearchPessoa" widgetVar="pnGridSearchPessoa" header="PessoaFilters " 
+			resizable="true" showEffect="fold" hideEffect="fold" width="600" height="350">  
+			
+			
+	     	<h:panelGrid rendered="#{pessoaFilters ne null}" id="#{id}pnGridDadosPessoaFilters">
+
+		     	<h:panelGrid columns="4">
+			     	<h:panelGrid columns="1">
+						<h:outputLabel value="Nome:" for="#{id}nomeFiltersPessoa" />
+						<p:inputText id="#{id}nomeFiltersPessoa" value="#{pessoaFilters.nome}" size="45" />
+					</h:panelGrid>
+			
+					<h:panelGrid columns="1">
+						<h:outputLabel value="Data Nascimento:" for="#{id}dataNascimentoFiltersPessoa"  />
+						<p:calendar id="#{id}dataNascimentoFiltersPessoa" value="#{pessoaFilters.dataNascimento}" pattern="dd/MM/yyyy" showButtonPanel="true" />
+					</h:panelGrid>
+ 
+			     	<h:panelGrid rendered="#{tipoPessoa eq 'pessoaFisica' or tipoPessoa eq 'pessoa' }">
+						<ui:include src="pessoaFisicaFilters.xhtml" > 
+							<ui:param name="pessoaFisicaFilters" value="#{pessoaFilters}" />
+							<ui:param name="form" value="#{form}" />
+							<ui:param name="id" value="clienteFilters_" />
+						</ui:include>
+					</h:panelGrid>
+
+			     	<h:panelGrid rendered="#{tipoPessoa eq 'pessoaFisica' or tipoPessoa eq 'pessoa' }">
+						<ui:include src="pessoaJuridicaFilters.xhtml" >  
+							<ui:param name="pessoaJuridicaFilters" value="#{pessoaFilters}" />
+							<ui:param name="form" value="#{form}" />
+							<ui:param name="id" value="clienteFilters_" />
+						</ui:include>
+					</h:panelGrid>
+					
+
+				</h:panelGrid>
+
+			</h:panelGrid>
+			
+		</h:panelGrid>
+	
+	</h:panelGrid>	
+</html>

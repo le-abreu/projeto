@@ -16,21 +16,31 @@
 		
 		<h:form id="formCliente">
 		
-			<p:panel header="Cliente" toggleable="false" id="panelSearchClientes">
-				
-				<p:toolbar style="margin-top: 8px">
-				
-					<p:toolbarGroup>
-							
-						<p:commandButton id="btnNovoCliente" value="Novo Cliente" style="font-size: 0.8em;" icon="ui-icon-document" action="clienteEdit.xhtml" immediate="true" ajax="false">
-							<f:setPropertyActionListener value="Confirmar" target="#{clienteBean.evento}" />
-							<f:setPropertyActionListener value="" target="#{clienteBean.disabled}" />
-							<f:setPropertyActionListener value="#{clienteBean.novoCliente}" target="#{clienteBean.cliente}" />
-						</p:commandButton>	 
+			<p:toolbar style="margin-top: 8px">
+			
+				<p:toolbarGroup>
 						
-					</p:toolbarGroup>
+					<p:commandButton id="btnNovoCliente" value="Novo Cliente" style="font-size: 0.8em;" icon="ui-icon-document" action="clienteEdit.xhtml" immediate="true" ajax="false">
+						<f:setPropertyActionListener value="Confirmar" target="#{clienteBean.evento}" />
+						<f:setPropertyActionListener value="" target="#{clienteBean.disabled}" />
+						<f:setPropertyActionListener value="#{clienteBean.novoCliente}" target="#{clienteBean.cliente}" />
+					</p:commandButton>	 
+					
+				</p:toolbarGroup>
 
-				</p:toolbar>
+			</p:toolbar>
+			
+			<p:panel header="Cliente" toggleable="false" id="panelSearchClientes">
+				#{clienteBean.clienteDaoFilters}
+				
+				<h:panelGrid id="pnGridSearchCliente">
+					<ui:include src="include/filters/clienteFilters.xhtml" >
+						<ui:param name="#{clienteFilters}" value="#{clienteBean.clienteDaoFilters}" />
+						<ui:param name="form" value="formCliente" />
+						<ui:param name="id" value="clienteFilters_" />
+						<ui:param name="tipoPessoa" value="pessoaFisica" />
+					</ui:include>
+				</h:panelGrid>	
 			</p:panel>
 			
 			<p:panel header="Clientes" toggleable="false" id="panelClientes">

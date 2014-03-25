@@ -24,7 +24,7 @@ public class ClienteDaoImpl extends GenericsDAOImpl<Cliente> implements ClienteD
 		
 		//- atributos para pesquisa
 		private Long idCliente;
-		private PessoaFisicaDaoFilters pessoaFisicaDaoFilters;
+		private PessoaFisicaDaoFilters pessoaFisicaDaoFilters = new PessoaFisicaDaoFilters();
 		
 		public Long getIdCliente() {
 			return idCliente;

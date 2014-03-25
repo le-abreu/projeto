@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import br.com.system.cadastro.business.ClienteBusiness;
 import br.com.system.cadastro.business.impl.ClienteBusinessImpl;
+import br.com.system.cadastro.dao.impl.ClienteDaoImpl.ClienteDaoFilters;
 import br.com.system.cadastro.model.Cliente;
 
 @SessionScoped
@@ -25,6 +26,7 @@ public class ClienteBean implements Serializable{
 	
 	// ATRIBUTOS CONTROLER
 	private ClienteBusiness clienteBusiness = new ClienteBusinessImpl();
+	private ClienteDaoFilters clienteDaoFilters = new ClienteDaoFilters();
 	private boolean disabled;
 	private String evento;
 
@@ -123,6 +125,14 @@ public class ClienteBean implements Serializable{
 
 	public void setEvento(String evento) {
 		this.evento = evento;
+	}
+
+	public ClienteDaoFilters getClienteDaoFilters() {
+		return clienteDaoFilters;
+	}
+
+	public void setClienteDaoFilters(ClienteDaoFilters clienteDaoFilters) {
+		this.clienteDaoFilters = clienteDaoFilters;
 	}
 
 	private void getFacesMessage(String msgTela) {

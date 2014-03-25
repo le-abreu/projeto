@@ -26,6 +26,7 @@
 		<ui:include src="pessoaFisicaEdit.xhtml" >
 			<ui:param name="disabled" value="#{disabled}" /> 
 			<ui:param name="pessoaFisica" value="#{pessoa}" /> 
+			<ui:param name="id" value="#{id}" /> 
 		</ui:include>
 	</h:panelGrid>
 
@@ -33,6 +34,7 @@
 		<ui:include src="pessoaJuridicaEdit.xhtml" > 
 			<ui:param name="disabled" value="#{disabled}" /> 
 			<ui:param name="pessoaJuridica" value="#{pessoa}" /> 
+			<ui:param name="id" value="#{id}" /> 
 		</ui:include>
 	</h:panelGrid>
 

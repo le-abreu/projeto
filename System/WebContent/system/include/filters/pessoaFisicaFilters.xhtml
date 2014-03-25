@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+	
+	
+	<h:panelGrid id="#{id}pnGridPessoaFisicaFilters">
+
+		<h:panelGrid id="#{id}pnGridSearchPessoaFisicaFilters" widgetVar="pnGridSearchPessoaFisicaFilters" header="PessoaFisicaFilters " 
+			resizable="true" showEffect="fold" hideEffect="fold" width="600" height="350">  
+			
+			
+	     	<h:panelGrid rendered="#{pessoaFisicaFilters ne null}" id="#{id}pnGridDadosPessoaFisicaFilters">
+
+		     	<h:panelGrid columns="4">
+		     		<h:panelGrid columns="1">
+					<h:outputLabel value="CPF:" for="{id}cpfPessoaFisicaFilters" />
+					<p:inputMask id="#{id}cpfPessoaFisicaFilters" value="#{pessoaFisicaFilters.cpf}"  mask="999.999.999-99" />
+				</h:panelGrid>
+				
+				<h:panelGrid columns="1">
+					<h:outputLabel value="RG:" for="{id}rgPessoaFisicaFilters"/>
+					<p:inputText id="#{id}rgPessoaFisicaFilters" value="#{pessoaFisicaFilters.rg}" />
+				</h:panelGrid>
+				
+				<h:panelGrid columns="1">
+					<h:outputLabel value="Sexo:" for="{id}sexoPessoaFisicaFilters" />
+					<p:selectOneMenu id="#{id}sexoPessoaFisicaFilters" value="#{pessoaFisicaFilters.sexo}" >
+						<f:selectItems value="#{pessoaFisicaFilters.sexoEnum}" itemLabel="#{sexo}" itemValue="#{sexo}" var="sexo" />
+					</p:selectOneMenu>				
+				</h:panelGrid>
+ 
+				</h:panelGrid>
+
+			</h:panelGrid>
+			
+		</h:panelGrid>
+	
+	</h:panelGrid>	
+</html>
