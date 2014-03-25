@@ -36,6 +36,7 @@ public class FuncionarioHandler implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
 	//BEAN
 	private Funcionario funcionario;
 	private  Endereco endereco = new Endereco();

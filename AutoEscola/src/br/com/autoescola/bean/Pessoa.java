@@ -59,7 +59,7 @@ public class Pessoa implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Imagem imagem;
-	
+
 	public String getNome() {
 		return nome;
 	}
