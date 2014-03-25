@@ -26,12 +26,12 @@
 				<p:commandButton id="btnRemoverCliente" value="Remover" title="Remover" icon="ui-icon-close" action="#{clienteBean.excluirCliente}" style="align:right" 
 					rendered="#{clienteBean.evento eq 'Remover'}" />	
 				
-				<h:panelGrid id="pnGridTipoPessoaResult" rendered="#{id eq null or pessoaBean.tipoPessoa.descricao eq 'Pessoa Juridica' or pessoaBean.tipoPessoa.descricao eq 'Pessoa Fisica'}">
+				<h:panelGrid id="pnGridTipoPessoaResult">
 					<ui:include src="include/pessoaEdit.xhtml" > 
 						<ui:param name="disabled" value="#{clienteBean.disabled}" /> 
 						<ui:param name="pessoa" value="#{clienteBean.cliente.pessoaFisica}" />
 						<ui:param name="form" value="formCliente" />
-						<ui:param name="id" value="Cliente" />
+						<ui:param name="id" value="cliente_" />
 					</ui:include>
 				</h:panelGrid> 
 

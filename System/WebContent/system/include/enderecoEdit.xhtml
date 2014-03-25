@@ -132,7 +132,7 @@
 			</p:column>
 									
 			<p:column style="width:90px" headerText="Visualizar">
-				<p:commandButton id="#{id}btnViewEndereco" icon="ui-icon-search"  update="#{form}">
+				<p:commandButton id="#{id}btnViewEndereco" icon="ui-icon-search"  update=":#{form}">
 					<f:setPropertyActionListener value="#{endereco}" target="#{enderecoBean.endereco}" />
 					<f:setPropertyActionListener value="Visualizar" target="#{enderecoBean.evento}" />
 					<f:setPropertyActionListener value="true" target="#{enderecoBean.disabled}" />
