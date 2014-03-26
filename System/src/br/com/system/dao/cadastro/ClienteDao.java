@@ -7,6 +7,6 @@ import br.com.system.model.cadastro.Cliente;
 
 public interface ClienteDao extends GenericsDAO<Cliente> {
 
-	List<Cliente> findClienteDaoFilters();
+	List<Cliente> findClienteDaoFilters() throws Exception;
 
 }

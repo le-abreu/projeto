@@ -16,27 +16,25 @@
 			resizable="true" showEffect="fold" hideEffect="fold" width="600" height="350">  
 			
 			
-	     	<h:panelGrid rendered="#{pessoaFisicaFilters ne null}" id="#{id}pnGridDadosPessoaFisicaFilters">
-
-		     	<h:panelGrid columns="4">
-		     		<h:panelGrid columns="1">
-					<h:outputLabel value="CPF:" for="{id}cpfPessoaFisicaFilters" />
+	     	<h:panelGrid rendered="#{pessoaFisicaFilters ne null}" id="#{id}pnGridDadosPessoaFisicaFilters" columns="1">
+				
+		     	<h:panelGrid columns="2">
+					<h:outputLabel value="CPF:" for="#{id}cpfPessoaFisicaFilters" />
 					<p:inputMask id="#{id}cpfPessoaFisicaFilters" value="#{pessoaFisicaFilters.cpf}"  mask="999.999.999-99" />
 				</h:panelGrid>
 				
-				<h:panelGrid columns="1">
-					<h:outputLabel value="RG:" for="{id}rgPessoaFisicaFilters"/>
+				<h:panelGrid columns="2">
+					<h:outputLabel value="RG:" for="#{id}rgPessoaFisicaFilters"/>
 					<p:inputText id="#{id}rgPessoaFisicaFilters" value="#{pessoaFisicaFilters.rg}" />
 				</h:panelGrid>
 				
-				<h:panelGrid columns="1">
-					<h:outputLabel value="Sexo:" for="{id}sexoPessoaFisicaFilters" />
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Sexo:" for="#{id}sexoPessoaFisicaFilters" />
 					<p:selectOneMenu id="#{id}sexoPessoaFisicaFilters" value="#{pessoaFisicaFilters.sexo}" >
 						<f:selectItems value="#{enumBean.sexoEnum}" itemLabel="#{sexo}" itemValue="#{sexo}" var="sexo" />
 					</p:selectOneMenu>				
 				</h:panelGrid>
  
-				</h:panelGrid>
 
 			</h:panelGrid>
 			

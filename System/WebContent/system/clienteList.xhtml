@@ -30,9 +30,7 @@
 
 			</p:toolbar>
 			
-			<p:panel header="Cliente" toggleable="false" id="panelSearchClientes">
-				#{clienteBean.clienteDaoFilters}
-				
+			<p:panel header="Cliente" toggleable="false" id="panelSearchClientes" >
 				<h:panelGrid id="pnGridSearchCliente">
 					<ui:include src="include/filters/clienteFilters.xhtml" >
 						<ui:param name="clienteFilters" value="#{clienteBean.clienteDaoFilters}" />
@@ -41,6 +39,8 @@
 						<ui:param name="tipoPessoa" value="pessoaFisica" />
 					</ui:include>
 				</h:panelGrid>	
+				
+				<p:commandButton id="btnSeacrchCliente" value="Pesquisar" style="font-size: 0.8em;" icon="ui-icon-document" action="#{clienteBean.pesquisarClientes}" update=":formCliente:dataTableClientesResults"/>
 			</p:panel>
 			
 			<p:panel header="Clientes" toggleable="false" id="panelClientes">
@@ -51,7 +51,7 @@
 					rowsPerPageTemplate="10,20,40"
 					style="margin-top: 8px">
 
-					<f:facet name="header">
+					<f:facet name="header"> 
 						<h:outputText value="" />
 					</f:facet>
 	
@@ -66,6 +66,8 @@
 					
 						<p:commandButton id="btnEditar" title="Editar" icon="ui-icon-pencil" action="clienteEdit.xhtml">
 							<f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.cliente}" />
+							<f:setPropertyActionListener value="Confirmar" target="#{clienteBean.evento}" />
+							<f:setPropertyActionListener value="false" target="#{clienteBean.disabled}" />
 						</p:commandButton>
 					
 					</p:column>

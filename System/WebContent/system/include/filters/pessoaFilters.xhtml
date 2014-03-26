@@ -16,38 +16,35 @@
 			resizable="true" showEffect="fold" hideEffect="fold" width="600" height="350">  
 			
 			
-	     	<h:panelGrid rendered="#{pessoaFilters ne null}" id="#{id}pnGridDadosPessoaFilters">
+	     	<h:panelGrid rendered="#{pessoaFilters ne null}" id="#{id}pnGridDadosPessoaFilters" columns="1">
 
-		     	<h:panelGrid columns="4">
-			     	<h:panelGrid columns="1">
-						<h:outputLabel value="Nome:" for="#{id}nomeFiltersPessoa" />
-						<p:inputText id="#{id}nomeFiltersPessoa" value="#{pessoaFilters.nome}" size="45" />
-					</h:panelGrid>
-			
-					<h:panelGrid columns="1">
-						<h:outputLabel value="Data Nascimento:" for="#{id}dataNascimentoFiltersPessoa"  />
-						<p:calendar id="#{id}dataNascimentoFiltersPessoa" value="#{pessoaFilters.dataNascimento}" pattern="dd/MM/yyyy" showButtonPanel="true" />
-					</h:panelGrid>
- 
-			     	<h:panelGrid rendered="#{tipoPessoa eq 'pessoaFisica' or tipoPessoa eq 'pessoa' }">
-						<ui:include src="pessoaFisicaFilters.xhtml" > 
-							<ui:param name="pessoaFisicaFilters" value="#{pessoaFilters}" />
-							<ui:param name="form" value="#{form}" />
-							<ui:param name="id" value="clienteFilters_" />
-						</ui:include>
-					</h:panelGrid>
-
-			     	<h:panelGrid rendered="#{tipoPessoa eq 'pessoaFisica' or tipoPessoa eq 'pessoa' }">
-						<ui:include src="pessoaJuridicaFilters.xhtml" >  
-							<ui:param name="pessoaJuridicaFilters" value="#{pessoaFilters}" />
-							<ui:param name="form" value="#{form}" />
-							<ui:param name="id" value="clienteFilters_" />
-						</ui:include>
-					</h:panelGrid>
-					
-
+		     	<h:panelGrid columns="2">
+					<h:outputLabel value="Nome:" for="#{id}nomeFiltersPessoa" />
+					<p:inputText id="#{id}nomeFiltersPessoa" value="#{pessoaFilters.nome}" size="45" />
+				</h:panelGrid>
+		
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Data Nascimento:" for="#{id}dataNascimentoFiltersPessoa"  />
+					<p:calendar id="#{id}dataNascimentoFiltersPessoa" value="#{pessoaFilters.dataNascimento}" pattern="dd/MM/yyyy" showButtonPanel="true" />
 				</h:panelGrid>
 
+
+		     	<h:panelGrid rendered="#{tipoPessoa eq 'pessoaFisica' or tipoPessoa eq 'pessoa' }">
+					<ui:include src="pessoaFisicaFilters.xhtml" > 
+						<ui:param name="pessoaFisicaFilters" value="#{pessoaFilters}" />
+						<ui:param name="form" value="#{form}" />
+						<ui:param name="id" value="clienteFilters_" />
+					</ui:include>
+				</h:panelGrid>
+
+		     	<h:panelGrid rendered="#{tipoPessoa eq 'pessoaFisica' or tipoPessoa eq 'pessoa' }">
+					<ui:include src="pessoaJuridicaFilters.xhtml" >  
+						<ui:param name="pessoaJuridicaFilters" value="#{pessoaFilters}" />
+						<ui:param name="form" value="#{form}" />
+						<ui:param name="id" value="clienteFilters_" />
+					</ui:include>
+				</h:panelGrid>
+					
 			</h:panelGrid>
 			
 		</h:panelGrid>

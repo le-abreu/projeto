@@ -14,27 +14,23 @@
 
 		<h:panelGrid id="#{id}pnGridSearchCliente" widgetVar="pnGridSearchCliente" header="ClienteFilters " 
 			resizable="true" showEffect="fold" hideEffect="fold" width="600" height="350">  
-			
-			
-			#{clienteFilters ne null}
-			#{clienteFilters}
+
 	     	<h:panelGrid rendered="#{clienteFilters ne null}" id="#{id}pnGridDadosClienteFilters">
- 
-		     	<h:panelGrid columns="4">
-			     	<h:panelGrid columns="1">
+
+		     	<h:panelGrid columns="1">
+			     	<h:panelGrid columns="2">
 						<h:outputLabel value="ID:" for="#{id}idClienteFilters"/>
 						<p:inputText id="#{id}idClienteFilters" value="#{clienteFilters.idCliente}" size="5" />
 					</h:panelGrid>
-
 					<ui:include src="pessoaFilters.xhtml"> 
 						<ui:param name="pessoaFilters" value="#{clienteFilters.pessoaFisicaDaoFilters}" />
 						<ui:param name="form" value="#{form}" />
 						<ui:param name="id" value="#{id}" />
 						<ui:param name="tipoPessoa" value="#{tipoPessoa}" />
 					</ui:include>
-					
-
 				</h:panelGrid>
+				
+
 
 			</h:panelGrid>
 			

@@ -16,8 +16,13 @@ public class ClienteDaoImpl extends GenericsDAOImpl<Cliente> implements ClienteD
 
 
 	@Override
-	public List<Cliente> findClienteDaoFilters() {
-		return null;
+	public List<Cliente> findClienteDaoFilters() throws Exception {
+		try {
+			return this.lista();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	public static class ClienteDaoFilters{
