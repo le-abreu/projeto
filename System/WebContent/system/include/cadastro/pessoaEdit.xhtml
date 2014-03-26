@@ -28,7 +28,7 @@
 			<ui:param name="pessoaFisica" value="#{pessoa}" /> 
 			<ui:param name="id" value="#{id}" /> 
 		</ui:include>
-	</h:panelGrid>
+	</h:panelGrid> 
 
 	<h:panelGrid id="#{id}pnGridTipoPessoaJuridico" columns="6" rendered="#{pessoa.value eq 'pessoaJuridico'}">
 		<ui:include src="pessoaJuridicaEdit.xhtml" > 

@@ -35,7 +35,7 @@
 				
 				<h:panelGrid id="pnGridSearchCliente">
 					<ui:include src="include/filters/clienteFilters.xhtml" >
-						<ui:param name="#{clienteFilters}" value="#{clienteBean.clienteDaoFilters}" />
+						<ui:param name="clienteFilters" value="#{clienteBean.clienteDaoFilters}" />
 						<ui:param name="form" value="formCliente" />
 						<ui:param name="id" value="clienteFilters_" />
 						<ui:param name="tipoPessoa" value="pessoaFisica" />

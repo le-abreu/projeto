@@ -32,7 +32,7 @@
 				<h:panelGrid columns="1">
 					<h:outputLabel value="Sexo:" for="{id}sexoPessoaFisicaFilters" />
 					<p:selectOneMenu id="#{id}sexoPessoaFisicaFilters" value="#{pessoaFisicaFilters.sexo}" >
-						<f:selectItems value="#{pessoaFisicaFilters.sexoEnum}" itemLabel="#{sexo}" itemValue="#{sexo}" var="sexo" />
+						<f:selectItems value="#{enumBean.sexoEnum}" itemLabel="#{sexo}" itemValue="#{sexo}" var="sexo" />
 					</p:selectOneMenu>				
 				</h:panelGrid>
  

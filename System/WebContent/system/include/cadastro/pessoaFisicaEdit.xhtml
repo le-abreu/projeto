@@ -11,19 +11,19 @@
 
 
 	<h:panelGrid columns="1">
-		<h:outputLabel value="CPF:" for="{id}cpfPessoaFisica" />
+		<h:outputLabel value="CPF:" for="#{id}cpfPessoaFisica" />
 		<p:inputMask id="#{id}cpfPessoaFisica" value="#{pessoaFisica.cpf}"  mask="999.999.999-99" disabled="#{disabled}" rendered="true" requiredMessage="O campo CPF é obrigátorio!"/>
 	</h:panelGrid>
 	
 	<h:panelGrid columns="1">
-		<h:outputLabel value="RG:" for="{id}rgPessoaFisica"/>
+		<h:outputLabel value="RG:" for="#{id}rgPessoaFisica"/>
 		<p:inputText id="#{id}rgPessoaFisica" value="#{pessoaFisica.rg}"  disabled="#{disabled}" rendered="true" requiredMessage="O campo RG é obrigátorio!"/>
 	</h:panelGrid>
 	
 	<h:panelGrid columns="1">
-		<h:outputLabel value="Sexo:" for="{id}sexoPessoaFisica" />
+		<h:outputLabel value="Sexo:" for="#{id}sexoPessoaFisica" />
 		<p:selectOneMenu id="#{id}sexoPessoaFisica" value="#{pessoaFisica.sexo}" disabled="#{disabled}" requiredMessage="O campo sexo é obrigátorio!">
-			<f:selectItems value="#{pessoaFisica.sexoEnum}" itemLabel="#{sexo}" itemValue="#{sexo}" var="sexo" />
+			<f:selectItems value="#{enumBean.sexoEnum}" itemLabel="#{sexo}" itemValue="#{sexo}" var="sexo" />
 		</p:selectOneMenu>				
 	</h:panelGrid>
 
